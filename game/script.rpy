@@ -13,6 +13,13 @@ init python:
             }
             self.days = 0
 
+            self.classes = {"Biology":"biology",
+                            "Drama":"drama",
+                            "Gym":"gym"}
+
+            self.picked_classes = []
+            self.max_classes = 2
+
         def add_stats(self,stat,amount):
             self.stats[stat]
             if stat in self.stats:
@@ -25,6 +32,26 @@ init python:
                 return self.stats[stat]
             else:
                 return None
+
+        def increment_day(self):
+            self.days += 1
+
+        def pick_classes(self,class_type):
+            self.picked_classes.append(class_type)
+
+        def reset_classes(self):
+            self.picked_classes = []
+
+        def get_available_classes(self):
+            choices = []
+            for class_type,class_desc in self.classes.items():
+                if not(class_type in self.picked_classes):
+                    choices.append((class_type,class_desc))
+            return choices
+
+        def get_picked_classes(self):
+            return self.picked_classes
+
                 
     class Girl:
         def __init__(self, name):
@@ -35,6 +62,8 @@ init python:
         def add_closeness(self,amount):
             self.closeness += amount
 
+    def rng_roll(chance): #chance should be between [0,1]
+        return chance > renpy.random.random() 
 
 # Declare characters used by this game.
 image bg placeholderbg = "background.png"
@@ -62,8 +91,7 @@ label start:
 
 label intro:
     
-    principal "Welcome to <insert school name here>. This school consists of the brightest students from all over the city, so congratulations for making it! In order to foster independence and individual growth in each of our students, we’re extremely flexible in what classes you attend. So you’ll be able to choose which class to show up to and what area of study you wish to upgrade in a sense. But be choose wisely. Once you set your classes today, it’ll be permanent for the rest of the year. 
-If you’re ready, I can take you on a tour of the school and some of the club rooms. Do you want me to repeat anything?"
+    principal "Welcome to <insert school name here>. This school consists of the brightest students from all over the city, so congratulations for making it! In order to foster independence and individual growth in each of our students, we’re extremely flexible in what classes you attend. So you’ll be able to choose which class to show up to and what area of study you wish to upgrade in a sense. But be choose wisely. Once you set your classes today, it’ll be permanent for the rest of the year. If you’re ready, I can take you on a tour of the school and some of the club rooms. Do you want me to repeat anything?"
     
     menu: 
     
@@ -99,56 +127,43 @@ label school_tour:
     jump make_schedule
 
 label make_schedule:
-    
-    "It looks like I have to make my year schedule now. These are the classes that this school is offering right now:"
+    if len(stats.get_picked_classes()) == 0:
+        "It looks like I have to make my year schedule now. These are the classes that this school is offering right now:"
+    $choices = stats.get_available_classes()
+    $result = renpy.display_menu(choices)
 
-    menu:
-        "Gym":
-            "Guess I'll choose Gym for one choice, I still need to pick another."
-            #choose again without gym
-            menu: 
-                "Biology":
-                    jump gym_biology
-                "Drama":
-                    jump gym_drama
-        "Biology":
-            "Guess I'll choose Biology for one choice, I still need to pick another."
-            #choose again without Biology
-            menu: 
-                "Gym":
-                    jump gym_biology
-                "Drama":
-                    jump biology_drama
-        "Drama":
-            "Guess I'll choose Drama for one choice, I still need to pick another."
-            #choose again without Drama
-            menu: 
-                "Biology":
-                    jump biology_drama
-                "Gym":
-                    jump gym_drama
+    call expression result
+
+    if len(stats.picked_classes) < stats.max_classes:
+        jump make_schedule
+    else:
+        jump extracurricular
+
             
-label gym_biology:
-    #chose gym and biology
+label gym:
+    $ stats.pick_classes("Gym")
     $ stats.add_stats("str", 1)
+    if len(stats.get_picked_classes()) < stats.max_classes:
+        "Guess I'll choose Gym for one choice, I still need to pick another."
+    return
+    
+label drama:
+    $ stats.pick_classes("Drama")
+    $ stats.add_stats("str", 1)
+    if len(stats.get_picked_classes()) <= stats.max_classes:
+        "Guess I'll choose Drama for one choice, I still need to pick another."
+    return 
+   
+label biology:
+    $ stats.pick_classes("Biology")
     $ stats.add_stats("int", 1)
+    if len(stats.get_picked_classes()) <= stats.max_classes:
+        "Guess I'll choose Biology for one choice, I still need to pick another."
+    return
+   
 
-    jump extracurricular
-    
-label gym_drama:
-    #chose gym and drama
-    $ stats.add_stats("str", 1)
-    $ stats.add_stats("cha", 1)
-    
-    jump extracurricular
-   
-label biology_drama:
-    #chose biology and drama
-    $ stats.add_stats("int", 1)
-    $ stats.add_stats("cha", 1)
-    
-    jump extracurricular
-   
+
+
 label extracurricular:
     "So this is what an elite school is like? Classes seem ridiculously hard. Maybe I should check out those extracurriculars the principal mentioned."
     
@@ -156,7 +171,7 @@ label extracurricular:
     
 #the main daytime routine.
 label daytime:
-    $ stats.days += 1
+    $ stats.increment_day()
     $ temp = stats.days
     "this is the daytime routine (Day %(temp)d)"
     call raisestat #go to raisestat routine
