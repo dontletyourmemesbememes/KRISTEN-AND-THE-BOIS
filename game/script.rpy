@@ -130,18 +130,30 @@ label make_schedule:
             
 label gym_biology:
     #chose gym and biology
-    #check what day it is to see what actions/dialogue should play
-    return
+    $ stats.add_stats("str", 1)
+    $ stats.add_stats("int", 1)
+
+    jump extracurricular
     
 label gym_drama:
+    #chose gym and drama
+    $ stats.add_stats("str", 1)
+    $ stats.add_stats("cha", 1)
     
-    return
-    
+    jump extracurricular
+   
 label biology_drama:
+    #chose biology and drama
+    $ stats.add_stats("int", 1)
+    $ stats.add_stats("cha", 1)
+    
+    jump extracurricular
+   
+label extracurricular:
+    "So this is what an elite school is like? Classes seem ridiculously hard. Maybe I should check out those extracurriculars the principal mentioned."
     
     return
     
-
 #the main daytime routine.
 label daytime:
     $ stats.days += 1
