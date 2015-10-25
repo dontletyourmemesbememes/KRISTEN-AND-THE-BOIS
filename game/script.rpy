@@ -11,7 +11,7 @@ init python:
                 "int":0,
                 "cha":0
             }
-            self.days = 0
+            self.days = 1
 
             self.classes = {"Biology":"biology",
                             "Drama":"drama",
@@ -297,7 +297,7 @@ label made_good_food:
     
 label end_day_1:
     
-    $stats.increment_days()
+    $ stats.increment_days()
     
     return
     
