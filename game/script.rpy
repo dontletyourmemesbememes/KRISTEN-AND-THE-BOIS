@@ -19,7 +19,8 @@ init python:
 
             self.picked_classes = []
             self.max_classes = 2
-
+            self.food_choice = 0
+            
         def add_stats(self,stat,amount):
             self.stats[stat]
             if stat in self.stats:
@@ -32,12 +33,12 @@ init python:
                 return self.stats[stat]
             else:
                 return None
-
-        def increment_days(self):
-            self.days += 1
-
+    
         def get_days(self):
             return self.days
+            
+        def increment_days(self):
+            self.days += 1
 
         def pick_classes(self,class_type):
             self.picked_classes.append(class_type)
@@ -54,24 +55,36 @@ init python:
 
         def get_picked_classes(self):
             return self.picked_classes
-
-                
+            
+        def get_food_choice(self):
+            return self.food_choice
+        
+        def set_food_choice(self, value):
+            self.food_choice = value
+               
     class Girl:
         def __init__(self, name):
             self.name = name
             self.character = Character(name)
-            self.closeness = 0
+            self.closeness = 3
 
         def add_closeness(self,amount):
             self.closeness += amount
-
+            
+        def get_closeness(self,name):
+            return self.closeness
+            
+        def set_name(self,name):
+            self.name = name
+            
     def rng_roll(chance): #chance should be between [0,1]
-        return chance > renpy.random.random() 
+        return chance > renpy.random.random()
+
 
 # Declare characters used by this game.
 image bg placeholderbg = "background.png"
 
-define p = Character("grill", color="#c8ffc8")
+define p = DynamicCharacter("unknown_name", color="#c8ffc8")
 define m = DynamicCharacter("player_name")
 define principal = Character("Principal", color="#c8ffc8")
 
@@ -81,7 +94,8 @@ label start:
 
     $ player_name = renpy.input("Can I get you to repeat your name please?")
     $ stats = Stats()
-    $ girl1 = Girl("")
+    $ girl1 = Girl("Mary")
+    $ unknown_name = "???"
 
     m "My name is %(player_name)s !"
     
@@ -94,7 +108,8 @@ label start:
 
 label intro:
     
-    principal "Welcome to <insert school name here>. This school consists of the brightest students from all over the city, so congratulations for making it! In order to foster independence and individual growth in each of our students, we’re extremely flexible in what classes you attend. So you’ll be able to choose which class to show up to and what area of study you wish to upgrade in a sense. But be choose wisely. Once you set your classes today, it’ll be permanent for the rest of the year. If you’re ready, I can take you on a tour of the school and some of the club rooms. Do you want me to repeat anything?"
+    principal "Welcome to <insert school name here>. This school consists of the brightest students from all over the city, so congratulations for making it! In order to foster independence and individual growth in each of our students, we’re extremely flexible in what classes you attend. So you’ll be able to choose which class to show up to and what area of study you wish to upgrade in a sense. But be choose wisely. Once you set your classes today, it’ll be permanent for the rest of the year. 
+If you’re ready, I can take you on a tour of the school and some of the club rooms. Do you want me to repeat anything?"
     
     menu: 
     
@@ -127,22 +142,23 @@ label school_tour:
     #go to general image, office or something
     principal "Well those are just examples of the many facilities this school provides. Make use of your time and be sure to work hard on your academics. Remember that although this is an elite school and your studies are very important, your social life and extra curriculars are crucial in a healthy high school experience too. Good luck on your first day!"
     
+    $ reset = stats.reset_classes
     jump make_schedule
 
 label make_schedule:
+    
     if len(stats.get_picked_classes()) == 0:
-        "It looks like I have to make my year schedule now. These are the classes that this school is offering right now:"
+        "It looks like I have to make my year schedule now. These are the classes that this school is offering right now."
     $choices = stats.get_available_classes()
     $result = renpy.display_menu(choices)
 
     call expression result
 
-    if len(stats.get_picked_classes()) < stats.max_classes:
+    if len(stats.picked_classes) < stats.max_classes:
         jump make_schedule
     else:
         jump extracurricular
-
-            
+                    
 label gym:
     $ stats.pick_classes("Gym")
     $ stats.add_stats("str", 1)
@@ -152,34 +168,148 @@ label gym:
     
 label drama:
     $ stats.pick_classes("Drama")
-    $ stats.add_stats("str", 1)
+    $ stats.add_stats("cha", 1)
     if len(stats.get_picked_classes()) < stats.max_classes:
         "Guess I'll choose Drama for one choice, I still need to pick another."
     return 
-   
+    
 label biology:
     $ stats.pick_classes("Biology")
     $ stats.add_stats("int", 1)
     if len(stats.get_picked_classes()) < stats.max_classes:
         "Guess I'll choose Biology for one choice, I still need to pick another."
     return
-   
-
-
 
 label extracurricular:
     "So this is what an elite school is like? Classes seem ridiculously hard. Maybe I should check out those extracurriculars the principal mentioned."
     
+    menu:
+        "Home Economics Room":
+            jump home_ec_room
+        "Music Room":
+            jump music_room
+        "Fitness Centre":
+            jump fitness_room
+
+label home_ec_room:
+    # show image of room
+    # play sound of sizzling noise
+    "> As you enter the room, you hear a sizzling noise. The fragrances tickle your nose as you enter the room. Your sight is drawn to the centre of the room, to a girl. She looks up to acknowledge you, and she gives a friendly but shy smile."
+    
+    p "Hello, I haven’t seen your face around, are you new?"
+    
+    m "Yeah, I just transferred here recently. Is this the cooking club?"
+    
+    p "Yes! you’ve come to the right place."
+    
+    m "Where do I sign up?"
+    
+    p "Well… you kind of need to cook in this club. Show me what you can do first, and then we can talk about your membership."
+    
+    "You realize that you’ve only been here for a day, and the only culinary experience you have comes from instant ramen."
+    
+    p "Hello? You blanked out for a second, haha. what do you plan on making for me?"
+    
+    $ str_check = stats.get_stats("str")
+    $ int_check = stats.get_stats("int")
+    $ cha_check = stats.get_stats("cha")
+    
+    menu: 
+        "Chocolate chip cookies":
+            if str_check >= 1 and cha_check >= 1:
+                "Miraculously, you remember a recipe for chocolate cookies, and manage to put them together. You put them aside to cool, and as you wait there is a silent moment. When you make eye contact you realize that you could probably use this time to get to know her, or would that be too awkward right now?"
+                $ girl1.add_closeness(1)
+                $ stats.set_food_choice(0)
+                jump girl_1_convo
+            else:
+                "I don't remember how to make this, time to guess!"
+                $ girl1.add_closeness(-1)
+                $ stats.set_food_choice(1)
+                jump girl_1_convo
+        
+        "Instant Ramen":
+            "This is easy to make."
+            $ girl1.add_closeness(-1)
+            $ stats.set_food_choice(2)
+            jump girl_1_convo
+        
+        "Beef Carpaccio":
+            # add/decrease closeness
+            $ stats.set_food_choice(3)
+            jump girl_1_convo
+            
+label girl_1_convo:
+    
+    m "Soooo… I actually never caught your name, my names %(player_name)s."
+    
+    p "Oh, sorry about that! I’m Mary, I am president of the cooking club. I’m in my senior year, just like you."
+    # change the name of p to Mary
+    $ unknown_name = "Mary"
+    
+    "You try to carry the conversation as you realize it’s not really going anywhere"
+    
+    m "Nice, why cooking?"
+    
+    p "It is a good way to release stress, but I’m not anything like a master chef"
+    
+    $ get_food = stats.get_food_choice()
+    if get_food == 0 or get_food == 1:
+        $ food = "cookies are"
+    elif get_food == 2:
+        $ food = "instant ramen is"
+    else:
+        $ food = "beef carpaccio is"
+    m "Looks like the %(food)s done!"
+    
+    "> Mary takes a bite"
+    
+    $ get_food = stats.get_food_choice()
+    if get_food == 0:
+        jump made_good_food
+    elif get_food == 1:
+        jump made_bad_food
+    elif get_food == 2:
+        jump made_bad_food
+    else:
+        jump made_bad_food
+        
+label made_bad_food:
+    
+    p "It was... uh... not bad... "
+    
+    "she forces a smile and pushes your food a few inches away"
+    
+    m "Sorry about that, maybe you can teach me some basics?"
+    
+    p "mmm… that sounds okay i suppose...come by tomorrow and I’ll teach you a little of what I know."
+    
+    jump end_day_1
+    
+label made_good_food:
+    
+    p "It was good!"
+    
+    "she gives a warm smile"
+    
+    p "I’ll let you into the club! I need a sous chef to help me with a project. If you’re free come by tomorrow after class"
+    
+    jump end_day_1
+    
+label end_day_1:
+    
+    $stats.increment_days()
+    
     return
     
+                
 #the main daytime routine.
 label daytime:
-    $ stats.increment_days()
-    $ temp = stats.get_days()
+    $ stats.days += 1
+    $ temp = stats.days
     "this is the daytime routine (Day %(temp)d)"
     call raisestat #go to raisestat routine
 
-    if stats.get_days() < 5:
+    if stats.days < 5:
         jump daytime #jump to daytime again
 
     "ya out of time"
