@@ -33,8 +33,11 @@ init python:
             else:
                 return None
 
-        def increment_day(self):
+        def increment_days(self):
             self.days += 1
+
+        def get_days(self):
+            return self.days
 
         def pick_classes(self,class_type):
             self.picked_classes.append(class_type)
@@ -134,7 +137,7 @@ label make_schedule:
 
     call expression result
 
-    if len(stats.picked_classes) < stats.max_classes:
+    if len(stats.get_picked_classes()) < stats.max_classes:
         jump make_schedule
     else:
         jump extracurricular
@@ -150,14 +153,14 @@ label gym:
 label drama:
     $ stats.pick_classes("Drama")
     $ stats.add_stats("str", 1)
-    if len(stats.get_picked_classes()) <= stats.max_classes:
+    if len(stats.get_picked_classes()) < stats.max_classes:
         "Guess I'll choose Drama for one choice, I still need to pick another."
     return 
    
 label biology:
     $ stats.pick_classes("Biology")
     $ stats.add_stats("int", 1)
-    if len(stats.get_picked_classes()) <= stats.max_classes:
+    if len(stats.get_picked_classes()) < stats.max_classes:
         "Guess I'll choose Biology for one choice, I still need to pick another."
     return
    
@@ -171,8 +174,8 @@ label extracurricular:
     
 #the main daytime routine.
 label daytime:
-    $ stats.increment_day()
-    $ temp = stats.days
+    $ stats.increment_days()
+    $ temp = stats.get_days
     "this is the daytime routine (Day %(temp)d)"
     call raisestat #go to raisestat routine
 
