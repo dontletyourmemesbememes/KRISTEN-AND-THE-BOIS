@@ -175,11 +175,11 @@ label extracurricular:
 #the main daytime routine.
 label daytime:
     $ stats.increment_days()
-    $ temp = stats.get_days
+    $ temp = stats.get_days()
     "this is the daytime routine (Day %(temp)d)"
     call raisestat #go to raisestat routine
 
-    if stats.days < 5:
+    if stats.get_days() < 5:
         jump daytime #jump to daytime again
 
     "ya out of time"
