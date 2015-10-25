@@ -11,7 +11,7 @@ init python:
                 "int":0,
                 "cha":0
             }
-            self.days = 1
+            self.days = 0
 
             self.classes = {"Biology":"biology",
                             "Drama":"drama",
@@ -20,6 +20,7 @@ init python:
             self.picked_classes = []
             self.max_classes = 2
             self.food_choice = 0
+            self.chosen_girl = 0
             
         def add_stats(self,stat,amount):
             self.stats[stat]
@@ -61,6 +62,12 @@ init python:
         
         def set_food_choice(self, value):
             self.food_choice = value
+        
+        def get_chosen_girl(self):
+            return self.chosen_girl
+            
+        def set_chosen_girl(self, girl):
+            self.chosen_girl = girl
                
     class Girl:
         def __init__(self, name):
@@ -142,13 +149,13 @@ label school_tour:
     #go to general image, office or something
     principal "Well those are just examples of the many facilities this school provides. Make use of your time and be sure to work hard on your academics. Remember that although this is an elite school and your studies are very important, your social life and extra curriculars are crucial in a healthy high school experience too. Good luck on your first day!"
     
-    $ reset = stats.reset_classes
+    $ stats.reset_classes()
     jump make_schedule
 
 label make_schedule:
     
     if len(stats.get_picked_classes()) == 0:
-        "It looks like I have to make my year schedule now. These are the classes that this school is offering right now."
+        "It looks like I have to choose 2 classes to attend."
     $choices = stats.get_available_classes()
     $result = renpy.display_menu(choices)
 
@@ -157,8 +164,23 @@ label make_schedule:
     if len(stats.picked_classes) < stats.max_classes:
         jump make_schedule
     else:
-        jump extracurricular
+        $ day = stats.get_days()
+        if day == 0: # end the day
+            jump end_day_0
+        else:
+            jump extracurricular
                     
+label end_day_0:
+    "Phew... That was a long day, I'll head home for today..."
+    $ stats.increment_days()
+    
+    #fade to show end of day 
+    
+    
+    "Time to go to class..."
+    $ stats.reset_classes()
+    jump make_schedule
+    
 label gym:
     $ stats.pick_classes("Gym")
     $ stats.add_stats("str", 1)
@@ -182,18 +204,28 @@ label biology:
 
 label extracurricular:
     "So this is what an elite school is like? Classes seem ridiculously hard. Maybe I should check out those extracurriculars the principal mentioned."
+    $ chosen_girl = stats.get_chosen_girl()
     
-    menu:
-        "Home Economics Room":
-            jump home_ec_room
-        "Music Room":
-            jump music_room
-        "Fitness Centre":
-            jump fitness_room
+    if chosen_girl == 0:
+        menu:
+            "Home Economics Room":
+                jump home_ec_room
+            "Music Room":
+                jump music_room
+            "Fitness Centre":
+                jump fitness_room
+    
+    elif chosen_girl == 1: # Mary is chosen
+        
+        jump home_ec_day_2
 
 label home_ec_room:
     # show image of room
     # play sound of sizzling noise
+    
+    # you have chosen Mary as the girl 
+    $ stats.set_chosen_girl(1)
+    
     "> As you enter the room, you hear a sizzling noise. The fragrances tickle your nose as you enter the room. Your sight is drawn to the centre of the room, to a girl. She looks up to acknowledge you, and she gives a friendly but shy smile."
     
     p "Hello, I haven’t seen your face around, are you new?"
@@ -297,10 +329,27 @@ label made_good_food:
     
 label end_day_1:
     
+    # show image of bedroom at night?
+    m "That was a long day, time to hit the sack."
     $ stats.increment_days()
     
-    return
+    jump start_day_2
     
+label start_day_2:
+    
+    "Another day at school..." 
+    $ stats.reset_classes()
+    jump make_schedule
+    
+label home_ec_day_2:
+    
+    # DO STUFF HERE
+    # cake cafe (need +1 closeness)
+    # HIGH END RESTAURANT (need +8 closeness?)
+    # home cooked meal (need + 1000000000 closeness) 
+
+    return
+ 
                 
 #the main daytime routine.
 label daytime:
