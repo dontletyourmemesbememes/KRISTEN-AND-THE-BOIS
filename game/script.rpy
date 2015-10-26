@@ -167,8 +167,10 @@ label make_schedule:
         $ day = stats.get_days()
         if day == 0: # end the day
             jump end_day_0
-        else:
+        elif day == 1:
             jump extracurricular
+        else: 
+            return
                     
 label end_day_0:
     "Phew... That was a long day, I'll head home for today..."
@@ -238,7 +240,7 @@ label home_ec_room:
     
     p "Well… you kind of need to cook in this club. Show me what you can do first, and then we can talk about your membership."
     
-    "You realize that you’ve only been here for a day, and the only culinary experience you have comes from instant ramen."
+    "> You realize that you’ve only been here for a day, and the only culinary experience you have comes from instant ramen."
     
     p "Hello? You blanked out for a second, haha. what do you plan on making for me?"
     
@@ -247,43 +249,61 @@ label home_ec_room:
     $ cha_check = stats.get_stats("cha")
     
     menu: 
-        "Chocolate chip cookies":
+        "Chocolate chip cookies (Strength 1, Charm 1)":
             if str_check >= 1 and cha_check >= 1:
-                "Miraculously, you remember a recipe for chocolate cookies, and manage to put them together. You put them aside to cool, and as you wait there is a silent moment. When you make eye contact you realize that you could probably use this time to get to know her, or would that be too awkward right now?"
+                "> Miraculously, you remember a recipe for chocolate cookies, and manage to put them together. You put them aside to cool, and as you wait there is a silent moment. When you make eye contact you realize that you could probably use this time to get to know her, or would that be too awkward right now?"
                 $ girl1.add_closeness(1)
                 $ stats.set_food_choice(0)
-                jump girl_1_convo
+                jump girl_1_convo_1
             else:
-                "I don't remember how to make this, time to guess!"
+                "> You don't remember how to make this, time to guess!"
                 $ girl1.add_closeness(-1)
                 $ stats.set_food_choice(1)
-                jump girl_1_convo
+                jump girl_1_convo_1
         
-        "Instant Ramen":
-            "This is easy to make."
+        "Instant Ramen (No reqs)":
+            "> You decide that it’s would be more efficient to make what you know the best. Conveniently, you remember that you brought along a spare package of instant noodles to school with you. You pull it out of your backpack and proceed to open the plastic wrapping."
             $ girl1.add_closeness(-1)
             $ stats.set_food_choice(2)
-            jump girl_1_convo
+            jump girl_1_convo_1
         
-        "Beef Carpaccio":
-            # add/decrease closeness
-            $ stats.set_food_choice(3)
-            jump girl_1_convo
+        "Beef Carpaccio (Strength 2)":
+            "> You decide that it would be best to go big or go home. If you managed to pull this off, she would be incredibly impressed. Unfortunately, you do not have the knowledge of the ingredients or techniques need to put this dish together. You improvise as you go."
+                
+            if str_check >= 2:
+                $ stats.set_food_choice(3)
+                jump girl_1_convo_1
+            else:
+                $ stats.set_food_choice(4)
+                jump girl_1_convo_1
             
-label girl_1_convo:
+label girl_1_convo_1:
     
-    m "Soooo… I actually never caught your name, my names %(player_name)s."
+    "> As you’re working, you can’t help notice the awkward silence settling in. You glance over to her and end up making eye contact. You realize that you could probably use this time to get to know her."
     
-    p "Oh, sorry about that! I’m Mary, I am president of the cooking club. I’m in my senior year, just like you."
-    # change the name of p to Mary
-    $ unknown_name = "Mary"
+    menu: 
+        "Ask her for her name":
+            m "Soooo… I actually never caught your name, my names %(player_name)s."
     
-    "You try to carry the conversation as you realize it’s not really going anywhere"
+            p "Oh, sorry about that! I’m Mary, I am president of the cooking club. I'm also in my senior year."
+            # change the name of p to Mary
+            $ unknown_name = "Mary"
+            
+            menu:
+                "Ask her why she joined the cooking club":
+                    p "It's just a hobby, nothing that serious."
+            
+        "Ask her why she joined the cooking club":
+            p "It's just a hobby, nothing that serious."
+            
+            menu:
+                "Ask her for her name":
+                    m "Soooo… I actually never caught your name, my names %(player_name)s."
     
-    m "Nice, why cooking?"
-    
-    p "It is a good way to release stress, but I’m not anything like a master chef"
-    
+                    p "Oh, sorry about that! I’m Mary, I am president of the cooking club. I'm also in my senior year."
+                    # change the name of p to Mary
+                    $ unknown_name = "Mary"
+            
     $ get_food = stats.get_food_choice()
     if get_food == 0 or get_food == 1:
         $ food = "cookies are"
@@ -293,23 +313,23 @@ label girl_1_convo:
         $ food = "beef carpaccio is"
     m "Looks like the %(food)s done!"
     
-    "> Mary takes a bite"
-    
     $ get_food = stats.get_food_choice()
-    if get_food == 0:
-        jump made_good_food
+    if get_food == 0 or get_food == 3:
+        jump made_good_food_1
     elif get_food == 1:
-        jump made_bad_food
+        jump made_bad_food_1
     elif get_food == 2:
-        jump made_bad_food
+        "> You peek at her eyes to get some idea of what she may be thinking, but it’s not really discernible. You watch nervously as she takes a bite. This is your favorite flavor of instant noodles. After swallowing, she hesitates for a moment, and her eyes bulge. Violently she clasps her mouth and supports herself with the edge of the counter. She spits out your creation."
+        jump made_bad_food_1
     else:
-        jump made_bad_food
+        "> You peek at her eyes to get some idea of what she may be thinking, but it’s not really discernible. You watch nervously as she takes a bite, wondering if you put in enough sriracha sauce to mask the overbearing taste of durian. After swallowing, she hesitates for a moment, and her eyes bulge. Violently she clasps her mouth and supports herself with the edge of the counter. She spits out your creation."
+        jump made_bad_food_1
         
-label made_bad_food:
+label made_bad_food_1:
     
     p "It was... uh... not bad... "
     
-    "she forces a smile and pushes your food a few inches away"
+    "She forces a smile and pushes your food a few inches away"
     
     m "Sorry about that, maybe you can teach me some basics?"
     
@@ -317,11 +337,11 @@ label made_bad_food:
     
     jump end_day_1
     
-label made_good_food:
+label made_good_food_1:
     
     p "It was good!"
     
-    "she gives a warm smile"
+    "She gives a warm smile"
     
     p "I’ll let you into the club! I need a sous chef to help me with a project. If you’re free come by tomorrow after class"
     
@@ -339,16 +359,13 @@ label start_day_2:
     
     "Another day at school..." 
     $ stats.reset_classes()
-    jump make_schedule
+    call make_schedule
+    jump home_ec_day_2
     
 label home_ec_day_2:
     
-    # DO STUFF HERE
-    # cake cafe (need +1 closeness)
-    # HIGH END RESTAURANT (need +8 closeness?)
-    # home cooked meal (need + 1000000000 closeness) 
-
-    return
+    # check closeness
+    
  
                 
 #the main daytime routine.
