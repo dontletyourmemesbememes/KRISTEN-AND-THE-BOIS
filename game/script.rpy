@@ -341,11 +341,7 @@ label made_good_food_1:
     
     p "It was good!"
     
-<<<<<<< HEAD
     "She gives a warm smile"
-=======
-    "> Mary gives a warm smile"
->>>>>>> 9e3998fc24ef6d57907df0de7f8837713ad7b1e4
     
     p "I’ll let you into the club! I need a sous chef to help me with a project. If you’re free come by tomorrow after class"
     
@@ -361,76 +357,17 @@ label end_day_1:
     
 label start_day_2:
     
-    m "Another day at school..." 
+    "Another day at school..." 
     $ stats.reset_classes()
     call make_schedule
     jump home_ec_day_2
     
 label home_ec_day_2:
     
-<<<<<<< HEAD
     # check closeness
     
-=======
-    # DO STUFF HERE
-    m "maybe I should drop by the club room, Mary might be there too."
-    
-    "> You head over to the home ec room. Mary is standing in the centre of the room."
-    #should we do something different for the club activities?
-    p "You're here! Let's get started then."
-    
-    "> Mary gives a cheerful look."
-    
-    "> You spend time cooking with Mary. You manage to follow her orders perfectly!"
-    
-    p "Hmmm..."
-    
-    "> Mary stares blankly into space."
-    
-    m "What's wrong?"
-    
-    "> Mary's gaze shifts to you."
-    
-    p "Well... I just feel like I need some inspiration right now. I wish I could try some new food somewhere. Do you have any suggestions %(player_name)s?"
-    
-    menu:
-        "How about a cake cafe?" :
-            if girl1.get_closeness("Mary") >= 1 :
-                jump cafe_date
-            else:
-                "Can't do that."
-        "Let's go somewhere fancy!" :
-            if girl1.get_closeness("Mary") >= 8 :
-                jump restaurant_date
-            else:
-                "Can't do that."
-        "I'll make you something at my place." :
-            if girl1.get_closeness(girl1) >= 10000000 :
-                jump girl1_home_date
-            else:
-                " > You want to say that, but you don't have enough SELF RESPECT (LOL)" 
-    # cake cafe (need +1 closeness)
-    # HIGH END RESTAURANT (need +8 closeness?)
-    # home cooked meal (need + 1000000000 closeness) 
-    # option should none of them qualify
-
-    return
->>>>>>> 9e3998fc24ef6d57907df0de7f8837713ad7b1e4
  
-label cafe_date :
-        
-    return
-
-label restaurant_date :
-    
-    return
-    
-label girl1_home_date:
-    
-    return
-
-
-
+                
 #the main daytime routine.
 label daytime:
     $ stats.days += 1
