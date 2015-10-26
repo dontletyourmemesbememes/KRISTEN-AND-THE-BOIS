@@ -251,7 +251,7 @@ label home_ec_room:
     menu: 
         "Chocolate chip cookies (Strength 1, Charm 1)":
             if str_check >= 1 and cha_check >= 1:
-                "> Miraculously, you remember a recipe for chocolate cookies, and manage to put them together. You put them aside to cool, and as you wait there is a silent moment. When you make eye contact you realize that you could probably use this time to get to know her, or would that be too awkward right now?"
+                "> Miraculously, you remember a recipe for chocolate cookies, and manage to put them together."
                 $ girl1.add_closeness(1)
                 $ stats.set_food_choice(0)
                 jump girl_1_convo_1
