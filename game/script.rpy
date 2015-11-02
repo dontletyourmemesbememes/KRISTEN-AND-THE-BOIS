@@ -74,6 +74,7 @@ init python:
             self.name = name
             self.character = Character(name)
             self.closeness = 3
+            self.event = 0
 
         def add_closeness(self,amount):
             self.closeness += amount
@@ -83,6 +84,12 @@ init python:
             
         def set_name(self,name):
             self.name = name
+            
+        def get_event(self,name):
+            return self.event
+            
+        def add_event(self):
+            self.event += 1
             
     def rng_roll(chance): #chance should be between [0,1]
         return chance > renpy.random.random()
@@ -362,11 +369,130 @@ label start_day_2:
     call make_schedule
     jump home_ec_day_2
     
+label girl1_check_1:
+    
+    $ closeness = girl1.get_closeness("Mary")
+    $ day = stats.get_days()
+    $ event_num = girl1.get_event("Mary")
+    "closeness is"
+    
+    if day < 5 and closeness > -3 and closeness < 5:
+        # continue on with cooking
+        return
+    elif day > 5:
+        # too long trigger failure event
+        jump girl1_failure
+    elif closeness <= -3:
+        # lost too much closeness
+        jump girl1_failure
+    elif day < 5 and closeness >= 5:
+        # trigger event 1 of cafe as day < 5 and closess > 5
+        # set the event value to 1
+        $ girl1.add_event()
+        jump cafe_event
+        
+label girl1_check_2:
+    
+    $ closeness = girl1.get_closeness("Mary")
+    $ event_num = girl1.get_event("Mary")
+    if closeness >= 7 and event_num == 1:
+        $ girl1.add_event()
+        jump restaurant_event
+    else:
+        return
+        
+label girl1_check_3:
+    
+    $ closeness = girl1.get_closeness("Mary")
+    $ event_num = girl1.get_event("Mary")
+    if closeness >= 10 and event_num == 2:
+        jump home_event
+    else:
+        return
+    
 label home_ec_day_2:
     
     # check closeness
+    call girl1_check_1
     
- 
+    $ str_check = stats.get_stats("str")
+    $ int_check = stats.get_stats("int")
+    $ cha_check = stats.get_stats("cha")
+    
+    menu:
+        "Blueberry Muffin":
+            jump girl_1_convo_2
+        "Creme brule":
+            if int_check > 1 and cha_check > 2:
+                # sucess
+                "success"
+            else:
+                # failure
+                "failure"
+        "Lasagna":
+            "do something"
+    
+    $ stats.increment_days()
+
+label day_3:
+    
+    "Another day at school..." 
+    $ stats.reset_classes()
+    call make_schedule
+    jump home_ec_day_3
+
+label home_ec_day_3:
+    
+    call girl1_check_1
+    
+    $ str_check = stats.get_stats("str")
+    $ int_check = stats.get_stats("int")
+    $ cha_check = stats.get_stats("cha")
+    
+    menu:
+        "Cinnamon Buns":
+            "do something"
+        "Assorted Sashimi":
+            "do something"
+        "Carbonara":
+            "do something"
+    $stats.increment_days()
+
+label day_4:
+    
+    "Another day at school..." 
+    $ stats.reset_classes()
+    call make_schedule
+    jump home_ec_day_4
+    
+label home_ec_day_4:
+    
+    call girl1_check_1
+    
+    $ str_check = stats.get_stats("str")
+    $ int_check = stats.get_stats("int")
+    $ cha_check = stats.get_stats("cha")
+    
+    menu:
+        "Mac and Cheese":
+            "do something"
+        "Beef Stroganoff":
+            "do something"
+        "Lemon Meringue Pie":
+            "do something"
+    $stats.increment_days()
+    
+label day_5:
+    
+    "Another day at school..." 
+    $ stats.reset_classes()
+    call make_schedule
+    jump girl1_failure
+    
+label girl1_failure:
+    
+    # failed, end game here
+    return 
                 
 #the main daytime routine.
 label daytime:
