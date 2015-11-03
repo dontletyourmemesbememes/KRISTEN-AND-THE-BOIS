@@ -374,7 +374,6 @@ label girl1_check_1:
     $ closeness = girl1.get_closeness("Mary")
     $ day = stats.get_days()
     $ event_num = girl1.get_event("Mary")
-    "closeness is"
     
     if day < 5 and closeness > -3 and closeness < 5:
         # continue on with cooking
@@ -414,6 +413,8 @@ label home_ec_day_2:
     
     # check closeness
     call girl1_check_1
+    call girl1_check_2
+    call girl1_check_3
     
     $ str_check = stats.get_stats("str")
     $ int_check = stats.get_stats("int")
@@ -421,16 +422,31 @@ label home_ec_day_2:
     
     menu:
         "Blueberry Muffin":
-            jump girl_1_convo_2
+            "> The muffins looks great!"
+            p "Wow! They're so fluffy, but the top is so crisp. Good job!"
+            $ girl1.add_closeness(1)
+            
         "Creme brule":
-            if int_check > 1 and cha_check > 2:
+            if int_check > 2 and cha_check > 2:
                 # sucess
-                "success"
+                "> The Creme brule looks great! nice golden caramelize on it! Looks delicious!"
+                p "Looks great. I'm impressed."
+                $ girl1.add_closeness(3)
             else:
                 # failure
-                "failure"
+                "> The Creme brule turned out completely black... You think that you burnt it..."
+                p "Uhh... is this even edible?"
+                $ girl1.add_closeness(-3)
+                
         "Lasagna":
-            "do something"
+            if str_check > 2 and cha_check > 1:
+                "> The lasagna looks great! The cheese is perfectly melted."
+                p "The Lasagna looks awesome! The layers look so even!"
+                $ girl1.add_closeness(2)
+            else:
+                "> You reach into the oven and pull out what looks like a pile of plain pasta."
+                p "I think you didn't use enough tomato sauce... it looks pretty dry."
+                $ girl1.add_closeness(-2)
     
     $ stats.increment_days()
 
@@ -444,6 +460,8 @@ label day_3:
 label home_ec_day_3:
     
     call girl1_check_1
+    call girl1_check_2
+    call girl1_check_3
     
     $ str_check = stats.get_stats("str")
     $ int_check = stats.get_stats("int")
@@ -451,11 +469,30 @@ label home_ec_day_3:
     
     menu:
         "Cinnamon Buns":
-            "do something"
+            "> The Cinnamon Buns turned out great! The icing looks shiny and delicious!"
+            p "Looks so good! Can't wait to try it."
+            $ girl1.add_closeness(1)
+            
         "Assorted Sashimi":
-            "do something"
+            if int_check > 3 and str_check > 3:
+                "> The sashimi is perfectly sliced."
+                p "Wow! Looks so good I almost don't want to eat it!"
+                $ girl1.add_closeness(3)
+            else:
+                "> The slices turned out oddly-shaped and uneven. You see pieces of bones and scales mixed in with the fish."
+                p "Uhh... It's okay. We can always get some more expensive fish."
+                $ girl1.add_closeness(-3)
+                
         "Carbonara":
-            "do something"
+            if str_check > 2 and cha_check > 2:
+                "> The pasta turned out perfectly cooked! The aroma of the sauce fills the air."
+                p "That smells so good!"
+                $ girl1.add_closeness(2)
+            else:
+                "> The pasta looks like a pile of mush..."
+                p "I think the pasta is way too overcooked..."
+                $ girl1.add_closeness(-2)
+            
     $stats.increment_days()
 
 label day_4:
@@ -468,6 +505,8 @@ label day_4:
 label home_ec_day_4:
     
     call girl1_check_1
+    call girl1_check_2
+    call girl1_check_3
     
     $ str_check = stats.get_stats("str")
     $ int_check = stats.get_stats("int")
@@ -476,10 +515,28 @@ label home_ec_day_4:
     menu:
         "Mac and Cheese":
             "do something"
+            $ girl1.add_closeness(1)
+            
         "Beef Stroganoff":
-            "do something"
+            if str_check > 4 and cha_check > 4:
+                "> The pasta turned out perfectly cooked! The aroma of the sauce fills the air."
+                p "That smells so good!"
+                $ girl1.add_closeness(2)
+            else:
+                "> The pasta looks like a pile of mush..."
+                p "I think the pasta is way too overcooked..."
+                $ girl1.add_closeness(-2)
+                
         "Lemon Meringue Pie":
-            "do something"
+            if int_check > 3 and cha_check > 3:
+                "> The pie is firm and the meringue keeps it's form."
+                p "Congratulations! The browning of the meringue is beautiful!"
+                $ girl1.add_closeness(2)
+            else:
+                "> The filling is too liquidy; it will not hold its shape."
+                p "I think that you over baked the pie."
+                $ girl1.add_closeness(-2)
+                
     $stats.increment_days()
     
 label day_5:
