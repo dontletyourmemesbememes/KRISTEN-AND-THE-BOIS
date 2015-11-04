@@ -341,11 +341,7 @@ label made_good_food_1:
     
     p "It was good!"
     
-<<<<<<< HEAD
-    "She gives a warm smile"
-=======
     "> Mary gives a warm smile"
->>>>>>> 9e3998fc24ef6d57907df0de7f8837713ad7b1e4
     
     p "I’ll let you into the club! I need a sous chef to help me with a project. If you’re free come by tomorrow after class"
     
@@ -368,10 +364,6 @@ label start_day_2:
     
 label home_ec_day_2:
     
-<<<<<<< HEAD
-    # check closeness
-    
-=======
     # DO STUFF HERE
     m "maybe I should drop by the club room, Mary might be there too."
     
@@ -391,7 +383,7 @@ label home_ec_day_2:
     
     "> Mary's gaze shifts to you."
     
-    p "Well... I just feel like I need some inspiration right now. I wish I could try some new food somewhere. Do you have any suggestions %(player_name)s?"
+        p "Well... I just feel like I need some inspiration right now. I wish I could try some new food somewhere. Do you have any suggestions %(player_name)s?"
     
     menu:
         "How about a cake cafe?" :
@@ -415,7 +407,6 @@ label home_ec_day_2:
     # option should none of them qualify
 
     return
->>>>>>> 9e3998fc24ef6d57907df0de7f8837713ad7b1e4
  
 label cafe_date :
         
