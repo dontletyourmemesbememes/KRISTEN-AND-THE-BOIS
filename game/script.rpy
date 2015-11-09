@@ -180,6 +180,7 @@ label make_schedule:
             return
                     
 label end_day_0:
+    
     "Phew... That was a long day, I'll head home for today..."
     $ stats.increment_days()
     
@@ -514,7 +515,8 @@ label home_ec_day_4:
     
     menu:
         "Mac and Cheese":
-            "do something"
+            "> The cheese is perfectly melted and crisp on the surface of the casserole dish."
+            p "I can't wait to try this! Looks fantastic!"
             $ girl1.add_closeness(1)
             
         "Beef Stroganoff":
@@ -548,6 +550,7 @@ label day_5:
     
 label girl1_failure:
     
+    "GAME OVER"
     # failed, end game here
     return 
                 
