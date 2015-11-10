@@ -349,7 +349,7 @@ label made_good_food_1:
     
     p "It was good!"
     
-    "She gives a warm smile"
+    "> Mary gives a warm smile"
     
     p "I’ll let you into the club! I need a sous chef to help me with a project. If you’re free come by tomorrow after class"
     
@@ -420,6 +420,8 @@ label home_ec_day_2:
     $ str_check = stats.get_stats("str")
     $ int_check = stats.get_stats("int")
     $ cha_check = stats.get_stats("cha")
+
+    m "maybe I should drop by the club room, Mary might be there too."
     
     menu:
         "Blueberry Muffin":
@@ -504,7 +506,7 @@ label day_4:
     jump home_ec_day_4
     
 label home_ec_day_4:
-    
+
     call girl1_check_1
     call girl1_check_2
     call girl1_check_3
@@ -512,7 +514,9 @@ label home_ec_day_4:
     $ str_check = stats.get_stats("str")
     $ int_check = stats.get_stats("int")
     $ cha_check = stats.get_stats("cha")
-    
+
+    p "Well... I just feel like I need some inspiration right now. I wish I could try some new food somewhere. Do you have any suggestions %(player_name)s?"
+
     menu:
         "Mac and Cheese":
             "> The cheese is perfectly melted and crisp on the surface of the casserole dish."
@@ -540,7 +544,16 @@ label home_ec_day_4:
                 $ girl1.add_closeness(-2)
                 
     $stats.increment_days()
-    
+
+    return
+ 
+label cafe_date :
+        
+    return
+
+label restaurant_date :
+
+
 label day_5:
     
     "Another day at school..." 
