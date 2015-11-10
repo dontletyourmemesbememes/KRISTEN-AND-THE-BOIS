@@ -74,6 +74,7 @@ init python:
             self.name = name
             self.character = Character(name)
             self.closeness = 3
+            self.event = 0
 
         def add_closeness(self,amount):
             self.closeness += amount
@@ -83,6 +84,12 @@ init python:
             
         def set_name(self,name):
             self.name = name
+            
+        def get_event(self,name):
+            return self.event
+            
+        def add_event(self):
+            self.event += 1
             
     def rng_roll(chance): #chance should be between [0,1]
         return chance > renpy.random.random()
@@ -173,6 +180,7 @@ label make_schedule:
             return
                     
 label end_day_0:
+    
     "Phew... That was a long day, I'll head home for today..."
     $ stats.increment_days()
     
@@ -357,54 +365,185 @@ label end_day_1:
     
 label start_day_2:
     
-    m "Another day at school..." 
+    "Another day at school..." 
     $ stats.reset_classes()
     call make_schedule
     jump home_ec_day_2
     
+label girl1_check_1:
+    
+    $ closeness = girl1.get_closeness("Mary")
+    $ day = stats.get_days()
+    $ event_num = girl1.get_event("Mary")
+    
+    if day < 5 and closeness > -3 and closeness < 5:
+        # continue on with cooking
+        return
+    elif day > 5:
+        # too long trigger failure event
+        jump girl1_failure
+    elif closeness <= -3:
+        # lost too much closeness
+        jump girl1_failure
+    elif day < 5 and closeness >= 5:
+        # trigger event 1 of cafe as day < 5 and closess > 5
+        # set the event value to 1
+        $ girl1.add_event()
+        jump cafe_event
+        
+label girl1_check_2:
+    
+    $ closeness = girl1.get_closeness("Mary")
+    $ event_num = girl1.get_event("Mary")
+    if closeness >= 7 and event_num == 1:
+        $ girl1.add_event()
+        jump restaurant_event
+    else:
+        return
+        
+label girl1_check_3:
+    
+    $ closeness = girl1.get_closeness("Mary")
+    $ event_num = girl1.get_event("Mary")
+    if closeness >= 10 and event_num == 2:
+        jump home_event
+    else:
+        return
+    
 label home_ec_day_2:
     
-    # DO STUFF HERE
+    # check closeness
+    call girl1_check_1
+    call girl1_check_2
+    call girl1_check_3
+    
+    $ str_check = stats.get_stats("str")
+    $ int_check = stats.get_stats("int")
+    $ cha_check = stats.get_stats("cha")
+
     m "maybe I should drop by the club room, Mary might be there too."
     
-    "> You head over to the home ec room. Mary is standing in the centre of the room."
-    #should we do something different for the club activities?
-    p "You're here! Let's get started then."
+    menu:
+        "Blueberry Muffin":
+            "> The muffins looks great!"
+            p "Wow! They're so fluffy, but the top is so crisp. Good job!"
+            $ girl1.add_closeness(1)
+            
+        "Creme brule":
+            if int_check > 2 and cha_check > 2:
+                # sucess
+                "> The Creme brule looks great! nice golden caramelize on it! Looks delicious!"
+                p "Looks great. I'm impressed."
+                $ girl1.add_closeness(3)
+            else:
+                # failure
+                "> The Creme brule turned out completely black... You think that you burnt it..."
+                p "Uhh... is this even edible?"
+                $ girl1.add_closeness(-3)
+                
+        "Lasagna":
+            if str_check > 2 and cha_check > 1:
+                "> The lasagna looks great! The cheese is perfectly melted."
+                p "The Lasagna looks awesome! The layers look so even!"
+                $ girl1.add_closeness(2)
+            else:
+                "> You reach into the oven and pull out what looks like a pile of plain pasta."
+                p "I think you didn't use enough tomato sauce... it looks pretty dry."
+                $ girl1.add_closeness(-2)
     
-    "> Mary gives a cheerful look."
+    $ stats.increment_days()
+
+label day_3:
     
-    "> You spend time cooking with Mary. You manage to follow her orders perfectly!"
+    "Another day at school..." 
+    $ stats.reset_classes()
+    call make_schedule
+    jump home_ec_day_3
+
+label home_ec_day_3:
     
-    p "Hmmm..."
+    call girl1_check_1
+    call girl1_check_2
+    call girl1_check_3
     
-    "> Mary stares blankly into space."
-    
-    m "What's wrong?"
-    
-    "> Mary's gaze shifts to you."
-    
-        p "Well... I just feel like I need some inspiration right now. I wish I could try some new food somewhere. Do you have any suggestions %(player_name)s?"
+    $ str_check = stats.get_stats("str")
+    $ int_check = stats.get_stats("int")
+    $ cha_check = stats.get_stats("cha")
     
     menu:
-        "How about a cake cafe?" :
-            if girl1.get_closeness("Mary") >= 1 :
-                jump cafe_date
+        "Cinnamon Buns":
+            "> The Cinnamon Buns turned out great! The icing looks shiny and delicious!"
+            p "Looks so good! Can't wait to try it."
+            $ girl1.add_closeness(1)
+            
+        "Assorted Sashimi":
+            if int_check > 3 and str_check > 3:
+                "> The sashimi is perfectly sliced."
+                p "Wow! Looks so good I almost don't want to eat it!"
+                $ girl1.add_closeness(3)
             else:
-                "Can't do that."
-        "Let's go somewhere fancy!" :
-            if girl1.get_closeness("Mary") >= 8 :
-                jump restaurant_date
+                "> The slices turned out oddly-shaped and uneven. You see pieces of bones and scales mixed in with the fish."
+                p "Uhh... It's okay. We can always get some more expensive fish."
+                $ girl1.add_closeness(-3)
+                
+        "Carbonara":
+            if str_check > 2 and cha_check > 2:
+                "> The pasta turned out perfectly cooked! The aroma of the sauce fills the air."
+                p "That smells so good!"
+                $ girl1.add_closeness(2)
             else:
-                "Can't do that."
-        "I'll make you something at my place." :
-            if girl1.get_closeness(girl1) >= 10000000 :
-                jump girl1_home_date
+                "> The pasta looks like a pile of mush..."
+                p "I think the pasta is way too overcooked..."
+                $ girl1.add_closeness(-2)
+            
+    $stats.increment_days()
+
+label day_4:
+    
+    "Another day at school..." 
+    $ stats.reset_classes()
+    call make_schedule
+    jump home_ec_day_4
+    
+label home_ec_day_4:
+
+    call girl1_check_1
+    call girl1_check_2
+    call girl1_check_3
+    
+    $ str_check = stats.get_stats("str")
+    $ int_check = stats.get_stats("int")
+    $ cha_check = stats.get_stats("cha")
+
+    p "Well... I just feel like I need some inspiration right now. I wish I could try some new food somewhere. Do you have any suggestions %(player_name)s?"
+
+    menu:
+        "Mac and Cheese":
+            "> The cheese is perfectly melted and crisp on the surface of the casserole dish."
+            p "I can't wait to try this! Looks fantastic!"
+            $ girl1.add_closeness(1)
+            
+        "Beef Stroganoff":
+            if str_check > 4 and cha_check > 4:
+                "> The pasta turned out perfectly cooked! The aroma of the sauce fills the air."
+                p "That smells so good!"
+                $ girl1.add_closeness(2)
             else:
-                " > You want to say that, but you don't have enough SELF RESPECT (LOL)" 
-    # cake cafe (need +1 closeness)
-    # HIGH END RESTAURANT (need +8 closeness?)
-    # home cooked meal (need + 1000000000 closeness) 
-    # option should none of them qualify
+                "> The pasta looks like a pile of mush..."
+                p "I think the pasta is way too overcooked..."
+                $ girl1.add_closeness(-2)
+                
+        "Lemon Meringue Pie":
+            if int_check > 3 and cha_check > 3:
+                "> The pie is firm and the meringue keeps it's form."
+                p "Congratulations! The browning of the meringue is beautiful!"
+                $ girl1.add_closeness(2)
+            else:
+                "> The filling is too liquidy; it will not hold its shape."
+                p "I think that you over baked the pie."
+                $ girl1.add_closeness(-2)
+                
+    $stats.increment_days()
 
     return
  
@@ -413,15 +552,21 @@ label cafe_date :
     return
 
 label restaurant_date :
-    
-    return
-    
-label girl1_home_date:
-    
-    return
 
 
-
+label day_5:
+    
+    "Another day at school..." 
+    $ stats.reset_classes()
+    call make_schedule
+    jump girl1_failure
+    
+label girl1_failure:
+    
+    "GAME OVER"
+    # failed, end game here
+    return 
+                
 #the main daytime routine.
 label daytime:
     $ stats.days += 1
