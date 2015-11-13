@@ -4,6 +4,31 @@
 # eg. image eileen happy = "eileen_happy.png"
 
 init python:
+    import random
+
+    class QuestionManager:
+        def __init__(self):
+            self.question_list = []
+        def get_random_question(self):
+            # do something FIX IT
+            self.question_list = []
+
+    class Question:
+        def __init__(self,desc,choices,answer):
+            self.description = desc
+            self.choices = choices
+            self.answer = answer
+
+        def get_description(self):
+            return self.description
+
+        def get_choices(self):
+            random.shuffle(self.choices)
+            return choice_list
+
+        def check_answer(answer):
+            return answer == self.answer
+
     class Stats:
         def __init__(self):
             self.stats = {
@@ -101,6 +126,9 @@ image bg placeholderbg = "background.png"
 define p = DynamicCharacter("unknown_name", color="#c8ffc8")
 define m = DynamicCharacter("player_name")
 define principal = Character("Principal", color="#c8ffc8")
+
+define mom = Character("Mom", color="#c8ffc8")
+
 #Cafe date variables~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 define cafe_asked_count = 0
 define cafe_boyfriend = False #variable for recording whether or not player has asked about a boyfriend yet.
@@ -110,7 +138,6 @@ define cafe_asked1 = False
 define rest1_asked2 = False
 define rest1_asked3 = False
 define rest2_asked1 = False
-
 
 # The game starts here.
 # Initialize stuff here and shove all the tutorial intro stuff here as well.
@@ -125,7 +152,6 @@ label start:
     
     #show placeholder normal at left
     #with moveinbottom
-    jump restaurant_date1
     jump intro
 
     return
@@ -416,7 +442,7 @@ label girl1_check_3:
     $ closeness = girl1.get_closeness("Mary")
     $ event_num = girl1.get_event("Mary")
     if closeness >= 10 and event_num == 2:
-        jump home_event
+        jump girl1_home_date
     else:
         return
     
@@ -434,12 +460,12 @@ label home_ec_day_2:
     m "maybe I should drop by the club room, Mary might be there too."
     
     menu:
-        "Blueberry Muffin":
+        "Blueberry Muffin (No reqs)":
             "> The muffins looks great!"
             p "Wow! They're so fluffy, but the top is so crisp. Good job!"
             $ girl1.add_closeness(1)
             
-        "Creme brule":
+        "Creme brule (Intelligence 2, Charisma 2)":
             if int_check > 2 and cha_check > 2:
                 # sucess
                 "> The Creme brule looks great! nice golden caramelize on it! Looks delicious!"
@@ -451,7 +477,7 @@ label home_ec_day_2:
                 p "Uhh... is this even edible?"
                 $ girl1.add_closeness(-3)
                 
-        "Lasagna":
+        "Lasagna (Strength 2, Charisma 1)":
             if str_check > 2 and cha_check > 1:
                 "> The lasagna looks great! The cheese is perfectly melted."
                 p "The Lasagna looks awesome! The layers look so even!"
@@ -481,12 +507,12 @@ label home_ec_day_3:
     $ cha_check = stats.get_stats("cha")
     
     menu:
-        "Cinnamon Buns":
+        "Cinnamon Buns (No reqs)":
             "> The Cinnamon Buns turned out great! The icing looks shiny and delicious!"
             p "Looks so good! Can't wait to try it."
             $ girl1.add_closeness(1)
             
-        "Assorted Sashimi":
+        "Assorted Sashimi (Intelligence 3, Strength 3)":
             if int_check > 3 and str_check > 3:
                 "> The sashimi is perfectly sliced."
                 p "Wow! Looks so good I almost don't want to eat it!"
@@ -496,7 +522,7 @@ label home_ec_day_3:
                 p "Uhh... It's okay. We can always get some more expensive fish."
                 $ girl1.add_closeness(-3)
                 
-        "Carbonara":
+        "Carbonara (Strength 2, Charisma 2)":
             if str_check > 2 and cha_check > 2:
                 "> The pasta turned out perfectly cooked! The aroma of the sauce fills the air."
                 p "That smells so good!"
@@ -528,12 +554,12 @@ label home_ec_day_4:
     p "Well... I just feel like I need some inspiration right now. I wish I could try some new food somewhere. Do you have any suggestions %(player_name)s?"
 
     menu:
-        "Mac and Cheese":
+        "Mac and Cheese (No reqs)":
             "> The cheese is perfectly melted and crisp on the surface of the casserole dish."
             p "I can't wait to try this! Looks fantastic!"
             $ girl1.add_closeness(1)
             
-        "Beef Stroganoff":
+        "Beef Stroganoff (Strength 4, Charm 4)":
             if str_check > 4 and cha_check > 4:
                 "> The pasta turned out perfectly cooked! The aroma of the sauce fills the air."
                 p "That smells so good!"
@@ -544,7 +570,7 @@ label home_ec_day_4:
                 p "I think the pasta is way too overcooked..."
                 $ girl1.add_closeness(-2)
                 
-        "Lemon Meringue Pie":
+        "Lemon Meringue Pie (Intelligence 3, Charm 3)":
             if int_check > 3 and cha_check > 3:
                 "> The pie is firm and the meringue keeps it's form."
                 p "Congratulations! The browning of the meringue is beautiful!"
@@ -696,7 +722,7 @@ label cafe_date_goodending :
     
     "> The date was a success! You managed to get closer to Mary"
     
-    jump end_day_1
+    jump return_to_which_day
     
 label cafe_date_badending :
     $ girl1.add_closeness(-1)
@@ -708,9 +734,10 @@ label cafe_date_badending :
     
     "> You were unsuccessful in this date."
     
-    jump end_day_1
+    jump return_to_which_day
     
     #cue bad game ending?
+
     
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #Girl 1 - Restaurant Date
@@ -882,7 +909,7 @@ label mary_backstory2:
     
     m "{i}Was she really okay..?{/i}"
     
-    jump end_day_1
+    jump return_to_which_day
             
 #label restaurant_ending:
     
@@ -890,7 +917,245 @@ label mary_backstory2:
     
 
 #==================================================================================================================================================================
+label girl1_home_date:
+    p "I remember you mentioned before that I never tasted your cooking. If it’s okay with you, I’d really like to try some today."
 
+    m "Oh, so you did remember!" 
+
+    "{i}she seems shy but happy{/i}"
+
+    m "Then, why don’t we go back to my house? I have all the ingredients there."
+
+    "You and Mary head back to her place. You feel tenser than usual, despite the fact you’ve recently spent a lot of time with her. In the corner of your eye you catch her peeking slightly in your directly, but she immediately redirects her vision forward after being noticed."
+
+    m "Today is really beautiful, although I don’t know what we’d do if there wasn’t a breeze."
+
+    "As you approach her house, your eyes follow her as she leaps ahead. She moves forward and her hair swings, and pushes a scent towards you, pleasantly resonates with the core of your body"
+
+    "For a second you get hung on the scent for a moment as you’re both entering, and you have a blank stare. She turns to notice you"
+
+    #(o.o) face
+    m "You look like you’re lost"
+
+    p "E-ehh "
+
+    "{i}you shake your head, but flustered you don’t know how to recover smoothly{/i}"
+
+    # :) face
+    m "hehehe, the kitchen is this way"
+
+    "She leads you into the kitchen, and immediately moves to the different corners of the kitchen, in an a rehearsed efficiency. You pick up some newspapers to attempt helping"
+
+    m "No, not there hahaha"
+
+    "she pulls them out of your hands and sets them aside, then turns to you"
+
+    m "Everything is set! What do you want to eat?"
+    call girl1_home_date_choice
+
+    #mom drama stuff
+    "{i}Doorbell rings{/i}"
+
+    mom "Hey Mary, I’m home from my business trip!"
+
+    m "Oh crap, my mom is home. Hi mom!"
+
+    "{i}Mom sees you{/i}"
+
+    mom "Who is this, Mary? Why are you guys alone together?"
+
+    m  "Uh, this is my friend, <insert name>. We are just hanging out after school mom. There is nothing to worry about."
+
+    mom "You shouldn’t be inviting people over when I’m on a business trip. Shouldn’t you be studying too? It’s a school night!"
+
+    m "I-I just wanted to relieve some stress, it’s just a little bit of cooking."
+
+    "the discussion gets heated, and you stand there as if you are not even in the room"
+
+    mom "Mary, you should be using your time more wisely. What happen to the money i gave you to buy food with? You should be focusing on getting into university, so you can get a career. You spend too much time in that cooking club, or whatever."
+
+    m "I didn’t use it; it is still in your office. What if I wanted to be a chef? Like dad?"
+    "Her mom, is taken back for a moment"
+
+    mom "…Don’t you remember what happened to your father? I can’t let that happen to you, Mary, I can’t lose both of you like that. "
+
+    m "What happen to dad was unfortunate, but.."
+
+    mom "No buts! Don’t try to argue with me. Escort your friend out and then go to your room."
+
+    menu:
+        "Leave the house":
+            "GG"
+            return
+            #replace return with jump to game over screen
+        "Talk to mom":
+            p "Can I speak with you in private?"
+            mom "Fine."
+            "Mary leaves"
+            p "I may not know what happened to your husband and I understand where you are coming from, but I don’t think you are approaching the right way. "
+            mom "Are you trying to tell me what to do?"
+            p "No, but I just want to tell you about my experience. My parents wanted my older brother to go into medicine and put a lot of pressure and expectations on him. "
+            p "Because of this, he unfortunately got a stress induced heart attack and passed away. Even when he was studying medicine, he was not happy and did not feel like he was living life. "
+            p "My parents have learnt the hard way that letting your child follow their passion is the best for their lives. "
+            p "Letting Mary pursue her passions of cooking will help her de-stress from school and there are plenty of jobs in the food industry! She has the talent for it!"
+            "{i}mom is speechless{/i}" 
+            "Moments later, she goes upstairs to get Mary"
+            mom "Is cooking your passion in life?"
+            m "Yes"
+            mom "I will let you continue your cooking has a hobby on one condition. You keep your school marks up."
+            m "Of course. Thank you mom!"
+            mom "Go have fun cooking"
+            "Mary goes back in the kitchen; Mom goes into her office"
+
+    "It feels a little weird.What should you do?"
+    menu:
+        "Sit in the living room and play video games":
+            m "Ehhh… I’d be nice if you helped me out" #:S face
+            p "Oh! sorry about that"
+            "{i}You rush to the kitchen, you aren’t really good at this are you?{/i}"
+            #negative
+        "Go into the kitchen and offer your assistance":
+            label girl1_home_date_kitchen:
+                p "Let me help you, Mary."
+                m "Sure! can you preheat the oven for me?"
+                #positive
+                "you agree and you continue to be on the side and help her where you can."
+                "as she carefully measures dry ingredients from a 20kg flour bag, the wet ingredients are your responsibility."
+                "{i}The parts start to come together as you both share each other’s presence. once in a while her elbow brushes against yours.{/i}"
+
+                m "Oh sorry <she looks up at you for a brief moment and catches your eye"
+                p D"on’t apologize, it’s alright." 
+                "{i}Her eyes widen slightly, but immediately both of you look away and refocus on the preparations.{/i}"
+                "{i}in the corner of her eye, you see a bead of sweat trailing down from her temple to the front of her neck. You see her cheeks flooded with red.{/i}"
+                "{i}This makes you blush too, and your breaths seem shallower{/i}"
+                m "WOW! it’s getting hot in here! oh my! how hot did you preheat that oven??"
+                "{i}she looks at the temperature{/i}" 
+                m "Oh! look 350 degrees, perfect! and wasn’t it hot today?" 
+                "{i}frantically she wipes her sweat, but knocks her bowl of flour off the table. Luckily your reactions catch the bowl, but leave the flour across the floor.{/i}"
+                m "OH NO! ahhh…."
+                menu:
+                    "somebody’s got a lot of cleaning to do":
+                        #negative
+                        m "just get me more flour"
+                    "It’s okay, don’t worry! I’ll grab you some more flour.":
+                        #positive
+                        "IN THIS BLOCK"
+                "{i}you struggle with the heavy flour bag, trying to get it level with the counter. You release the weight of the bag in front of her.{/i}"
+                "{i}You failed to realize that the top of the bag was open, releasing a shower of flower that covers her face and yours, as you both look up to see the flying ingredients{/i}"
+
+                p "You got some… umm flour all over you"
+
+                "{i}You brush the flower off her shoulders, as you gently avoid making awkward physical contact.{/i}"
+
+                m "Well… I could only assume, but my lenses are completely covered hahaha… I can’t see a thing."
+                
+                p "Here I got it for you"
+
+                "{i}you lean in, as you lift the frames off her eyes.{/i}" 
+                "Her brown eyes fixated on you. unprepared, you find your face lingering mere inches away from her’s."
+
+                menu:
+                    "{b}JUST DO IT!!{/b}":
+                        "maybe it’s something in the air, besides flour, but you didn’t decide to take the relationship one step further, you want the leap of faith."
+                        "{i}you wipe the flour off her cheeks, and find your hands resting on the back of her neck{/i}"
+                        "{i}Before you know it, your hand pulls her towards you. Anticipation building, you close your eyes.{/i}"
+                        "{i}you feel something press against your lips{/i}"
+                        "{i}...{/i}"
+                        "{i}something doesn’t feel right. As you open your eyes you find your mouth, cupped by her hand. Mary eye still wide opening, smiling{/i}"
+
+                        m "I may not be able to see that well without glasses, but I’m not blind. Don’t get me wrong, I can’t deny that I have feeling for you, but let’s take it slow. ;) LMAOOO"
+
+                        "{i}she lifts your hands off of her, she holds you palm open and examines it. You both turn slightly towards the counter to face shoulder to shoulder.{/i}"
+                        "{i}still examining your hand, she places her hand on top of your’s as if comparing hand sizes{/i}"
+
+                        m "you know, you have pretty soft hands. I think I’ll hold on to them for a while."
+
+                        "{i}both her and your hands begin to offset a little, you decide not to resist, progressing to interlock fingers.{/i}"
+                        return #replace with jump to win screen
+                    "Go back to baking":
+                        "{i} You pull away to avoid embarrassment{/i}"
+        "Look around for any photo albums that she may have":
+            "you stray away from the kitchen and walk along the line of photos, many of them focused around Mary as a child. "
+            "In the photos that you look skim across, many of them almost bleak, she has no expression. Soccer team, School class photos, Academic achievement photos, in none of them she is smiling."
+            "You pick one with her flour all over her face as a kid, her glasses caked in powder, but her smile being the only distinguishable thing."
+
+            "{i}Mary glances over{/i}"
+            m "Ek! nooo! that’s such an embarrassing picture of me!"
+            p "HAHAH, Really? I think it’s pretty cute"
+            "{i}Her cheeks grow red from being flushed{/i}"
+            m "D-don’t say things like that!" 
+            "{i}even with this statement, she holds back a smile{/i}" 
+            m "Are you going to help me bake or what?"
+            menu:
+                "Yes":
+                    jump girl1_home_date_kitchen
+                "Why is this the only happy photo?":
+                    m "I don’t really know. This is the first time when my mom let me bake all by myself, but I ended up dropping the flour bag, and made a huge mess all over the place." 
+                    m "Nothing else really excited me that much. I didn’t do that many extra curriculars, and any I ended up signing up for got in the way of school." 
+                    m "My parents really wanted me to do get good grades, so I never stayed in an activity for more than a couple months." 
+                    m "But I mean, I get where they're coming from, I have to do well in school, or else I can’t get into university, get a job, and marry some guys with a stable job. How will I help support the kids I’ll have?"
+
+                    "{i}you say something supportive{/i}" #replace
+                    m "haha… you always have the right thing to say… most of the times :P"
+                    "{i}she grabs on to your arm and brings you back to the kitchen{/i}"
+                    jump girl1_home_date_kitchen
+
+    jump end_day_1 
+    #return
+
+
+label girl1_home_date_choice:
+    menu:
+        "Chimichurri Rack of Lamb" :
+            m "Wow! Your taste is pretty extravagant huh?"
+            menu:
+                "You don’t have to cook it if you don't want to.":
+                    m "You don’t think I can do it?"
+                    m "I’ll prove you wrong. "
+                    #negative
+                " I really want to eat this.":
+                    "{i}Mary seems intimidated by the challenge but finds her resolve.{/i}"
+                    "I’ll do my best!"
+                    #positive/neutral 
+        "Instant noodles":
+            m "Common..are you taking my offer seriously here?"
+            #negative
+            call girl1_home_date_choice
+            return
+        "Triple Layer Chocolate Cake":
+            "{i}She seems surprised by your request{/i}"
+            m "I thought you’d choose something harder. Why did you choose a cake?"
+            menu:
+                "I didn’t want you to work too hard.":
+                    m "What? Don’t worry so much...I can handle it. But alright, if that’s what you want."
+                    #negative
+                "So we can share it when you’re done.":
+                    m "Are you usually this corny? haha. But alright, if that’s what you want."
+                    #neutral 
+                "I already know how great your cooking skills are. So i want you to make me something that’s meaningful.":
+                    m "Meaningful?"
+                    p "Each layer of the cake represents each place we’ve spent time together and how far we’ve come building on our relationship. One layer at a time."
+                    m "{i}blushiesssssss{/i} O-oh." 
+                    "{i}Mary seems flustered but pleased by your thought.{/i}"
+                    m " Alright, I-I’ll get started then" # :) face
+                    #positive
+    "Mary goes begins cooking the dish and you’re left sitting in her living room alone."
+    return 
+
+# -----------------------------------------------------------------------------------------------------------------
+
+label return_to_which_day:
+    $ day = stats.get_days()
+    if day == 1:
+        jump end_day_1
+    elif day == 2:
+        jump day_2
+    elif day == 3:
+        jump day_3
+    elif day == 4:
+        jump day_4
+    else:
+        jump day_5
 
 label day_5:
     
@@ -903,7 +1168,7 @@ label girl1_failure:
     
     "GAME OVER"
     # failed, end game here
-    return 
+    return
                 
 
 #the main daytime routine.
