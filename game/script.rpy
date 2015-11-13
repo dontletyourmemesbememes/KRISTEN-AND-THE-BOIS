@@ -125,7 +125,7 @@ label start:
     
     #show placeholder normal at left
     #with moveinbottom
-    jump restaurant_date1
+
     jump intro
 
     return
