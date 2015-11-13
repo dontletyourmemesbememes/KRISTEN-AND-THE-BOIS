@@ -460,12 +460,12 @@ label home_ec_day_2:
     m "maybe I should drop by the club room, Mary might be there too."
     
     menu:
-        "Blueberry Muffin":
+        "Blueberry Muffin (No reqs)":
             "> The muffins looks great!"
             p "Wow! They're so fluffy, but the top is so crisp. Good job!"
             $ girl1.add_closeness(1)
             
-        "Creme brule":
+        "Creme brule (Intelligence 2, Charisma 2)":
             if int_check > 2 and cha_check > 2:
                 # sucess
                 "> The Creme brule looks great! nice golden caramelize on it! Looks delicious!"
@@ -477,7 +477,7 @@ label home_ec_day_2:
                 p "Uhh... is this even edible?"
                 $ girl1.add_closeness(-3)
                 
-        "Lasagna":
+        "Lasagna (Strength 2, Charisma 1)":
             if str_check > 2 and cha_check > 1:
                 "> The lasagna looks great! The cheese is perfectly melted."
                 p "The Lasagna looks awesome! The layers look so even!"
@@ -507,12 +507,12 @@ label home_ec_day_3:
     $ cha_check = stats.get_stats("cha")
     
     menu:
-        "Cinnamon Buns":
+        "Cinnamon Buns (No reqs)":
             "> The Cinnamon Buns turned out great! The icing looks shiny and delicious!"
             p "Looks so good! Can't wait to try it."
             $ girl1.add_closeness(1)
             
-        "Assorted Sashimi":
+        "Assorted Sashimi (Intelligence 3, Strength 3)":
             if int_check > 3 and str_check > 3:
                 "> The sashimi is perfectly sliced."
                 p "Wow! Looks so good I almost don't want to eat it!"
@@ -522,7 +522,7 @@ label home_ec_day_3:
                 p "Uhh... It's okay. We can always get some more expensive fish."
                 $ girl1.add_closeness(-3)
                 
-        "Carbonara":
+        "Carbonara (Strength 2, Charisma 2)":
             if str_check > 2 and cha_check > 2:
                 "> The pasta turned out perfectly cooked! The aroma of the sauce fills the air."
                 p "That smells so good!"
@@ -554,12 +554,12 @@ label home_ec_day_4:
     p "Well... I just feel like I need some inspiration right now. I wish I could try some new food somewhere. Do you have any suggestions %(player_name)s?"
 
     menu:
-        "Mac and Cheese":
+        "Mac and Cheese (No reqs)":
             "> The cheese is perfectly melted and crisp on the surface of the casserole dish."
             p "I can't wait to try this! Looks fantastic!"
             $ girl1.add_closeness(1)
             
-        "Beef Stroganoff":
+        "Beef Stroganoff (Strength 4, Charm 4)":
             if str_check > 4 and cha_check > 4:
                 "> The pasta turned out perfectly cooked! The aroma of the sauce fills the air."
                 p "That smells so good!"
@@ -570,7 +570,7 @@ label home_ec_day_4:
                 p "I think the pasta is way too overcooked..."
                 $ girl1.add_closeness(-2)
                 
-        "Lemon Meringue Pie":
+        "Lemon Meringue Pie (Intelligence 3, Charm 3)":
             if int_check > 3 and cha_check > 3:
                 "> The pie is firm and the meringue keeps it's form."
                 p "Congratulations! The browning of the meringue is beautiful!"
