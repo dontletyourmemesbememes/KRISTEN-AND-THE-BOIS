@@ -1038,11 +1038,11 @@ label girl1_home_date:
                 m "OH NO! ahhh…."
                 menu:
                     "somebody’s got a lot of cleaning to do":
-                        girl1.add_closeness(-1)
+                        $ girl1.add_closeness(-1)
                         #negative
                         m "just get me more flour"
                     "It’s okay, don’t worry! I’ll grab you some more flour.":
-                        girl1.add_closeness(1)
+                        $ girl1.add_closeness(1)
                         #positive
                         "IN THIS BLOCK"
                 "{i}you struggle with the heavy flour bag, trying to get it level with the counter. You release the weight of the bag in front of her.{/i}"
@@ -1117,12 +1117,12 @@ label girl1_home_date_choice:
                 "You don’t have to cook it if you don't want to.":
                     m "You don’t think I can do it?"
                     m "I’ll prove you wrong. "
-                    girl1.add_closeness(-1)
+                    $ girl1.add_closeness(-1)
                     #negative
                 " I really want to eat this.":
                     "{i}Mary seems intimidated by the challenge but finds her resolve.{/i}"
                     "I’ll do my best!"
-                    girl1.add_closeness(1)
+                    $ girl1.add_closeness(1)
                     #positive/neutral 
         "Instant noodles":
             m "Common..are you taking my offer seriously here?"
