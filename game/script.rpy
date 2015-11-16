@@ -160,7 +160,7 @@ label start:
     $ bio_qman = QuestionManager()
     $ gym_qman = QuestionManager()
     $ drama_qman = QuestionManager()
-    
+
     $ bio_qman.add_question("description",["wrong1","wrong2","wrong3","correct"],3)
     $ gym_qman.add_question("description",["wrong1","wrong2","wrong3","correct"],3)
     $ drama_qman.add_question("description",["wrong1","wrong2","wrong3","correct"],3)
@@ -252,7 +252,10 @@ label end_day_0:
     
 label gym:
     $ stats.pick_classes("Gym")
-    $ choices = gym_qman.get_random_question().get_menu_choices()
+    $ question = gym_qman.get_random_question()
+    $ desc = question.get_description()
+    "Question: %(desc)s"
+    $ choices = question.get_menu_choices()
     $ result = renpy.display_menu(choices)
     if result == True:
         $ stats.add_stats("str", 1)
@@ -265,7 +268,10 @@ label gym:
     
 label drama:
     $ stats.pick_classes("Drama")
-    $ choices = drama_qman.get_random_question().get_menu_choices()
+    $ question = drama_qman.get_random_question()
+    $ desc = question.get_description()
+    "Question: %(desc)s"
+    $ choices = question.get_menu_choices()
     $ result = renpy.display_menu(choices)
     if result == True:
         $ stats.add_stats("str", 1)
@@ -279,7 +285,10 @@ label drama:
     
 label biology:
     $ stats.pick_classes("Biology")
-    $ choices = bio_qman.get_random_question().get_menu_choices()
+    $ question = bio_qman.get_random_question()
+    $ desc = question.get_description()
+    "Question: %(desc)s"
+    $ choices = question.get_menu_choices()
     $ result = renpy.display_menu(choices)
     if result == True:
         $ stats.add_stats("str", 1)
