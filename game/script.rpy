@@ -130,6 +130,7 @@ define principal = Character("Principal", color="#c8ffc8")
 define mom = Character("Mom", color="#c8ffc8")
 
 #Cafe date variables~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+define cafe_trigger = 0
 define cafe_asked_count = 0
 define cafe_boyfriend = False #variable for recording whether or not player has asked about a boyfriend yet.
 define cafe_before= False #record whether you have asked her if she's been here before
@@ -152,57 +153,87 @@ label start:
     
     #show placeholder normal at left
     #with moveinbottom
-<<<<<<< HEAD
-
-=======
->>>>>>> refs/remotes/origin/master
+    
+    principal "Welcome to <insert school name here>. This school consists of the brightest students from all over the city, so congratulations for making it!" 
     jump intro
 
     return
 
 label intro:
     
-    principal "Welcome to <insert school name here>. This school consists of the brightest students from all over the city, so congratulations for making it! In order to foster independence and individual growth in each of our students, we’re extremely flexible in what classes you attend. So you’ll be able to choose which class to show up to and what area of study you wish to upgrade in a sense. But be choose wisely. Once you set your classes today, it’ll be permanent for the rest of the year. 
-If you’re ready, I can take you on a tour of the school and some of the club rooms. Do you want me to repeat anything?"
     
+    principal "As this is an elite school, our curriculum is a tad different than other schools in the country."
+    principal "Required classes will all be covered during your morning lessons, while {i}optional classes{/i} are held throughout the afternoon. Our most popular ones that we offer are {i}Drama, Biology, and Phys Ed{/i}." 
+    principal "In order to foster independence and individual growth in each of our students, we’re extremely flexible in what classes you decide to attend each day." 
+    principal "Keep in mind that each class will affect {i}how you grow as a person{/i}."
+    principal "Whatever person you decide to become can help or harm any choices you make in the future, so choose your classes wisely."
+    # "But be choose wisely. Once you set your classes today, it’ll be permanent for the rest of the year. 
+    principal "Now, If you’re ready, I can take you on a tour of the school and some of the club rooms. Do you want me to repeat anything?"
     menu: 
     
         "I think I'm good.":
             principal "Please follow me, %(player_name)s."
             jump school_tour
         "Can you go over how this works again?":
+            principal "Certainly."
             jump intro
     
 label school_tour:
     
-    #show image of economics room
-    principal "This is the home economics room. Students come here to learn essential life skills like cooking. Keep in mind that the most sophisticated dishes require an amount of stamina and some creative style."
+    "> The principal shows you through most of the building and classrooms. Nothing about this school seems particulary unusual." 
+    "> Nothing the principal is saying seems particulary important..."
     
+    principal "...and here we have the {b}club room building{/b}..."
+    
+    "> Oh. Time to pay attention."
+    
+    #show image of economics room
+    principal "This is the home economics room. Students come here to learn essential life skills like cooking." 
+    "> You notice there's someone in the room. Let's take a look!"
     #show image of girl cooking
+    principal "Keep in mind that the most sophisticated dishes require a certain amount of stamina as well as some creative style."
+    
+  
     #fade out
     
     #show image of music room
-    principal "This is the music room. If you ever want to develop your musical capabilities, then this  the perfect spot to practice! Keep in mind that music is an expression of your personality, but also requires a lot of thought process."
+    principal "This is the music room. If you ever want to develop your musical capabilities, then this is the perfect spot to practice!"
+    "> You hear someone playing inside. Let's take a peek!"
+    #show tsundere playin violin
+    principal "Keep in mind that music is an expression of your personality, but also requires a lot of thought process."
     
-    #show tsundere playin piano
+    
     #fade out
     
     #show image of the gym
-    principal "This is our fitness centre. We have the newest equipment for any kind of workout. Remember to keep fit during the year, because it will help you psychologically when you are doing homework and are studying for your midterms."
-    
+    #JUST THE TWO CLUBS FOR NOW
+    #principal "This is our fitness centre. We have the newest equipment for any kind of workout. "
+    #principal "Remember to keep fit during the year, because it will help you psychologically when you are doing homework and are studying for your midterms."
     #show other girl
+  
+    principal "Moving on to the next club..."
     #fade out
+    "> The other club rooms didn't seem to interest you at all..."
     
     #go to general image, office or something
-    principal "Well those are just examples of the many facilities this school provides. Make use of your time and be sure to work hard on your academics. Remember that although this is an elite school and your studies are very important, your social life and extra curriculars are crucial in a healthy high school experience too. Good luck on your first day!"
+    principal "Well those are just examples of the many facilities this school provides."# Make use of your time and be sure to work hard on your academics."
+    principal "So... Did you enjoy checking out some of the female students instead of paying attention to what I was saying?"
+    principal "Haha, don't worry, you're a young man, so I understand."
+    principal "Some words of advice if you're aiming for a relationship. I'm only going to say this once."
+    principal "Don't cheat. It's not cool. If you choose someone you're stuck with it. It's how this world works."
+    principal "Don't wait. If too much time passes before you make a significant move, any girl is going to think you have no intention to be in a relationship."
+    principal "Follow these rules and you won't end up lonely and single for the {b}REST OF YOUR HIGH SCHOOL LIFE.{/b}"
+    principal "Remember that this is an elite school and your studies are very important. However, your social life and extra curriculars are crucial for a healthy high school experience too." 
+    principal "Best wishes to you!"
     
     $ stats.reset_classes()
+
     jump make_schedule
 
 label make_schedule:
     
     if len(stats.get_picked_classes()) == 0:
-        "It looks like I have to choose 2 classes to attend."
+        m "It looks like I have to choose 2 classes to attend."
     $choices = stats.get_available_classes()
     $result = renpy.display_menu(choices)
 
@@ -261,7 +292,7 @@ label extracurricular:
             "Home Economics Room":
                 jump home_ec_room
             "Music Room":
-                jump music_room
+                jump music_room_0
             "Fitness Centre":
                 jump fitness_room
     
@@ -405,7 +436,7 @@ label end_day_1:
     
 label start_day_2:
     
-    "Another day at school..." 
+    m "Another day at school..." 
     $ stats.reset_classes()
     call make_schedule
     jump home_ec_day_2
@@ -437,6 +468,14 @@ label girl1_check_2:
     $ event_num = girl1.get_event("Mary")
     if closeness >= 7 and event_num == 1:
         $ girl1.add_event()
+        "> Mary is standing outside the club room. It looks like she was waiting for you."
+        
+        p "Ah! There you are %(player_name)s! Are you free right now?"
+        p "You see, my mother had made reservations tonight at this restaurant I've been dying to try."
+        p "But, I got a call from her earlier saying she couldn't make it tonight. She suggested I find a friend to go with instead so we don't waste the reservation."
+        p "Of course, who better to join me than my new sous-chef. You will join me, right?"
+        
+        " > You have no power here. To the restaurant!"
         jump restaurant_date1
     else:
         return
@@ -495,7 +534,7 @@ label home_ec_day_2:
 
 label day_3:
     
-    "Another day at school..." 
+    m "Another day at school..." 
     $ stats.reset_classes()
     call make_schedule
     jump home_ec_day_3
@@ -540,7 +579,7 @@ label home_ec_day_3:
 
 label day_4:
     
-    "Another day at school..." 
+    m "Another day at school..." 
     $ stats.reset_classes()
     call make_schedule
     jump home_ec_day_4
@@ -586,103 +625,171 @@ label home_ec_day_4:
                 
     $stats.increment_days()
 
+label return_to_which_day:
+    $ day = stats.get_days()
+    if day == 1:
+        jump end_day_1
+    elif day == 2:
+        jump day_2
+    elif day == 3:
+        jump day_3
+    elif day == 4:
+        jump day_4
+    else:
+        jump day_5
 
-#WHAT I ADDED
-#================================================================================================================================================
-#Girl 1 - Cafe Date ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+label day_5:
+    
+    "Another day at school..." 
+    $ stats.reset_classes()
+    call make_schedule
+    jump girl1_failure
+    
+label girl1_failure:
+    
+    "GAME OVER"
+    # failed, end game here
+    return
+                
+
+#the main daytime routine.
+label daytime:
+    $ stats.days += 1
+    $ temp = stats.days
+    "this is the daytime routine (Day %(temp)d)"
+    call raisestat #go to raisestat routine
+
+    if stats.days < 5:
+        jump daytime #jump to daytime again
+
+    "ya out of time"
+
+    return #end game
+
+#routine for raising stats
+label raisestat:
+    menu:
+        "What Stat to raise"
+
+        "Strength":
+            $ stats.add_stats("str",1)
+            $ temp = stats.get_stats("str")
+            "strength is now [temp]."
+        "Intelligence" if stats.get_stats("str") > 1: 
+            $ stats.add_stats("int",1)
+            $ temp = stats.get_stats("int")
+            "intelligence is now [temp]."
+        "Charm" if stats.get_stats("str") + stats.get_stats("int") > 3:
+            $ stats.add_stats("cha",1)
+            $ temp = stats.get_stats("cha")
+            "charm is now [temp]."
+    return 
+
+
+
+#MARY DATE EVENTS ================================================================================================================================================
+#Mary - Cafe Date ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 label cafe_date1 :
-    if cafe_asked_count == 0 :
-        "> You and Mary spend some time casually talking at a local cafe. A warm glow shines through the windows."
-    
-        "> Mary is looking off to the distance, her face showing little expression."
+    if cafe_trigger == 0: 
         
-        "> Your orders arrive at the table."
+        if cafe_asked_count == 0 :
+            "> You and Mary spend some time casually talking at a local cafe. A warm glow shines through the windows."
         
-        p "Thank you!"
-    
-        "{i}She seems distracted. Maybe I should be more engaging. What should I ask her?{/i}"
-    else:
-        "{i}What should I ask her?{/i}"
-    menu:
-        "Do you have a boyfriend?" if not cafe_boyfriend:
-            $ cafe_asked_count += 1
-            $ girl1.add_closeness(-1)
-            p "Excuse me? Where is this coming from all of a sudden? What does it matter to you anyways?"
+            "> Mary is looking off to the distance, her face showing little expression."
             
-            "> Mary looks displeased."
+            "> Your orders arrive at the table."
+            
+            p "Thank you!"
+        
+            "{i}She seems distracted. Maybe I should be more engaging. What should I ask her?{/i}"
+        else:
+            "{i}What should I ask her?{/i}"
+        menu:
+            "Do you have a boyfriend?" if not cafe_boyfriend:
+                $ cafe_asked_count += 1
+                $ girl1.add_closeness(-1)
+                p "Excuse me? Where is this coming from all of a sudden? What does it matter to you anyways?"
                 
-            "{i} Maybe I should I should drop the topic...{/i}"
-            $ cafe_boyfriend = True
-            jump cafe_date1
-        
-        "C'mon, just tell me." if cafe_boyfriend:
-            $ cafe_asked_count += 1
-            $ girl1.add_closeness(-1)
-            p "mmm... you really are persistent."
+                "> Mary looks displeased."
+                    
+                "{i} Maybe I should I should drop the topic...{/i}"
+                $ cafe_boyfriend = True
+                jump cafe_date1
+            
+            "C'mon, just tell me." if cafe_boyfriend:
+                $ cafe_asked_count += 1
+                $ girl1.add_closeness(-1)
+                p "mmm... you really are persistent."
+                    
+                "> Mary looks very uncomfortable."
+                    
+                p "Oh yeah... I remembered there was something I had to do back home. Sorry to leave you so suddenly. Here's some money for the bill."
+                jump cafe_date_badending
+                    
+            
+            "What do you want to be?" :
+                $ cafe_asked_count += 1
+                p "Hmm.. not sure. Medicine? Engineering? Something in those professional fields. What do you think?"
                 
-            "> Mary looks very uncomfortable."
+                menu :
+                    "Sounds great!I'll support you if you ever need help." :
+                        $ girl1.add_closeness(-1)
+                        p "Yeah... It does, doesn't it?"
+                        
+                        "> Mary forces a smile. She lets out a small sigh."
+                        
+                        "That's how life is supposed to go, right? That was, I can meet my mom's expectations... I guess that's most important after all.."
+                        
+                        "> You sense a hint of frustration in her voice. The tension gets to you and things become too awkward for you to say anything else."
+                        
+                        "> The rest of your date went on without much dialogue."
+                        
+                        jump cafe_date_badending
+                        
+                    "What about being a chef?" :
+                        $ girl1.add_closeness(2)
+                        jump mary_backstory1
+                        
+                        
+            "What do you usually come here?" if not cafe_before:
+                $ cafe_asked_count += 1
+                $ cafe_before = True 
+                $ girl1.add_closeness(1)
+                p "Yeah! I love coming here for the pastries and desserts!"
                 
-            p "Oh yeah... I remembered there was something I had to do back home. Sorry to leave you so suddenly. Here's some money for the bill."
-            jump cafe_date_badending
+                " > Mary looks more excited as she rapidly counts her fingers."
                 
-        
-        "What do you want to be?" :
-            $ cafe_asked_count += 1
-            p "Hmm.. not sure. Medicine? Engineering? Something in those professional fields. What do you think?"
+                p "Everything here is good, black forest cake, gingersnaps, cinnamon buns... "
+                
+                p "YOU SHOULD TRY THE TIRAMISU HERE!"
+                
+                p "..."
             
-            menu :
-                "Sounds great!I'll support you if you ever need help." :
-                    $ girl1.add_closeness(-1)
-                    p "Yeah... It does, doesn't it?"
-                    
-                    "> Mary forces a smile. She lets out a small sigh."
-                    
-                    "That's how life is supposed to go, right? That was, I can meet my mom's expectations... I guess that's most important after all.."
-                    
-                    "> You sense a hint of frustration in her voice. The tension gets to you and things become too awkward for you to say anything else."
-                    
-                    "> The rest of your date went on without much dialogue."
-                    
-                    jump cafe_date_badending
-                    
-                "What about being a chef?" :
-                    $ girl1.add_closeness(2)
-                    jump mary_backstory1
-                    
-                    
-        "What do you usually come here?" if not cafe_before:
-            $ cafe_asked_count += 1
-            $ cafe_before = True 
-            $ girl1.add_closeness(1)
-            p "Yeah! I love coming here for the pastries and desserts!"
+                p "oops.. Haha, sorry. I'm usually more calm."
+                
+                "> Mary takes a therapeutic breath."
+                
+                m "Hahaha, don't worry. It's really kind of cute."
+                
+                "> Mary blushes. Her eyes drop to her latte."
+                                         
+                jump cafe_date1
+                
+            "How are classes?" if not cafe_asked1: 
+                $ cafe_asked_count += 1
+                $ cafe_asked1 = True
+                p "Ehhh not bad, classes are same old. Nothing that interesting."
+                
+                jump cafe_date1
+    else: 
+        return
             
-            " > Mary looks more excited as she rapidly counts her fingers."
-            
-            p "Everything here is good, black forest cake, gingersnaps, cinnamon buns... "
-            
-            p "YOU SHOULD TRY THE TIRAMISU HERE!"
-            
-            p "..."
-        
-            p "oops.. Haha, sorry. I'm usually more calm."
-            
-            "> Mary takes a therapeutic breath."
-            
-            m "Hahaha, don't worry. It's really kind of cute."
-            
-            "> Mary blushes. Her eyes drop to her latte."
-                                     
-            jump cafe_date1
-            
-        "How are classes?" if not cafe_asked1: 
-            $ cafe_asked_count += 1
-            $ cafe_asked1 = True
-            p "Ehhh not bad, classes are same old. Nothing that interesting."
-            
-            jump cafe_date1
 
 label mary_backstory1 :
+    
+    $ cafe_trigger = 1
+    
     p "Hmm... I don’t know. It’s not the most stable career out there, ahah."
     
     m "So?"
@@ -717,7 +824,6 @@ label mary_backstory1 :
 
 
 label cafe_date_goodending :
-    $ girl1.add_closeness(1)
     "> After a while of more small talk, you guys finish your food. You both stand up and she looks at you."
     
     p "I really enjoyed this. We should get together more often."
@@ -744,7 +850,7 @@ label cafe_date_badending :
 
     
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#Girl 1 - Restaurant Date
+#Mary - Restaurant Date
 
 label restaurant_date1 :
     if not rest1_asked2 and not rest1_asked3 :
@@ -916,19 +1022,17 @@ label mary_backstory2:
     jump return_to_which_day
             
 #label restaurant_ending:
-    
 #label restaurant_badending:
     
-
-#==================================================================================================================================================================
+#Mary - Home Date~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 label girl1_home_date:
-    p "I remember you mentioned before that I never tasted your cooking. If it’s okay with you, I’d really like to try some today."
+    m "I remember you mentioned before that I never tasted your cooking. If it’s okay with you, I’d really like to try some today."
 
-    m "Oh, so you did remember!" 
+    p "Oh, so you did remember!" 
 
     "{i}she seems shy but happy{/i}"
 
-    m "Then, why don’t we go back to my house? I have all the ingredients there."
+    p "Then, why don’t we go back to my house? I have all the ingredients there."
 
     "You and Mary head back to her place. You feel tenser than usual, despite the fact you’ve recently spent a lot of time with her. In the corner of your eye you catch her peeking slightly in your directly, but she immediately redirects her vision forward after being noticed."
 
@@ -939,22 +1043,22 @@ label girl1_home_date:
     "For a second you get hung on the scent for a moment as you’re both entering, and you have a blank stare. She turns to notice you"
 
     #(o.o) face
-    m "You look like you’re lost"
+    p "You look like you’re lost"
 
-    p "E-ehh "
+    m "E-ehh "
 
     "{i}you shake your head, but flustered you don’t know how to recover smoothly{/i}"
 
     # :) face
-    m "hehehe, the kitchen is this way"
+    p "hehehe, the kitchen is this way"
 
     "She leads you into the kitchen, and immediately moves to the different corners of the kitchen, in an a rehearsed efficiency. You pick up some newspapers to attempt helping"
 
-    m "No, not there hahaha"
+    p "No, not there hahaha"
 
     "she pulls them out of your hands and sets them aside, then turns to you"
 
-    m "Everything is set! What do you want to eat?"
+    p "Everything is set! What do you want to eat?"
     call girl1_home_date_choice
 
     #mom drama stuff
@@ -962,98 +1066,99 @@ label girl1_home_date:
 
     mom "Hey Mary, I’m home from my business trip!"
 
-    m "Oh crap, my mom is home. Hi mom!"
+    p "Oh crap, my mom is home. Hi mom!"
 
     "{i}Mom sees you{/i}"
 
     mom "Who is this, Mary? Why are you guys alone together?"
 
-    m  "Uh, this is my friend, <insert name>. We are just hanging out after school mom. There is nothing to worry about."
+    p  "Uh, this is my friend, <insert name>. We are just hanging out after school mom. There is nothing to worry about."
 
     mom "You shouldn’t be inviting people over when I’m on a business trip. Shouldn’t you be studying too? It’s a school night!"
 
-    m "I-I just wanted to relieve some stress, it’s just a little bit of cooking."
+    p "I-I just wanted to relieve some stress, it’s just a little bit of cooking."
 
     "the discussion gets heated, and you stand there as if you are not even in the room"
 
     mom "Mary, you should be using your time more wisely. What happen to the money i gave you to buy food with? You should be focusing on getting into university, so you can get a career. You spend too much time in that cooking club, or whatever."
 
-    m "I didn’t use it; it is still in your office. What if I wanted to be a chef? Like dad?"
+    p "I didn’t use it; it is still in your office. What if I wanted to be a chef? Like dad?"
     "Her mom, is taken back for a moment"
 
     mom "…Don’t you remember what happened to your father? I can’t let that happen to you, Mary, I can’t lose both of you like that. "
 
-    m "What happen to dad was unfortunate, but.."
+    p "What happen to dad was unfortunate, but.."
 
     mom "No buts! Don’t try to argue with me. Escort your friend out and then go to your room."
-
+    
+    "> Things look like they're going to get pretty serious."
     menu:
         "Leave the house":
-            "GG"
+            "> GG"
             return
             #replace return with jump to game over screen
         "Talk to mom":
-            p "Can I speak with you in private?"
+            m "Can I speak with you in private?"
             mom "Fine."
             "Mary leaves"
-            p "I may not know what happened to your husband and I understand where you are coming from, but I don’t think you are approaching the right way. "
+            m "I may not know what happened to your husband and I understand where you are coming from, but I don’t think you are approaching the right way. "
             mom "Are you trying to tell me what to do?"
-            p "No, but I just want to tell you about my experience. My parents wanted my older brother to go into medicine and put a lot of pressure and expectations on him. "
-            p "Because of this, he unfortunately got a stress induced heart attack and passed away. Even when he was studying medicine, he was not happy and did not feel like he was living life. "
-            p "My parents have learnt the hard way that letting your child follow their passion is the best for their lives. "
-            p "Letting Mary pursue her passions of cooking will help her de-stress from school and there are plenty of jobs in the food industry! She has the talent for it!"
+            m "No, but I just want to tell you about my experience. My parents wanted my older brother to go into medicine and put a lot of pressure and expectations on him. "
+            m "Because of this, he unfortunately got a stress induced heart attack and passed away. Even when he was studying medicine, he was not happy and did not feel like he was living life. "
+            m "My parents have learnt the hard way that letting your child follow their passion is the best for their lives. "
+            m "Letting Mary pursue her passions of cooking will help her de-stress from school and there are plenty of jobs in the food industry! She has the talent for it!"
             "{i}mom is speechless{/i}" 
             "Moments later, she goes upstairs to get Mary"
             mom "Is cooking your passion in life?"
-            m "Yes"
+            p "Yes"
             mom "I will let you continue your cooking has a hobby on one condition. You keep your school marks up."
-            m "Of course. Thank you mom!"
+            p "Of course. Thank you mom!"
             mom "Go have fun cooking"
             "Mary goes back in the kitchen; Mom goes into her office"
 
-    "It feels a little weird.What should you do?"
+    "> Things feel a little weird. What should you do?"
     menu:
         "Sit in the living room and play video games":
-            m "Ehhh… I’d be nice if you helped me out" #:S face
-            p "Oh! sorry about that"
+            p "Ehhh… I’d be nice if you helped me out" #:S face
+            m "Oh! sorry about that"
             "{i}You rush to the kitchen, you aren’t really good at this are you?{/i}"
             #negative
         "Go into the kitchen and offer your assistance":
             label girl1_home_date_kitchen:
-                p "Let me help you, Mary."
-                m "Sure! can you preheat the oven for me?"
+                m "Let me help you, Mary."
+                p "Sure! can you preheat the oven for me?"
                 #positive
                 "you agree and you continue to be on the side and help her where you can."
                 "as she carefully measures dry ingredients from a 20kg flour bag, the wet ingredients are your responsibility."
                 "{i}The parts start to come together as you both share each other’s presence. once in a while her elbow brushes against yours.{/i}"
 
-                m "Oh sorry <she looks up at you for a brief moment and catches your eye"
-                p D"on’t apologize, it’s alright." 
+                p "Oh sorry <she looks up at you for a brief moment and catches your eye"
+                m "Don’t apologize, it’s alright." 
                 "{i}Her eyes widen slightly, but immediately both of you look away and refocus on the preparations.{/i}"
                 "{i}in the corner of her eye, you see a bead of sweat trailing down from her temple to the front of her neck. You see her cheeks flooded with red.{/i}"
                 "{i}This makes you blush too, and your breaths seem shallower{/i}"
-                m "WOW! it’s getting hot in here! oh my! how hot did you preheat that oven??"
+                p "WOW! it’s getting hot in here! oh my! how hot did you preheat that oven??"
                 "{i}she looks at the temperature{/i}" 
-                m "Oh! look 350 degrees, perfect! and wasn’t it hot today?" 
+                p "Oh! look 350 degrees, perfect! and wasn’t it hot today?" 
                 "{i}frantically she wipes her sweat, but knocks her bowl of flour off the table. Luckily your reactions catch the bowl, but leave the flour across the floor.{/i}"
-                m "OH NO! ahhh…."
+                p "OH NO! ahhh…."
                 menu:
                     "somebody’s got a lot of cleaning to do":
                         #negative
-                        m "just get me more flour"
+                        p "just get me more flour"
                     "It’s okay, don’t worry! I’ll grab you some more flour.":
                         #positive
                         "IN THIS BLOCK"
                 "{i}you struggle with the heavy flour bag, trying to get it level with the counter. You release the weight of the bag in front of her.{/i}"
                 "{i}You failed to realize that the top of the bag was open, releasing a shower of flower that covers her face and yours, as you both look up to see the flying ingredients{/i}"
 
-                p "You got some… umm flour all over you"
+                m "You got some… umm flour all over you"
 
                 "{i}You brush the flower off her shoulders, as you gently avoid making awkward physical contact.{/i}"
 
-                m "Well… I could only assume, but my lenses are completely covered hahaha… I can’t see a thing."
+                p "Well… I could only assume, but my lenses are completely covered hahaha… I can’t see a thing."
                 
-                p "Here I got it for you"
+                m "Here I got it for you"
 
                 "{i}you lean in, as you lift the frames off her eyes.{/i}" 
                 "Her brown eyes fixated on you. unprepared, you find your face lingering mere inches away from her’s."
@@ -1076,6 +1181,7 @@ label girl1_home_date:
 
                         "{i}both her and your hands begin to offset a little, you decide not to resist, progressing to interlock fingers.{/i}"
                         return #replace with jump to win screen
+                        
                     "Go back to baking":
                         "{i} You pull away to avoid embarrassment{/i}"
         "Look around for any photo albums that she may have":
@@ -1084,12 +1190,12 @@ label girl1_home_date:
             "You pick one with her flour all over her face as a kid, her glasses caked in powder, but her smile being the only distinguishable thing."
 
             "{i}Mary glances over{/i}"
-            m "Ek! nooo! that’s such an embarrassing picture of me!"
-            p "HAHAH, Really? I think it’s pretty cute"
+            p "Ek! nooo! that’s such an embarrassing picture of me!"
+            m "HAHAH, Really? I think it’s pretty cute"
             "{i}Her cheeks grow red from being flushed{/i}"
-            m "D-don’t say things like that!" 
+            p "D-don’t say things like that!" 
             "{i}even with this statement, she holds back a smile{/i}" 
-            m "Are you going to help me bake or what?"
+            p "Are you going to help me bake or what?"
             menu:
                 "Yes":
                     jump girl1_home_date_kitchen
@@ -1106,104 +1212,43 @@ label girl1_home_date:
 
     jump end_day_1 
     #return
-
-
 label girl1_home_date_choice:
     menu:
         "Chimichurri Rack of Lamb" :
-            m "Wow! Your taste is pretty extravagant huh?"
+            p "Wow! Your taste is pretty extravagant huh?"
             menu:
                 "You don’t have to cook it if you don't want to.":
-                    m "You don’t think I can do it?"
-                    m "I’ll prove you wrong. "
+                    p "You don’t think I can do it?"
+                    p "I’ll prove you wrong. "
                     #negative
                 " I really want to eat this.":
                     "{i}Mary seems intimidated by the challenge but finds her resolve.{/i}"
-                    "I’ll do my best!"
+                    p "I’ll do my best!"
                     #positive/neutral 
         "Instant noodles":
-            m "Common..are you taking my offer seriously here?"
+            p "Common..are you taking my offer seriously here?"
             #negative
             call girl1_home_date_choice
             return
         "Triple Layer Chocolate Cake":
             "{i}She seems surprised by your request{/i}"
-            m "I thought you’d choose something harder. Why did you choose a cake?"
+            p "I thought you’d choose something harder. Why did you choose a cake?"
             menu:
                 "I didn’t want you to work too hard.":
-                    m "What? Don’t worry so much...I can handle it. But alright, if that’s what you want."
+                    p "What? Don’t worry so much...I can handle it. But alright, if that’s what you want."
                     #negative
                 "So we can share it when you’re done.":
-                    m "Are you usually this corny? haha. But alright, if that’s what you want."
+                    p "Are you usually this corny? haha. But alright, if that’s what you want."
                     #neutral 
                 "I already know how great your cooking skills are. So i want you to make me something that’s meaningful.":
-                    m "Meaningful?"
-                    p "Each layer of the cake represents each place we’ve spent time together and how far we’ve come building on our relationship. One layer at a time."
-                    m "{i}blushiesssssss{/i} O-oh." 
+                    p "Meaningful?"
+                    m "Each layer of the cake represents each place we’ve spent time together and how far we’ve come building on our relationship. One layer at a time."
+                    p "{i}blushiesssssss{/i} O-oh." 
                     "{i}Mary seems flustered but pleased by your thought.{/i}"
-                    m " Alright, I-I’ll get started then" # :) face
+                    p " Alright, I-I’ll get started then" # :) face
                     #positive
-    "Mary goes begins cooking the dish and you’re left sitting in her living room alone."
+    "> Mary begins cooking the dish and you’re left sitting in her living room alone."
     return 
 
-# -----------------------------------------------------------------------------------------------------------------
+#================================================================================================================================================================================
 
-label return_to_which_day:
-    $ day = stats.get_days()
-    if day == 1:
-        jump end_day_1
-    elif day == 2:
-        jump day_2
-    elif day == 3:
-        jump day_3
-    elif day == 4:
-        jump day_4
-    else:
-        jump day_5
-
-label day_5:
-    
-    "Another day at school..." 
-    $ stats.reset_classes()
-    call make_schedule
-    jump girl1_failure
-    
-label girl1_failure:
-    
-    "GAME OVER"
-    # failed, end game here
-    return
-                
-
-#the main daytime routine.
-label daytime:
-    $ stats.days += 1
-    $ temp = stats.days
-    "this is the daytime routine (Day %(temp)d)"
-    call raisestat #go to raisestat routine
-
-    if stats.days < 5:
-        jump daytime #jump to daytime again
-
-    "ya out of time"
-
-    return #end game
-
-#routine for raising stats
-label raisestat:
-    menu:
-        "What Stat to raise"
-
-        "Strength":
-            $ stats.add_stats("str",1)
-            $ temp = stats.get_stats("str")
-            "strength is now [temp]."
-        "Intelligence" if stats.get_stats("str") > 1: 
-            $ stats.add_stats("int",1)
-            $ temp = stats.get_stats("int")
-            "intelligence is now [temp]."
-        "Charm" if stats.get_stats("str") + stats.get_stats("int") > 3:
-            $ stats.add_stats("cha",1)
-            $ temp = stats.get_stats("cha")
-            "charm is now [temp]."
-    return 
