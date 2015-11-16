@@ -6,13 +6,6 @@
 init python:
     import random
 
-    class QuestionManager:
-        def __init__(self):
-            self.question_list = []
-        def get_random_question(self):
-            # do something FIX IT
-            self.question_list = []
-
     class Question:
         def __init__(self,desc,choices,answer):
             self.description = desc
@@ -28,6 +21,16 @@ init python:
 
         def check_answer(answer):
             return answer == self.answer
+
+    class QuestionManager:
+        def __init__(self):
+            self.question_list = []
+        def get_random_question(self):
+            return self.question_list[renpy.random.randint(0,len(self.question_list)-1)]
+        def add_question(self,desc,choices,answer):
+            question = Question(desc,choices,answer)
+            self.question_list.append(question)
+
 
     class Stats:
         def __init__(self):
