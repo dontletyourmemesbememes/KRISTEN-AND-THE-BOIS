@@ -10,7 +10,7 @@ init python:
         def __init__(self,desc,choices,answer):
             self.description = desc
             self.choices = choices
-            self.answer = answer
+            self.answer = choices[answer]
 
         def get_description(self):
             return self.description
@@ -157,8 +157,14 @@ define rest2_asked1 = False
 # The game starts here.
 # Initialize stuff here and shove all the tutorial intro stuff here as well.
 label start:
-    $ qman = QuestionManager()
-    $ qman.add_question("description",["wrong1","wrong2","wrong3","correct"],"correct")
+    $ bio_qman = QuestionManager()
+    $ gym_qman = QuestionManager()
+    $ drama_qman = QuestionManager()
+    
+    $ bio_qman.add_question("description",["wrong1","wrong2","wrong3","correct"],3)
+    $ gym_qman.add_question("description",["wrong1","wrong2","wrong3","correct"],3)
+    $ drama_qman.add_question("description",["wrong1","wrong2","wrong3","correct"],3)
+
 
     $ player_name = renpy.input("Can I get you to repeat your name please?")
     $ stats = Stats()
@@ -246,8 +252,9 @@ label end_day_0:
     
 label gym:
     $ stats.pick_classes("Gym")
-    call randomquiz
-    if _return == True:
+    $ choices = gym_qman.get_random_question().get_menu_choices()
+    $ result = renpy.display_menu(choices)
+    if result == True:
         $ stats.add_stats("str", 1)
         "Stat raised"
     else:
@@ -258,8 +265,9 @@ label gym:
     
 label drama:
     $ stats.pick_classes("Drama")
-    call randomquiz
-    if _return == True:
+    $ choices = drama_qman.get_random_question().get_menu_choices()
+    $ result = renpy.display_menu(choices)
+    if result == True:
         $ stats.add_stats("str", 1)
         "Stat raised"
     else:
@@ -271,8 +279,9 @@ label drama:
     
 label biology:
     $ stats.pick_classes("Biology")
-    call randomquiz
-    if _return == True:
+    $ choices = bio_qman.get_random_question().get_menu_choices()
+    $ result = renpy.display_menu(choices)
+    if result == True:
         $ stats.add_stats("str", 1)
         "Stat raised"
     else:
@@ -1242,16 +1251,4 @@ label raisestat:
             $ temp = stats.get_stats("cha")
             "charm is now [temp]."
     return 
-
-label randomquiz:
-    "RANDOMQUIZ"
-    $choices = qman.get_random_question().get_menu_choices()
-    $result = renpy.display_menu(choices)
-
-    if result == True:
-        "CORRECT"
-        return True
-    else:
-        "WRONG"
-        return False
 
