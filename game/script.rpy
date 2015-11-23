@@ -2,6 +2,18 @@
 
 # Declare images below this line, using the image statement.
 # eg. image eileen happy = "eileen_happy.png"
+image bg auditorium = "Auditorium.png"
+image bg balcony = "Balcony.png"
+image bg cafe = "Cafe.png"
+image bg classroom = "Classroom.png"
+image bg hallway = "Hallway.png"
+image bg home_ec_room = "Home_ec_room.png"
+image bg house = "House.png"
+image bg karaoke = "Karaoke.png"
+image bg music_room = "Music_room.png"
+image bg office = "Office.png"
+image bg outside_house = "Outside_house.png"
+image bg restaurant = "Restaurant.png"
 
 init python:
     import random
@@ -143,7 +155,6 @@ init python:
 
 
 # Declare characters used by this game.
-image bg placeholderbg = "background.png"
 
 define p = DynamicCharacter("unknown_name", color="#c8ffc8")
 define m = DynamicCharacter("player_name")
@@ -169,6 +180,8 @@ define girl2_event1_asked1 = False
 # The game starts here.
 # Initialize stuff here and shove all the tutorial intro stuff here as well.
 label start:
+    scene bg office
+    with fade
     $ bio_qman = QuestionManager()
     $ gym_qman = QuestionManager()
     $ drama_qman = QuestionManager()
@@ -214,6 +227,8 @@ label intro:
     
 label school_tour:
     
+    scene bg hallway
+    with fade
     "> The principal shows you through most of the building and classrooms. Nothing about this school seems particulary unusual." 
     "> Nothing the principal is saying seems particulary important..."
     
@@ -221,6 +236,8 @@ label school_tour:
     
     "> Oh. Time to pay attention."
     
+    scene bg home_ec_room
+    with fade
     #show image of economics room
     principal "This is the home economics room. Students come here to learn essential life skills like cooking." 
     "> You notice there's someone in the room. Let's take a look!"
@@ -230,7 +247,8 @@ label school_tour:
     
   
     #fade out
-    
+    scene bg music_room
+    with fade
     #show image of music room
     principal "This is the music room. If you ever want to develop your musical capabilities, then this is the perfect spot to practice!"
     "> You hear someone playing inside. Let's take a peek!"
@@ -252,6 +270,8 @@ label school_tour:
     "> The other club rooms didn't seem to interest you at all..."
 
     #go to general image, office or something
+    scene bg office
+    with fade
     principal "Well those are just examples of the many facilities this school provides."# Make use of your time and be sure to work hard on your academics."
     principal "So... Did you enjoy checking out some of the female students instead of paying attention to what I was saying?"
     principal "Haha, don't worry, you're a young man, so I understand."
@@ -267,6 +287,9 @@ label school_tour:
     jump make_schedule
 
 label make_schedule:
+    
+    scene bg classroom
+    with fade
     
     if len(stats.get_picked_classes()) == 0:
         m "It looks like I have to choose 2 classes to attend this afternoon."
@@ -387,6 +410,8 @@ label extracurricular:
 #-----------------------------START OF MUSIC GIRL---------------------------------------------#
 
 label music_room:
+    scene bg music_room
+    with fade
     
     "> As you get closer to the music room, you notice the door cracked open an inch. As you approach, you hear sustained instrument that cuts through the opening."
     # fade to show entering room
@@ -553,6 +578,9 @@ label music_day_2:
     #call music_event_check_2
     #call music_event_check_3
     
+    scene bg music_room
+    with fade
+    
     "> You enter the music room to see Catherine already practicing on her violin"
     p "Hey, you actually came. I hope you are prepared."
     m "I think so! I practiced all of last night!"
@@ -599,6 +627,9 @@ label music_day_2:
 
 label music_day_3:
     # check for events
+    scene bg music_room
+    with fade
+    
     if girl2_event1_asked1 == False:
         call music_event_check_1
         call music_event_check_2
@@ -647,6 +678,10 @@ label music_day_3:
     jump music_day_4
     
 label music_day_4:
+    
+    scene bg music_room
+    with fade
+    
     # check for events, day is 4 here
     if girl2_event1_asked1 == False:
         call music_event_check_1
@@ -695,14 +730,11 @@ label music_day_4:
     $ stats.reset_classes()
     call make_schedule
     jump girl2_failure
-
-label girl2_failure:
-    
-    "GAME OVER"
-    return
     
 label music_event_1:
     # triggered from closeness
+    scene bg music_room
+    with fade
     $ day = stats.get_days()
     "> You enter the music room quietly; you see Catherine on the floor curled up in a kneeling position. Sprawled around her are vibrantly coloured posters and unopened markers."
     menu:
@@ -735,7 +767,7 @@ label music_event_1:
             "> She seems embarrassed that you’re seeing her like this"
             p "I’m trying to make posters for this concert; I need to promote it. No need for help, I’m perfectly capable of doing this myself."
             m "Of course, of course! If I help you now though we’ll have time to play some music. I’ve been looking forward to it all day."
-            p "Hmmm… that’s a fair argument."
+            p "Hmmm...Fine! Do whatever you want."
             "> She still seems embarrassed for accepting your help but at the same time, satisfied"
             "> You end up kneeling beside her. As you sit she retracts a couple inches away from where you’re sitting"
             "She doesn’t seem that comfortable with me maybe I should try to make some conversation."
@@ -785,7 +817,7 @@ label music_event_1_part_2:
             menu:
                 "Sorry you just looked really good today":
                     $ girl2.add_affection(-1) 
-                    p "Oh… umm thanks…"
+                    p "Creep."
                     "Uhhh maybe I shouldn’t have said that, she probably thinks I’m weird."
                     "> You don’t really know how to follow up on that response, so you decide to let the awkward space settle for a moment"
                     menu:
@@ -796,7 +828,7 @@ label music_event_1_part_2:
                     
         "Sorry you just looked really good today":
             $ girl2.add_affection(-1)
-            p "Oh… umm thanks…"
+            p "Creep."
             "Uhhh maybe I shouldn’t have said that, she probably thinks I’m weird."
             "> You don’t really know how to follow up on that response, so you decide to let the awkward space settle for a moment"
             menu:
@@ -818,14 +850,19 @@ label music_event_1_part_2:
 label music_event_1_part_3:
     $ girl2.add_affection(1) 
     "> She looks happy at your comment"
-    p "Thanks, and I guess you aren’t super useless."
+    p "I guess you aren’t that useless."
     m "Thanks?..."
     "At least I’m not ‘super useless’..."
     m "I was thinking we should probably get to practicing soon."
-    p "Oh! haha --of course, I didn’t forget about that---"
-    "sureee..."
+    p "Oh! Of course, I didn’t forget about that---"
+    "Sureee..."
     
+    scene bg hallway
+    with fade
     "> Catherine and you are finished making the posters for the concert and put them around the school"
+    
+    scene bg music_room
+    with fade
     
     m "Do you want to play now?"
     p "Uh. Sure. What do you want to play?"
@@ -871,6 +908,9 @@ label music_event_2:
     # triggered from closeness
     "> You receive a text from Catherine"
     p "'Come to the music room for a minute'"
+    
+    scene bg music_room
+    with fade
     "> You walk into the music room, no music is being played which is strange"
     "> You see Catherine leaning against the window sill. She’s looking out the window smiling. She’s looking at the trees swaying in the breeze"
     "I guess it’s a good day out."
@@ -903,9 +943,15 @@ label music_event_2:
             jump music_event_2_part_2
 
 label music_event_2_part_2:
+    
+    scene bg music_room
+    with fade
     "> You arrive outside of the music room. The suit you’re wearing makes you feel stiff and limited in mobility"
     "I think I look okay, I can’t tell with only the moonlight"
     "> You receive a text from Catherine"
+    
+    scene bg balcony
+    with fade
     p "'Hey, I’m on the balcony'"
     "> You get to the top of the building, and through a wide set of glass double doors you see her in a white dress. As you pass the doors, the scenery opens wide overlooking the city dotted with streetlights and cars"
     "> You lean on the wide railing, next to her. On the side of your vision her dress and skin glow in the moonlight. both of you don’t look at each other, but enjoy the expanded scenery"
@@ -960,6 +1006,8 @@ label music_event_2_part_2:
     p "D-don’t look at me like that, you’re wasting time."
     "> She grabs your hand and leads you through the doors into the building"
     
+    scene bg auditorium
+    with fade
     "> You feel like a ragdoll as she makes sharp corners towards back-stage. She stops abruptly and turns around quickly to face you. Her eyes are shining with excitement and nervousness"
     p "Ready?"
     m "Your palms are sweaty"
@@ -999,6 +1047,8 @@ label music_event_2_part_2:
             
 label music_event_3:
     # karaoke event here, success or failure
+    scene bg karaoke
+    with fade
     m "Here we are."
     p "Y-yeah..."
     m "What’s wrong, Cathy?"
@@ -1101,6 +1151,9 @@ label music_event_3:
                 jump girl2_fail_end
     
 label music_event_3_part_2:
+    # NEED HOME PICTURE
+    #scene bg music_room
+    #with fade
     "> A few days have passed since that day"
     "> Your phone rings"
     m "Hello?"
@@ -1118,6 +1171,8 @@ label music_event_3_part_2:
             p "Well I just wanted to talk to you about it too, wanna meet in the music room?"
             m "Sure."
             
+    scene bg music_room
+    with fade
     "> You arrive to the music room"
     "> You see her again against the window sill"
     m "Hey, Cathy."
@@ -1167,7 +1222,11 @@ label music_event_3_part_2:
             p "Forget it. You’re right. I don’t know what I was thinking. I’ll go ahead with the academy. Thank you for everything. Let’s both work hard on our separate paths."
             "> Catherine starts walking towards the door but stops at your side. She glances up towards you quickly but then looks away and continues out the door, leaving you behind. You’re left alone standing in the silent music room and you have a feeling you won’t be playing the piano for a long time"
             jump girl2_bad_end
-            
+
+label girl2_failure:
+    "GAME OVER"
+    return
+    
 label girl2_bad_end:
     "GAME OVER"
     return
@@ -1434,7 +1493,7 @@ label home_ec_day_2:
             $ girl1.add_closeness(1)
             
         "Creme brule (Intelligence 2, Charm 2)":
-            if int_check > 2 and cha_check > 2:
+            if int_check >= 2 and cha_check >= 2:
                 # sucess
                 "> The Creme brule looks great! nice golden caramelize on it! Looks delicious!"
                 p "Looks great. I'm impressed."
@@ -1445,8 +1504,8 @@ label home_ec_day_2:
                 p "Uhh... is this even edible?"
                 $ girl1.add_closeness(-3)
                 
-        "Lasagna (Strength 2, Charm 2)":
-            if str_check > 2 and cha_check > 1:
+        "Lasagna (Strength 2, Charm 1)":
+            if str_check >= 2 and cha_check >= 1:
                 "> The lasagna turned out great! The cheese is perfectly melted."
                 p "The Lasagna looks awesome! The layers look so even!"
                 $ girl1.add_closeness(2)
@@ -1484,7 +1543,7 @@ label home_ec_day_3:
             $ girl1.add_closeness(1)
             
         "Assorted Sashimi (Charm 3, Strength 3)":
-            if int_check > 3 and str_check > 3:
+            if int_check >= 3 and str_check >= 3:
                 "> The sashimi is perfectly sliced."
                 p "Wow! Looks so good I almost don't want to eat it!"
                 $ girl1.add_closeness(3)
@@ -1494,7 +1553,7 @@ label home_ec_day_3:
                 $ girl1.add_closeness(-3)
                 
         "Carbonara (Strength 2, Charm 2)":
-            if str_check > 2 and cha_check > 2:
+            if str_check >= 2 and cha_check >= 2:
                 "> The pasta turned out perfectly cooked! The aroma of the sauce fills the air."
                 p "That smells so good!"
                 $ girl1.add_closeness(2)
@@ -1533,7 +1592,7 @@ label home_ec_day_4:
             $ girl1.add_closeness(1)
             
         "Beef Stroganoff (Strength 4, Charm 4)":
-            if str_check > 4 and cha_check > 4:
+            if str_check >= 4 and cha_check >= 4:
                 "> The pasta turned out perfectly cooked! The aroma of the sauce fills the air."
                 p "That smells so good!"
                 $ girl1.add_closeness(2)
@@ -1544,7 +1603,7 @@ label home_ec_day_4:
                 $ girl1.add_closeness(-2)
                 
         "Lemon Meringue Pie (Intelligence 3, Charm 3)":
-            if int_check > 3 and cha_check > 3:
+            if int_check >= 3 and cha_check >= 3:
                 "> The pie is firm and the meringue keeps it's form."
                 p "Congratulations! The browning of the meringue is beautiful!"
                 $ girl1.add_closeness(2)
