@@ -599,7 +599,7 @@ label music_day_2:
 
 label music_day_3:
     # check for events
-    if girl2_event1_asked1 = False:
+    if girl2_event1_asked1 == False:
         call music_event_check_1
         call music_event_check_2
     $ girl2_event1_asked1 = False
@@ -648,7 +648,7 @@ label music_day_3:
     
 label music_day_4:
     # check for events, day is 4 here
-    if girl2_event1_asked1 = False:
+    if girl2_event1_asked1 == False:
         call music_event_check_1
         call music_event_check_2
     $ girl2_event1_asked1 = False # reset it now that checks are done
