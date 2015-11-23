@@ -2109,7 +2109,7 @@ label girl1_home_date_kitchen:
     menu:
         "Somebody’s got a lot of cleaning to do...":
             #negative
-            $ girl.add_affection(-1)
+            $ girl1.add_affection(-1)
             p "Just get me more flour."
             "> After clearing the mess, you head into the pantry and find an extra-large bag of flour up on the top shelf."
         "Don’t worry! I’ll grab you some more flour.":
