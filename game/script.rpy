@@ -114,6 +114,7 @@ init python:
             self.name = name
             self.character = Character(name)
             self.closeness = 3
+            self.affection = 0
             self.event = 0
 
         def add_closeness(self,amount):
@@ -121,6 +122,12 @@ init python:
             
         def get_closeness(self,name):
             return self.closeness
+            
+        def add_affection(self,amount):
+            self.affection += amount
+            
+        def get_affection(self,name):
+            return self.affection
             
         def set_name(self,name):
             self.name = name
@@ -640,7 +647,7 @@ label music_event_1:
     menu:
         "Hey Catherine… should I come by another time? You look busy right now..":
             p "I am busy at the moment. Leave me alone."
-            $ girl2.add_closeness(-1)
+            $ girl2.add_affection(-1)
             "> You decide to leave her alone"
             $ girl2_event1_asked1 = True 
             if day == 3:
@@ -673,7 +680,7 @@ label music_event_1:
             "She doesn’t seem that comfortable with me maybe I should try to make some conversation."
             menu:
                 "What is the concert for?":
-                    $ girl2.add_closeness(1) # CHANGE LATER
+                    $ girl2.add_affection(1)
                     p "This is my opportunity to be the greatest violinist of our time."
                     m "What…?"
                     p "A representative from the most prestigious music schools in the UK was invited to view my performance. Basically I’m being evaluated before actually going there to do my audition for the school."
@@ -709,14 +716,14 @@ label music_event_1_part_2:
     p "...Why are you staring at me?"
     menu:
         "Is it hot in here?":
-            $ girl2.add_closeness(-1) # CHANGE
+            $ girl2.add_affection(-1)
             p "No not really, why are you sweating? That’s kinda gross."
             "WHY AM I SWEATING???"
             m "uh gah… don’t worry about it. It’s just hot."
             p "... o--okay..."
             menu:
                 "Sorry you just looked really good today":
-                    $ girl2.add_closeness(-1) # CHANGE
+                    $ girl2.add_affection(-1) 
                     p "Oh… umm thanks…"
                     "Uhhh maybe I shouldn’t have said that, she probably thinks I’m weird."
                     "> You don’t really know how to follow up on that response, so you decide to let the awkward space settle for a moment"
@@ -727,13 +734,13 @@ label music_event_1_part_2:
                     jump music_event_1_part_3
                     
         "Sorry you just looked really good today":
-            $ girl2.add_closeness(-1) # CHANGE
+            $ girl2.add_affection(-1)
             p "Oh… umm thanks…"
             "Uhhh maybe I shouldn’t have said that, she probably thinks I’m weird."
             "> You don’t really know how to follow up on that response, so you decide to let the awkward space settle for a moment"
             menu:
                 "Is it hot in here?":
-                    $ girl2.add_closeness(-1) # CHANGE
+                    $ girl2.add_affection(-1) 
                     p "No not really, why are you sweating? That’s kinda gross."
                     "WHY AM I SWEATING???"
                     m "uh gah… don’t worry about it. It’s just hot."
@@ -748,7 +755,7 @@ label music_event_1_part_2:
             jump music_event_1_part_3
 
 label music_event_1_part_3:
-    $ girl2.add_closeness(1) # CHANGE
+    $ girl2.add_affection(1) 
     "> She looks happy at your comment"
     p "Thanks, and I guess you aren’t super useless."
     m "Thanks?..."
@@ -775,14 +782,14 @@ label music_event_1_part_3:
     p "OF COURSE NOT!!! This is actually important."
     menu:
         "Change your mind":
-            #$ girl2.add_affection(-1)
+            $ girl2.add_affection(-1)
             m "Whatever, It’s not like I cared enough to help anyways."
             "> She looks pretty mad at that last comment"
             p "You don’t have to be so butthurt about it."
             "Maybe I shouldn’t have thought out loud."
             
         "Try to convince her":
-            #$ girl2.add_affection(1)
+            $ girl2.add_affection(1)
             m "What?! Why not? I think it would be fine, Cathy! If you ever want an accompanist, I’ll be around."
             "> She avoids eye contact and slightly blushes"
             p "...Thanks, I’ll think about it. BUT I TOLD YOU NOT TO CALL ME THAT."
@@ -812,9 +819,9 @@ label music_event_2:
     
     menu:
         "Yeah, of course":
-            #$girl2.add_affection(1)
+            $girl2.add_affection(1)
         "Sure, if you act a litter nicer to me":
-            #$girl2.add_affection(-1)
+            $girl2.add_affection(-1)
     
     "She looks pretty concerned, I wonder what this about"
     p "So... the concert..."
@@ -843,11 +850,11 @@ label music_event_2_part_2:
     "> You lean on the wide railing, next to her. On the side of your vision her dress and skin glow in the moonlight. both of you don’t look at each other, but enjoy the expanded scenery"
     menu:
         "You look good in this lighting":
-            #$girl2.add_affection(-1)
+            $girl2.add_affection(-1)
             p "What about other lightings?"
             "Oops, I guess that came out wrong."
         "It's a beautiful night":
-            #$girl2.add_affection(1)
+            $girl2.add_affection(1)
             p "Yeah, it is."
             
     m "It’s the big day huh? How are you feeling?"
@@ -856,7 +863,7 @@ label music_event_2_part_2:
     p "I need this to be perfect..."
     menu:
         "Downplay it to make her feel more at ease":
-            #$girl2.add_affection(-1)
+            $girl2.add_affection(-1)
             m "Calm down a little, it’s not a big deal."
             p "Haven’t you been listening at all?"
             "Oh crap that wasn’t smart of me."
@@ -867,7 +874,7 @@ label music_event_2_part_2:
                     m "What’s with the silence?"
                     
         "Reassure her":
-            #$girl2.add_affection(1)
+            $girl2.add_affection(1)
             m "Well it’s an important day to you right? You want to get into the school?"
             p "..."
             m "What’s with the silence?"
@@ -908,12 +915,12 @@ label music_event_2_part_2:
     p "We did it!"
     menu:
         "Hug her":
-            #$ girl2.add_affection(1)
+            $ girl2.add_affection(1)
             m "Yeah, good job!"
             "> You hug her. you intended to have a quick hug, but it lingers for a while longer"
             p "I’m really thankful for you helping me out."
         "Talk about the Academy":
-            #$ girl2.add_affection(-1)
+            $ girl2.add_affection(-1)
             m "You did it, you’re sure to get in now! I’m glad it went well."
             p "Oh... yeah right. thanks..."
             
@@ -939,7 +946,7 @@ label music_event_3:
     p "IT’S DIFFERENT, The violin has a good voice."
     menu:
         "Reassure her":
-            #$ girl2.add_affection(1)
+            $ girl2.add_affection(1)
             m " It can’t be that bad, don’t worry, I’m not here to judge you."
             p "Liar..."
             m "PROMISE."
@@ -947,7 +954,7 @@ label music_event_3:
             p " Don’t say I didn’t warn you."
             
         "Joke":
-            #$ girl2.add_affection(-1)
+            $ girl2.add_affection(-1)
             m "Well that’s a shame, I guess that’s the problem with hiding behind an instrument your whole life."
             p "Aren’t you a tad bit conceited?"
             m "That came out wrong..."
@@ -983,11 +990,11 @@ label music_event_3:
     p "I-I don’t know what you’re talking about... Idiot."
     menu:
         "Hey, if you want to talk about something, I’m listening":
-            #$ girl2.add_affection(1)
+            $ girl2.add_affection(1)
             p "..."
             
         "Oh alright":
-            #$ girl2.add_affection(-1)
+            $ girl2.add_affection(-1)
             p "... Why do you have to be so dense all the time?"
             
     "> She sighs"
@@ -1008,8 +1015,9 @@ label music_event_3:
     menu:
         "Hey Cathy, do you want to go out with me?":
             # check affection level
-            $ affection = girl2.get_affection()
+            $ affection = girl2.get_affection("Catherine")
             # if success:
+            if affection > 6: # NUMBER CAN VARY
                 p "Does it look like I don’t want to?"
                 m "Well maybe you just wanted to be friends."
                 p "Sometimes I can’t believe how clueless you can be... So I’ll say it plainly: I want to go out with you."
@@ -1017,6 +1025,7 @@ label music_event_3:
                 p "Thank you for everything, I’m really glad to have met you in my life..."
                 jump music_event_3_part_2
             # if failure:
+            else:
                 p "Does it look like I don’t want to?"
                 m "Well maybe you just wanted to be friends."
                 p "Sometimes I can’t believe how clueless you can be... But, I can’t..."
@@ -1039,12 +1048,10 @@ label music_event_3_part_2:
     p "I got the results from the evaluation."
     menu:
         "Great! this will be a great opportunity for you!":
-            #$ girl2.add_affection(-1)
             p "It is good..."
             m "I'll see you at the music room then."
             
         "Oh I see, how do you feel about it?":
-            #$ girl2.add_affection(1)
             p "Hmm... I don’t know if I really want to go anymore."
             m "What about being the greatest violinist ever?"
             p "Well I just wanted to talk to you about it too, wanna meet in the music room?"
