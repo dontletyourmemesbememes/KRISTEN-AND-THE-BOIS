@@ -1,4 +1,4 @@
-﻿# You can place the script of your game in this file.
+# You can place the script of your game in this file.
 
 # Declare images below this line, using the image statement.
 # eg. image eileen happy = "eileen_happy.png"
@@ -6,28 +6,43 @@
 init python:
     import random
 
-    class QuestionManager:
-        def __init__(self):
-            self.question_list = []
-        def get_random_question(self):
-            # do something FIX IT
-            self.question_list = []
-
     class Question:
         def __init__(self,desc,choices,answer):
             self.description = desc
             self.choices = choices
-            self.answer = answer
+            self.answer = choices[answer]
 
         def get_description(self):
             return self.description
 
         def get_choices(self):
             random.shuffle(self.choices)
-            return choice_list
+            return self.choices
+
+        def get_menu_choices(self):
+            menu_list = []
+            choice_list = self.get_choices()
+            for choices in choice_list:
+                if choices == self.answer:
+                    t = (choices,True)
+                else:
+                    t = (choices,False)
+                menu_list.append(t)
+
+            return menu_list
 
         def check_answer(answer):
             return answer == self.answer
+
+    class QuestionManager:
+        def __init__(self):
+            self.question_list = []
+        def get_random_question(self):
+            return self.question_list[renpy.random.randint(0,len(self.question_list)-1)]
+        def add_question(self,desc,choices,answer):
+            question = Question(desc,choices,answer)
+            self.question_list.append(question)
+
 
     class Stats:
         def __init__(self):
@@ -148,6 +163,14 @@ define reassure = False
 # The game starts here.
 # Initialize stuff here and shove all the tutorial intro stuff here as well.
 label start:
+    $ bio_qman = QuestionManager()
+    $ gym_qman = QuestionManager()
+    $ drama_qman = QuestionManager()
+
+    $ bio_qman.add_question("description",["wrong1","wrong2","wrong3","correct"],3)
+    $ gym_qman.add_question("description",["wrong1","wrong2","wrong3","correct"],3)
+    $ drama_qman.add_question("description",["wrong1","wrong2","wrong3","correct"],3)
+
 
     $ player_name = renpy.input("Most of the documents seem to be in order. Can I get you to sign your name below please?")
     $ stats = Stats()
@@ -275,21 +298,59 @@ label end_day_0:
     
 label gym:
     $ stats.pick_classes("Gym (+1 Strength)")
-    $ stats.add_stats("str", 1)
+
+    #$ stats.pick_classes("Gym")
+    $ question = gym_qman.get_random_question()
+    $ desc = question.get_description()
+    "Question: %(desc)s"
+    $ choices = question.get_menu_choices()
+    $ result = renpy.display_menu(choices)
+    if result == True:
+        $ stats.add_stats("str", 1)
+        "Stat raised"
+    else:
+        "No Stats raised"
+
     if len(stats.get_picked_classes()) < stats.max_classes:
         m "Guess I'll choose Gym for one choice, I still need to pick another."
     return
     
 label drama:
+
     $ stats.pick_classes("Drama (+1 Charm)")
-    $ stats.add_stats("cha", 1)
+
+    #$ stats.pick_classes("Drama")
+    $ question = drama_qman.get_random_question()
+    $ desc = question.get_description()
+    "Question: %(desc)s"
+    $ choices = question.get_menu_choices()
+    $ result = renpy.display_menu(choices)
+    if result == True:
+        $ stats.add_stats("cha", 1)
+        "Stat raised"
+    else:
+        "No Stats raised"
+
     if len(stats.get_picked_classes()) < stats.max_classes:
         m "Guess I'll choose Drama for one choice, I still need to pick another."
     return 
     
 label biology:
+
     $ stats.pick_classes("Biology (+1 Intelligence)")
-    $ stats.add_stats("int", 1)
+
+    #$ stats.pick_classes("Biology")
+    $ question = bio_qman.get_random_question()
+    $ desc = question.get_description()
+    "Question: %(desc)s"
+    $ choices = question.get_menu_choices()
+    $ result = renpy.display_menu(choices)
+    if result == True:
+        $ stats.add_stats("int", 1)
+        "Stat raised"
+    else:
+        "No Stats raised"
+
     if len(stats.get_picked_classes()) < stats.max_classes:
         m "Guess I'll choose Biology for one choice, I still need to pick another."
     return
@@ -303,9 +364,8 @@ label extracurricular:
             "Home Economics Room":
                 jump home_ec_room
             "Music Room":
-                jump music_room_0
-           # "Fitness Centre":
-           #     jump fitness_room
+                jump music_room 
+
     
     elif chosen_girl == 1: # Mary is chosen
         
@@ -1083,6 +1143,7 @@ label mary_backstory2:
     
 #Mary - Home Date~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 label girl1_home_date:
+
     if reassure:
         m "Hey Mary. I remember before you mentioned that I never tasted your cooking. If it’s okay with you, I’d really like to try some today."
 
@@ -1101,6 +1162,18 @@ label girl1_home_date:
         m "Of course."
         
         "> Mary smiles shyly."
+
+    m "I remember you mentioned before that I never tasted your cooking. If it’s okay with you, I’d really like to try some today."
+
+    p "Oh, so you did remember!" 
+
+    "{i}she seems shy but happy{/i}"
+
+    p "Then, why don’t we go back to my house? I have all the ingredients there."
+
+    "> You and Mary head back to her place. You feel tenser than usual, despite the fact you’ve recently spent a lot of time with her. In the corner of your eye you catch her peeking slightly in your directly, but she immediately redirects her vision forward after being noticed."
+
+    p "Today is really beautiful, although I don’t know what we’d do if there wasn’t a breeze."
 
     p "Then.. Instead of cooking it here, Why don’t we go to my house? There's plenty of ingredients there."
     
@@ -1187,7 +1260,6 @@ label girl1_home_date:
                             P "Y-yeah! Of course!"
                     "> Mary grabs on to your arm and brings you back into the kitchen."
                     jump girl1_home_date_kitchen
-            
             
 label girl1_home_date_kitchen:
     "> You watch Mary wander back and forth between different areas of the kitchen. Her smile is an obvious sign she's enjoying herself."
@@ -1299,12 +1371,13 @@ label girl1_home_date_choice:
                     "> Mary seems motivateds all of a sudden."
                     #positive/neutral 
         "Instant noodles":
-            p " C'mon.. are you even taking me seriously here?"
+            p "Common..are you taking my offer seriously here?"
             #negative
             call girl1_home_date_choice
             return
         "Triple Layer Chocolate Cake":
             "{i}She seems surprised by your request{/i}"
+
             p "I thought you’d choose something more difficut. Why did you choose a cake?"
             menu:
                 "I didn’t want you to work too hard.":
@@ -1321,6 +1394,7 @@ label girl1_home_date_choice:
                     p "Were you always this corny?"
                     "> Mary seems pleased by your thought."
                     p " Alright, I’ll get started then." 
+
                     #positive
     "> Mary begins cooking the dish and you’re left sitting in her living room alone."
     return 
@@ -1475,3 +1549,25 @@ label mary_bad_end:
     "> Who knows? Maybe it'll be better after highshool...?"
     "> Better luck next time, %(player_name)s."
     return #to end game
+
+#routine for raising stats
+label raisestat:
+    call randomquiz
+    menu:
+        "What Stat to raise"
+
+        "Strength":
+            $ stats.add_stats("str",1)
+            $ temp = stats.get_stats("str")
+            "strength is now [temp]."
+        "Intelligence" if stats.get_stats("str") > 1: 
+            $ stats.add_stats("int",1)
+            $ temp = stats.get_stats("int")
+            "intelligence is now [temp]."
+        "Charm" if stats.get_stats("str") + stats.get_stats("int") > 3:
+            $ stats.add_stats("cha",1)
+            $ temp = stats.get_stats("cha")
+            "charm is now [temp]."
+    return 
+
+
