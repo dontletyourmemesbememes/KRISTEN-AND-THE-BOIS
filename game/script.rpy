@@ -461,7 +461,7 @@ label girl1_check_1:
     $ day = stats.get_days()
     $ event_num = girl1.get_event("Mary")
     
-    if day < 5 and closeness > -3 and closeness < 5:
+    if day =< 5 and closeness > -3 and closeness < 5:
         # continue on with cooking
         return
     elif day > 5:
@@ -599,8 +599,8 @@ label home_ec_day_3:
             p "Looks so good! Can't wait to try it."
             $ girl1.add_closeness(1)
             
-        "Assorted Sashimi (Charm 3, Strength 3)":
-            if int_check > 3 and str_check > 3:
+        "Assorted Sashimi (Intelligence 3, Strength 3)":
+            if int_check >= 3 and str_check >= 3:
                 "> The sashimi is perfectly sliced."
                 p "Wow! Looks so good I almost don't want to eat it!"
                 $ girl1.add_closeness(3)
@@ -610,7 +610,7 @@ label home_ec_day_3:
                 $ girl1.add_closeness(-3)
                 
         "Carbonara (Strength 2, Charm 2)":
-            if str_check > 2 and cha_check > 2:
+            if str_check >= 2 and cha_check >= 2:
                 "> The pasta turned out perfectly cooked! The aroma of the sauce fills the air."
                 p "That smells so good!"
                 $ girl1.add_closeness(2)
@@ -1136,11 +1136,11 @@ label girl1_home_date:
     p "Alright! Everything is set! What do you want to eat?"
     call girl1_home_date_choice
 
-    "> You look around the room, it's pretty nice. What should you do?"
+    "> You look around the room. It's pretty nice. What should you do?"
+    
     menu:
         "Sit in the living room and play video games.":
-            "> ...You look around the room. Not a video game in sight"
-            "> Your impatience gets the better of you and you decide to head back into the kitchen."
+           "> Your impatience gets the better of you and you decide to head back into the kitchen."
             jump girl1_home_date_kitchen
         "Go into the kitchen and offer your assistance.":
             jump girl1_home_date_kitchen
@@ -1213,7 +1213,7 @@ label girl1_home_date_kitchen:
     menu:
         "Somebody’s got a lot of cleaning to do...":
             #negative
-            $ girl.add_affection(-1)
+            $ girl1.add_affection(-1)
             p "Just get me more flour."
             "> After clearing the mess, you head into the pantry and find an extra-large bag of flour up on the top shelf."
         "Don’t worry! I’ll grab you some more flour.":
@@ -1280,8 +1280,8 @@ label girl1_home_date_kitchen:
                 "> Mary leads you to the exit. You can’t think of much to say without making it more awkward, so you just keep walking." 
                 "> You look back. The door is closed."
                 m "{i} I guess that's it, huh...? {/i}"
-                #jump bad ending
-                return
+                jump bad ending
+                #return
                 
 label girl1_home_date_choice:
     menu:
