@@ -14,6 +14,7 @@ image bg music_room = "Music_room.png"
 image bg office = "Office.png"
 image bg outside_house = "Outside_house.png"
 image bg restaurant = "Restaurant.png"
+image bg home = "Player_home.png"
 
 init python:
     import random
@@ -318,7 +319,8 @@ label end_day_0:
     m "Phew... That was a long day, I'll head home for today..."
     $ stats.increment_days()
     
-    
+    scene bg home
+    with fade
     #fade to show end of day 
     
     "> Next morning."
@@ -547,6 +549,8 @@ label play_with_her:
         "> She immediately lifts her bow again and starts up playing again, ignoring you. You leave."
     
     # show image of bedroom at night?
+    scene bg home
+    with fade
     m "That was a long day, time to hit the sack."
     $ stats.increment_days()
         
@@ -637,6 +641,8 @@ label music_day_2:
                 p "That was terrible. The piano is suppose to accompany the violin not the other way around... But I guess this is a huge improvement from yesterday. I guess I will let you continue coming to the music room because you are dedicated to improve and you kind of have potential.."
                 $ girl2.add_closeness(-2)
                 
+    scene bg home
+    with fade
     m "That was a long day, time to hit the sack."
     $ stats.increment_days()
     
@@ -695,6 +701,8 @@ label music_day_3:
                 p "That was terrible. The piano is suppose to accompany the violin not the other way around... But I guess this is a huge improvement from yesterday. I guess I will let you continue coming to the music room because you are dedicated to improve and you kind of have potential.."
                 $ girl2.add_closeness(-2)
                 
+    scene bg home
+    with fade            
     m "That was a long day, time to hit the sack."
     $ stats.increment_days()
     
@@ -753,7 +761,9 @@ label music_day_4:
                 play music "Background Music.mp3" fadein 1.0
                 p "That was terrible. The piano is suppose to accompany the violin not the other way around... But I guess this is a huge improvement from yesterday. I guess I will let you continue coming to the music room because you are dedicated to improve and you kind of have potential.."
                 $ girl2.add_closeness(-2)
-                
+    
+    scene bg home
+    with fade
     m "That was a long day, time to hit the sack."
     $ stats.increment_days()
     
@@ -776,6 +786,8 @@ label music_event_1:
             $ girl2_event1_asked1 = True 
             if day == 3:
                 # show home image
+                scene bg home
+                with fade
                 m "That was a long day, time to hit the sack."
                 
                 "Another day at school..." 
@@ -784,7 +796,10 @@ label music_event_1:
                 jump music_day_3
             elif day == 4:
                 # show home image
+                scene bg home
+                with fade
                 m "That was a long day, time to hit the sack."
+                
                 "Another day at school..." 
                 $ stats.reset_classes()
                 call make_schedule
@@ -1232,9 +1247,9 @@ label music_event_3:
                 jump girl2_fail_end
     
 label music_event_3_part_2:
-    # NEED HOME PICTURE
-    #scene bg music_room
-    #with fade
+    scene bg home
+    with fade
+
     "> A few days have passed since that day."
     "> Your phone rings."
     m "Hello?"
