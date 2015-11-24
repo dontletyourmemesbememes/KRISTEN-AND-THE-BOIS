@@ -237,11 +237,11 @@ label intro:
     
     principal "As this is an elite school, our curriculum is a tad different than other schools in the country."
     principal "Required classes will all be covered during your morning lessons, while {i}optional classes{/i} are held throughout the afternoon. Our most popular ones that we offer are {i}Drama, Biology, and Phys Ed{/i}." 
-    principal "In order to foster independence and individual growth in each of our students, we’re extremely flexible in what classes you decide to attend each day." 
+    principal "In order to foster independence and individual growth in each of our students, we're extremely flexible in what classes you decide to attend each day." 
     principal "Keep in mind that each class will affect {i}how you grow as a person{/i}."
     principal "Whatever person you decide to become can help or harm any choices you make in the future, so choose your classes wisely."
-    # "But be choose wisely. Once you set your classes today, it’ll be permanent for the rest of the year. 
-    principal "Now, If you’re ready, I can take you on a tour of the school and some of the club rooms. Do you want me to repeat anything?"
+    # "But be choose wisely. Once you set your classes today, it'll be permanent for the rest of the year. 
+    principal "Now, If you're ready, I can take you on a tour of the school and some of the club rooms. Do you want me to repeat anything?"
     menu: 
     
         "I think I'm good.":
@@ -448,18 +448,18 @@ label music_room:
     # fade to show entering room
     scene bg music_room
     with fade
-    "> Upon entering, you find a girl drawing her bow flawlessly across the strings. She faces the opposite direction, displaying her hair that follows the dynamics of her playing. You’re compelled to sit down at the piano bench, as your eyes and ears perked up to witness her welcoming and mellow style."
+    "> Upon entering, you find a girl drawing her bow flawlessly across the strings. She faces the opposite direction, displaying her hair that follows the dynamics of her playing. You're compelled to sit down at the piano bench, as your eyes and ears perked up to witness her welcoming and mellow style."
     "> The song grows in depth, as the notes create an atmosphere, sustained in emotion. Her upper body sways intimately with the music, while the hair on the back of your neck rise gradually. you find yourself enveloped by her music."
     
-    "Wow… she’s pretty amazing, I need to know this girl’s name."
+    "Wow... she's pretty amazing, I need to know this girl's name."
     "> Her playing approaches the end. You feel anxiety rising up as you stand to attempt talking to her."
-    "Now’s my chance to talk to her!"
+    "Now's my chance to talk to her!"
     
     m "Hey, I just heard you playing and you were pretty awesome!"
     "> She looks back to be slightly surprised, not knowing you were there. Her expression instantly reads 'who the hell are you?'"
     p "I thought I closed the door, how did you get in?"
-    m "Oh no, it was opened. Sorry I didn’t know know you wanted to be alone."
-    p "I’m practicing, so if you don’t mind, I have a concert to prepare for."
+    m "Oh no, it was opened. Sorry I didn't know know you wanted to be alone."
+    p "I'm practicing, so if you don't mind, I have a concert to prepare for."
     "> Immediately she gets back to playing, but this time. Her playing loses its warmth, and immediately has an air of superiority."
     
     m "I never caught your name, by the way."
@@ -468,15 +468,15 @@ label music_room:
     m "I did, but I don't want to."
     "> Looking frustrated and agitated, she clenches the neck of the violin and stick."
     p "Ugh! Who do you think you are anyways!?"
-    m "I’m %(player_name)s. Your playing was pretty inspiring to listen to. What’s your name?"
+    m "I'm %(player_name)s. Your playing was pretty inspiring to listen to. What's your name?"
     "> She holds a frown."
-    p "Catherine… I suppose it’s not a HUGE inconvenience if you listen, just try to keep quiet, and don’t do anything to distract me or I am going to kick you out."
+    p "Catherine... I suppose it's not a HUGE inconvenience if you listen, just try to keep quiet, and don't do anything to distract me or I am going to kick you out."
     $ unknown_name = "Catherine"
-    "This girl’s scary."
+    "This girl's scary."
     "> She moves to her music stand again raising her bow into position. This time she continues to play, but still not as welcoming and warm as the first time."
     "> You start to get into the music, leaning back while tapping your feet."
     "> As you notice the dust on your elbows, you realize you have been sitting beside a piano."
-    "Oh man, this piano’s pretty dusty. I also haven’t touched one of these in a couple years. Now let’s see what we have here..."
+    "Oh man, this piano's pretty dusty. I also haven't touched one of these in a couple years. Now let's see what we have here..."
     "> You lift the key covering."
     
     $ int_check = stats.get_stats("int")
@@ -517,56 +517,56 @@ label play_with_her:
     # play with piano
     if int_check >= 1:
         $ girl2.add_closeness(1)
-        "> You pick up where there’s an opening, and accompany her. The first few moments feel sluggish and your hands feel clumsy, but after a few bars you’re able to familiarize yourself. You peek over your shoulder to notice that Catherine’s posture is rigid; she doesn’t seem like she’s used to someone playing with her. Her playing begins to become harsher and her facial expression suddenly becomes unimpressed."
-        "Hmm... She hasn’t stopped playing yet... I’ll just keep going to see where this takes me."
+        "> You pick up where there's an opening, and accompany her. The first few moments feel sluggish and your hands feel clumsy, but after a few bars you're able to familiarize yourself. You peek over your shoulder to notice that Catherine's posture is rigid; she doesn't seem like she's used to someone playing with her. Her playing begins to become harsher and her facial expression suddenly becomes unimpressed."
+        "Hmm... She hasn't stopped playing yet... I'll just keep going to see where this takes me."
         "> You listen to her carefully and do your best to follow her, trying to avoid taking over or not supporting her enough. You remember the feeling from before: the chill in your spine, hair upright, and heightened senses."
-        "> You can’t see her now, but you’d like to imagine she also is feeling the same way you do."
+        "> You can't see her now, but you'd like to imagine she also is feeling the same way you do."
         "> You listen carefully, and end the song."
         "I think my finish was coordinated with her pretty well. Granted not perfect, but pretty good I think."
         p "That was terrible."
         "> Catherine crosses her arms again and turns her back on you with a puff of air."
         p "But..not bad for an impromptu."
-        "> You can’t see the expression on her face but her response makes you smile."
+        "> You can't see the expression on her face but her response makes you smile."
         
         play music "Background Music.mp3" fadein 1.0
         menu:
             "Lightly joke":
-                m "You’re amazing at the violin. But yeah, thanks, Cathy!"
+                m "You're amazing at the violin. But yeah, thanks, Cathy!"
                 $ girl2.add_closeness(-1)
-                p "That’s not my name, I hate being called Cathy."
-                m "I’m sorry. It’s nice to meet you Catherine!"
+                p "That's not my name, I hate being called Cathy."
+                m "I'm sorry. It's nice to meet you Catherine!"
             "Be humble":
-                m "Thanks Catherine, but I’m still pretty rusty. I haven’t played since junior high. Your playing earlier inspired me!"
+                m "Thanks Catherine, but I'm still pretty rusty. I haven't played since junior high. Your playing earlier inspired me!"
                 "> Catherine looks flustered but trying keep an exaggerated mature composure." # guess image here instead of description
                 p "..."
-                p "Of course! I’m training to be the best you know. It’s nice to meet you too I guess."
+                p "Of course! I'm training to be the best you know. It's nice to meet you too I guess."
         
         m "Well, I think i might take another shot at playing the piano."
         p "What!? what do you mean?"
-        m "I’ll be around the music room more often, I like listening to you play and the way you played the violin has inspired me to get back into playing the piano."
+        m "I'll be around the music room more often, I like listening to you play and the way you played the violin has inspired me to get back into playing the piano."
         p "Who said you could be in here?"
-        m "Would you be opposed? I need to practice a little more and you could tell me how I’m doing."
-        p "I don’t have time to deal with an amateur like you. Ugh....but I guess it’s sort of useful having an accompanist. JUST FOR PRACTICE. Come by tomorrow, don’t be late or else I’ll kick you out."  
+        m "Would you be opposed? I need to practice a little more and you could tell me how I'm doing."
+        p "I don't have time to deal with an amateur like you. Ugh....but I guess it's sort of useful having an accompanist. JUST FOR PRACTICE. Come by tomorrow, don't be late or else I'll kick you out."  
         
         # end day
         
     else:
-        "> You try to think of what to play, but the keys starts to look more and more like a puzzle. You play the keys but it just makes a loud obstruction to The girl’s music."
+        "> You try to think of what to play, but the keys starts to look more and more like a puzzle. You play the keys but it just makes a loud obstruction to The girl's music."
         "> She stops midway, pointing the violin bow at you."
         
         play music "Background Music.mp3" fadein 1.0
-        p "What did I just say? Why are you even touching the piano, if you don’t have the capacity to play it?"
+        p "What did I just say? Why are you even touching the piano, if you don't have the capacity to play it?"
         "Oh crap."
-        m "W-well I haven’t played since junior high, so I’m rusty, I mean just a little rusty or maybe a lot depending on who’s judging that is. I’m usually better I just need to brush up. Actually, I think I might take another shot at playing the piano if you’ll give me a chance."
+        m "W-well I haven't played since junior high, so I'm rusty, I mean just a little rusty or maybe a lot depending on who's judging that is. I'm usually better I just need to brush up. Actually, I think I might take another shot at playing the piano if you'll give me a chance."
         p "What? what do you mean?"
         m "I want to be around the music room more often, I like listening to you play and the way you played the violin has inspired me to get back into playing the piano."
-        p "You’re terrible. Why should I even give you another chance."
+        p "You're terrible. Why should I even give you another chance."
         "> Catherine's eyes look hard and unforgiving."
-        m "Please give me another chance! I won’t disappoint you. I’ll leave you alone if I do not meet your standards next time!"
-        "> Catherine’s eyes suddenly soften but turns cold again so fast that you’re not sure if you were seeing right."
-        p "I..Fine. I’ll give you a shot. Be here tomorrow and don’t be late, or else."
-        "> She turns her back to you again. You’re not sure what else to say and you take this as your cue to leave. You get up and just about as you exit the room, you hear Catherine say something else."
-        p "If you’re really serious about this, you don’t want to waste your chance or you’ll regret it. Believe me."
+        m "Please give me another chance! I won't disappoint you. I'll leave you alone if I do not meet your standards next time!"
+        "> Catherine's eyes suddenly soften but turns cold again so fast that you're not sure if you were seeing right."
+        p "I..Fine. I'll give you a shot. Be here tomorrow and don't be late, or else."
+        "> She turns her back to you again. You're not sure what else to say and you take this as your cue to leave. You get up and just about as you exit the room, you hear Catherine say something else."
+        p "If you're really serious about this, you don't want to waste your chance or you'll regret it. Believe me."
         "> She immediately lifts her bow again and starts up playing again, ignoring you. You leave."
     
     # show image of bedroom at night?
@@ -632,11 +632,11 @@ label music_day_2:
         "Classical (no reqs)":
             "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
             play music "Background Music.mp3" fadein 1.0
-            p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again… It was kind of fun."
+            p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again... It was kind of fun."
             $ girl2.add_closeness(1)
             
         "Rock (Strength 2, Charm 2)":
-            p "Rock today? okay I’ll give it a try."
+            p "Rock today? okay I'll give it a try."
             if str_check >= 2 and cha_check >=2:
                 "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
                 play music "Background Music.mp3" fadein 1.0
@@ -654,7 +654,7 @@ label music_day_2:
             if cha_check >= 2 and int_check >= 2:
                 "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
                 play music "Background Music.mp3" fadein 1.0
-                p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again… It was kind of fun."
+                p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again... It was kind of fun."
                 $ girl2.add_closeness(2)
             else:
                 "> As you begin to play for the first few bars, you are able to stay on beat with Catherine, However, as the song intensifies, you stress out and begin to play fast and louder. The sounds created by piano overpowers the violin and there is dissonance in the music being played. Despite this, Catherine and  you imagine to finish the piece."
@@ -693,15 +693,15 @@ label music_day_3:
         "Classical (no reqs)":
             "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
             play music "Background Music.mp3" fadein 1.0
-            p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again… It was kind of fun."
+            p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again... It was kind of fun."
             $ girl2.add_closeness(1)
             
         "Folk (Strength 2, Charm 3)":
-            p "Really? Okay, I’m not very used to folk, but if you want."
+            p "Really? Okay, I'm not very used to folk, but if you want."
             if str_check >= 2 and cha_check >=3:
                 "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
                 play music "Background Music.mp3" fadein 1.0
-                p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again… It was kind of fun."
+                p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again... It was kind of fun."
                 $ girl2.add_closeness(2)
             else:
                 "> As you begin to play for the first few bars, you are able to stay on beat with Catherine, However, as the song intensifies, you stress out and begin to play fast and louder. The sounds created by piano overpowers the violin and there is dissonance in the music being played. Despite this, Catherine and  you imagine to finish the piece."
@@ -714,7 +714,7 @@ label music_day_3:
             if cha_check >= 2 and int_check >= 3:
                 "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
                 play music "Background Music.mp3" fadein 1.0
-                p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again… It was kind of fun."
+                p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again... It was kind of fun."
                 $ girl2.add_closeness(2)
             else:
                 "> As you begin to play for the first few bars, you are able to stay on beat with Catherine, However, as the song intensifies, you stress out and begin to play fast and louder. The sounds created by piano overpowers the violin and there is dissonance in the music being played. Despite this, Catherine and  you imagine to finish the piece."
@@ -754,15 +754,15 @@ label music_day_4:
         "Classical (no reqs)":
             "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
             play music "Background Music.mp3" fadein 1.0
-            p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again… It was kind of fun."
+            p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again... It was kind of fun."
             $ girl2.add_closeness(1)
             
         "Latin (Strength 3, Charm 4)":
-            p "Very very interesting. I don’t know how to start... ummm... here goes nothing."
+            p "Very very interesting. I don't know how to start... ummm... here goes nothing."
             if str_check >= 3 and cha_check >=4:
                 "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
                 play music "Background Music.mp3" fadein 1.0
-                p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again… It was kind of fun."
+                p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again... It was kind of fun."
                 $ girl2.add_closeness(2)
             else:
                 "> As you begin to play for the first few bars, you are able to stay on beat with Catherine, However, as the song intensifies, you stress out and begin to play fast and louder. The sounds created by piano overpowers the violin and there is dissonance in the music being played. Despite this, Catherine and  you imagine to finish the piece."
@@ -800,7 +800,7 @@ label music_event_1:
     $ day = stats.get_days()
     "> You enter the music room quietly; you see Catherine on the floor curled up in a kneeling position. Sprawled around her are vibrantly coloured posters and unopened markers."
     menu:
-        "Hey Catherine… should I come by another time? You look busy right now..":
+        "Hey Catherine... should I come by another time? You look busy right now..":
             p "I am busy at the moment. Leave me alone."
             $ girl2.add_affection(-1)
             "> You decide to leave her alone"
@@ -827,34 +827,34 @@ label music_event_1:
                 jump music_day_4
             
         "Don't say anything yet":
-            "> You decide to watch her and see what she’s doing. You notice her tugging on her hair occasionally and letting out fits of frustration."
+            "> You decide to watch her and see what she's doing. You notice her tugging on her hair occasionally and letting out fits of frustration."
             "> ring ring ring"
             p "sigh..."
             p "Hi Mom."
-            p "... I’m at school still making posters for the concert."
-            p "... No, I don’t think I’ll be home in time for dinner."
-            p "... I know, I still need to practice, don’t worry I’ll be fine."
-            "> Catherine’s tone sounds a little frustrated at this point."
-            p "... Don’t worry about it-- I said I’ll be fine!"
-            p "... I’m sorry for lashing out, I am just frustrated right now."
+            p "... I'm at school still making posters for the concert."
+            p "... No, I don't think I'll be home in time for dinner."
+            p "... I know, I still need to practice, don't worry I'll be fine."
+            "> Catherine's tone sounds a little frustrated at this point."
+            p "... Don't worry about it-- I said I'll be fine!"
+            p "... I'm sorry for lashing out, I am just frustrated right now."
             p "... You too, bye..."
             "I wonder why she sounded so angry at the end of her conversation."
-            "> You walk nearer to her without her noticing and upon closer inspection, notice that she’s making posters for some sort of concert."
+            "> You walk nearer to her without her noticing and upon closer inspection, notice that she's making posters for some sort of concert."
             m "Hey Catherine, what are all these for? Do you need help with something?"
             p "Oh! Hi %(player_name)s."
-            "> She seems embarrassed that you’re seeing her like this."
-            p "I’m trying to make posters for this concert; I need to promote it. No need for help, I’m perfectly capable of doing this myself."
-            m "Of course, of course! If I help you now though we’ll have time to play some music. I’ve been looking forward to it all day."
+            "> She seems embarrassed that you're seeing her like this."
+            p "I'm trying to make posters for this concert; I need to promote it. No need for help, I'm perfectly capable of doing this myself."
+            m "Of course, of course! If I help you now though we'll have time to play some music. I've been looking forward to it all day."
             p "Hmmm...Fine! Do whatever you want."
             "> She still seems embarrassed for accepting your help, but at the same time, satisfied."
-            "> You end up kneeling beside her. As you sit she retracts a couple inches away from where you’re sitting."
-            "She doesn’t seem that comfortable with me maybe I should try to make some conversation."
+            "> You end up kneeling beside her. As you sit she retracts a couple inches away from where you're sitting."
+            "She doesn't seem that comfortable with me maybe I should try to make some conversation."
             menu:
                 "What is the concert for?":
                     $ girl2.add_affection(1)
                     p "This is my opportunity to be the greatest violinist of our time."
                     m "What...?"
-                    p "A representative from the most prestigious music schools in the UK was invited to view my performance. Basically, I’m being evaluated before actually going there to do my audition for the school."
+                    p "A representative from the most prestigious music schools in the UK was invited to view my performance. Basically, I'm being evaluated before actually going there to do my audition for the school."
                     m "Uh huh... congrats, Cathy!"
                     p "Idiot. Don't call me that."
                     m "hahahahaha!"
@@ -868,36 +868,36 @@ label music_event_1:
         
 label music_event_1_part_2:
     p "Can you just sketch details, in pencil?"
-    m "Don’t you want me to do more than that?"
-    p "No. I can’t have any clumsy mistakes."
+    m "Don't you want me to do more than that?"
+    p "No. I can't have any clumsy mistakes."
     "> You look at the posters in front of her."
-    m "But you didn’t even colour in the lines."
+    m "But you didn't even colour in the lines."
     "> Catherine is flustered."
-    p "N-no! That’s for visual effect! I guess it’s hard to appreciate for an uncultured eye."
+    p "N-no! That's for visual effect! I guess it's hard to appreciate for an uncultured eye."
     m "That is debatable."
     p "Just get to work!"
     
     "> You work for some time, not saying anything to each other."
     "> You look at your clock and notice that the sun is starting to set."
     "> You look towards the window and you see the sunlight give a warm colouring to the surroundings. The chalk dust in the air highlights the sun rays giving the room a calm atmosphere."
-    "> Your eye wander the room and lead to Catherine, in the middle of the room and under the sun rays. She’s intently finishing up the final touches on the posters."
-    "> She looks like she’s in a spotlight. She looks so natural in it, like she was made to be in a spotlight. Light passes through her hair giving it an ethereal look. It drapes down, and on her shoulders. By observing her alone, you feel unsettled and begin to feel hot. From your chest and back, traveling up to the side of your neck, your body is uncomfortably warm."
-    "> She tucks her hair behind her ear, as she finishes up the final touches, but is then surprised catching you staring at her, from the side of her view."
+    "> Your eyes wander to Catherine in the middle room and under the sun rays. She is putting on the finishing touches on the posters."
+    "> She looks like she's in a spotlight. She looks so natural in it, like she was born to be in the spotlight. Light passes through her hair giving it an ethereal look as it drapes down on her shoulders. By observing her alone, you begin to feel unsettled and hot"
+    "> She tucks her hair behind her hair as she finishes up the final touches, but realizes that you are staring at her."
     
     p "...Why are you staring at me?"
     menu:
         "Is it hot in here?":
             $ girl2.add_affection(-1)
-            p "No not really, why are you sweating? That’s kinda gross."
+            p "No not really, why are you sweating? That's kinda gross."
             "WHY AM I SWEATING???"
-            m "uh gah... don’t worry about it. It’s just hot."
+            m "uh gah... don't worry about it. It's just hot."
             p "... o--okay..."
             menu:
                 "Sorry you just looked really good today":
                     $ girl2.add_affection(-1) 
                     p "Creep."
-                    "Uhhh maybe I shouldn’t have said that, she probably thinks I’m weird."
-                    "> You don’t really know how to follow up on that response, so you decide to let the awkward space settle for a moment."
+                    "Uhhh maybe I shouldn't have said that, she probably thinks I'm weird."
+                    "> You don't really know how to follow up on that response, so you decide to let the awkward space settle for a moment."
                     menu:
                         "Wow, the posters look amazing! We did a good job":
                             jump music_event_1_part_3
@@ -907,14 +907,14 @@ label music_event_1_part_2:
         "Sorry you just looked really good today":
             $ girl2.add_affection(-1)
             p "Creep."
-            "Uhhh maybe I shouldn’t have said that, she probably thinks I’m weird."
-            "> You don’t really know how to follow up on that response, so you decide to let the awkward space settle for a moment."
+            "Uhhh maybe I shouldn't have said that, she probably thinks I'm weird."
+            "> You don't really know how to follow up on that response, so you decide to let the awkward space settle for a moment."
             menu:
                 "Is it hot in here?":
                     $ girl2.add_affection(-1) 
-                    p "No not really, why are you sweating? That’s kinda gross."
+                    p "No not really, why are you sweating? That's kinda gross."
                     "WHY AM I SWEATING???"
-                    m "uh gah… don’t worry about it. It’s just hot."
+                    m "uh gah... don't worry about it. It's just hot."
                     p "... o--okay..."
                     menu:
                         "Wow, the posters look amazing! We did a good job":
@@ -928,11 +928,11 @@ label music_event_1_part_2:
 label music_event_1_part_3:
     $ girl2.add_affection(1) 
     "> She looks happy at your comment."
-    p "I guess you aren’t that useless."
+    p "I guess you aren't that useless."
     m "Thanks?..."
-    "At least I’m not ‘super useless’..."
+    "At least I'm not ‘super useless'..."
     m "I was thinking we should probably get to practicing soon."
-    p "Oh! Of course, I didn’t forget about that---"
+    p "Oh! Of course, I didn't forget about that---"
     "Sureee..."
     
     scene bg hallway
@@ -947,17 +947,17 @@ label music_event_1_part_3:
     stop music fadeout 1.0
     menu: 
         "Beethoven violin Sonata No.9 Op.47 \"Kreutzer\"":
-            m "Let's play Beethoven." #ADD MUSIC
+            m "Let's play Beethoven violin Sonata No.9 Op.47 \"Kreutzer\"." #ADD MUSIC
             $ girl2_music_choice = 1
             play music "Beethoven.mp3" fadein 1.0
             
         "Chopin Tristesse Etudes in E major":
-            m "Let's play Chopin." #ADD MUSIC
+            m "Let's play Chopin Tristesse Etudes in E major." #ADD MUSIC
             $ girl2_music_choice = 2
             play music "Chopin.mp3" fadein 1.0
             
         "Rondo Capriccioso- Saint-Saens":
-            m "Let's play Rondo" #ADD MUSIC
+            m "Let's play Rondo Capriccioso- Saint-Saens." #ADD MUSIC
             $ girl2_music_choice = 3
             play music "Rondo.mp3" fadein 1.0
             
@@ -975,27 +975,27 @@ label outta_girl2_while_loop:
     play music "Background Music.mp3" fadein 1.0
     
     m "That was fun!"
-    p "Yeah.. You're getting better."
-    m "Here's an idea... do you think that I could play with you in your concert?"
+    p "Yeah..."
+    m "Here's an idea... Do you think that I could play with you in your concert?"
     p "OF COURSE NOT!!! This is actually important."
     menu:
         "Change your mind":
             $ girl2.add_affection(-1)
-            m "Whatever, It’s not like I cared enough to help anyways."
+            m "Whatever, It's not like I cared enough to help anyways."
             "> She looks pretty mad at that last comment."
-            p "You don’t have to be so butthurt about it."
-            "Maybe I shouldn’t have thought out loud."
+            p "You don't have to be so butthurt about it."
+            "Maybe I shouldn't have thought out loud."
             
         "Try to convince her":
             $ girl2.add_affection(1)
-            m "What?! Why not? I think it would be fine, Cathy! If you ever want an accompanist, I’ll be around."
+            m "What?! Why not? I think it would be fine, Cathy! If you ever want an accompanist, I'll be around."
             "> She avoids eye contact and slightly blushes."
-            p "...Thanks, I’ll think about it. BUT I TOLD YOU NOT TO CALL ME THAT."
+            p "...Thanks, I'll think about it. BUT I TOLD YOU NOT TO CALL ME THAT."
             
     "> Catherine huffs."
     p "Anyways, I should get going."
-    "> She starts to pack up quickly and begins to rush out."
-    m "I’ll see you tomorrow then."
+    "> She packs up quickly and begins to rush out."
+    m "I'll see you tomorrow then."
     p "...Yeah"
     "Hmm she seems a little off. Was it something I said?"
     $ day = stats.get_days()
@@ -1011,10 +1011,10 @@ label music_event_2:
     
     scene bg music_room
     with fade
-    "> You walk into the music room, no music is being played which is strange."
-    "> You see Catherine leaning against the window sill. She’s looking out the window smiling. She’s looking at the trees swaying in the breeze."
-    "I guess it’s a good day out."
-    "> The warm lighting gives her a glow, where she seems so peaceful. For some reason everything seems so vibrant."
+    "> You walked into the music room. Strangely, there is no music being played."
+    "> You see Catherine leaning against the window sill. She's looking out the window contently."
+    "I guess it's a good day out."
+    "> The warm lighting gives her a glow, where she seems so peaceful. For some reason everything seems so vibrant. The lighting gives her a warm, peaceful glow."
     "> Catherine sees your reflection in the window and turns around to address you with a smile on her face."
     p "Can I ask you for a favour?"
     
@@ -1024,37 +1024,37 @@ label music_event_2:
         "Sure, if you act a litter nicer to me":
             $girl2.add_affection(-1)
     
-    "She looks pretty concerned, I wonder what this about"
+    "She looks pretty concerned. I wonder what it is about?"
     p "So... the concert..."
     m "Yeah?"
-    p "Apparently I’m required to have an accompanist."
-    m "Oh? and?"
-    "> You try not to crack a smile knowing whats coming."
+    p "Apparently I'm required to have an accompanist."
+    m "Oh? And?"
+    "> You try not to crack a smile knowing what's coming."
     p "So... I... may need you to play as my accompanist."
-    m "I don’t know... I thought I wasn’t good enough?"
-    "I’m not sure if I should be teasing her at a situation like this, but I need to milk this opportunity."
-    "> She seems surprised at your response like she was expecting you to agree right away. Her face turns mad red and squeezes her eyes shut."
-    p "Please! This is my only opportunity! I know I’ve been mean to you this whole time."
+    m "I don't know... I thought I wasn't good enough?"
+    "I'm not sure if I should be teasing her in a situation like this, but I need to make the most of this opportunity!"
+    "> She seems surprised at your response like she was expecting you to agree right away. Her face turns mad red and squeezes her eyes shut. Her face instantly turns red from frustration."
+    p "I know I've been mean to you this whole time, but please! This is my only opportunity!"
     "> Her eyes begin to water."
-    p "But I just get so frustrated when I can’t do anything myself because people won’t see me as strong, but now I need someone and I find myself with no one else to lean on. Please..."
-    "Oh crap. She’s super serious right now."
+    p "I just get so frustrated when I can't do anything myself. I don't want people to see me as weak, but it is a requirement and I need someone to lean on. Please..."
+    "Oh crap. She's super serious right now."
     menu:
-        "Yeah don’t worry, I said I was going to be around if you needed me, right? Let’s start practicing for it!":
+        "Yeah, don't worry. I said I was going to be around if you needed me, right? Let's start practicing for it!":
             jump music_event_2_part_2
 
 label music_event_2_part_2:
     
     scene bg music_room
     with fade
-    "> You arrive outside of the music room. The suit you’re wearing makes you feel stiff and limited in mobility."
-    "I think I look okay, I can’t tell with only the moonlight"
+    "> You arrive outside of the music room. The suit you're wearing makes you feel stiff and limited in mobility."
+    "I think I look okay, I can't tell with only the moonlight"
     "> You receive a text from Catherine."
     
     scene bg balcony
     with fade
-    p "'Hey, I’m on the balcony'"
-    "> You get to the top of the building, and through a wide set of glass double doors you see her in a white dress. As you pass the doors, the scenery opens wide overlooking the city dotted with streetlights and cars."
-    "> You lean on the wide railing, next to her. On the side of your vision her dress and skin glow in the moonlight. both of you don’t look at each other, but enjoy the expanded scenery."
+    p "Hey, I'm on the balcony."
+    "> You get to the top of the building and through a set of glass doors you see her in a white dress. As you pass the doors, your eyes capture the city twinkling with streetlights and cars."
+    "> You lean next to her on the railing. In the corner of your eye, you catch a glimpse of her dress and skin glowing in the moonlight."
     menu:
         "You look good in this lighting":
             $girl2.add_affection(-1)
@@ -1064,59 +1064,59 @@ label music_event_2_part_2:
             $girl2.add_affection(1)
             p "Yeah, it is."
             
-    m "It’s the big day huh? How are you feeling?"
+    m "It's the big day huh? How are you feeling?"
     p "My palms are a little sweaty and my head is all jumbled with worries."
-    m "It will be fine, don’t worry about it. Let’s just try our best!"
+    m "It will be fine, don't worry about it. Let's just try our best!"
     p "I need this to be perfect..."
     menu:
         "Downplay it to make her feel more at ease":
             $girl2.add_affection(-1)
-            m "Calm down a little, it’s not a big deal."
-            p "Haven’t you been listening at all?"
-            "Oh crap that wasn’t smart of me."
+            m "Calm down a little, it's not a big deal."
+            p "Haven't you been listening at all?"
+            "Oh crap that wasn't smart of me."
             menu:
                 "Reassure her":
-                    m "Well it’s an important day to you right? You want to get into the school?"
+                    m "Well it's an important day to you right? You want to get into the school? You want to make it into the school, right?"
                     p "..."
-                    m "What’s with the silence?"
+                    m "What's with the silence?"
                     
         "Reassure her":
             $girl2.add_affection(1)
-            m "Well it’s an important day to you right? You want to get into the school?"
+            m "Well it's an important day to you right? You want to get into the school?"
             p "..."
-            m "What’s with the silence?"
+            m "What's with the silence?"
             
-    p "To be completely honest, I couldn’t care less if I went to the music academy or not. Not anymore anyways..."
-    m "I thought that was your goal? To become the greatest violinist of our time?"
-    p "I mean, excelling at playing the violin is a goal and passion, but I want this to say I was able to do it too."
+    p "To be completely honest, I couldn't care less if I went to the music academy or not. Not anymore anyways..."
+    m "I thought that was your goal to become the greatest violinist of our time?"
+    p "I mean, excelling at playing the violin is my goal, but this concert is for approval from others."
     m "Sounds like a lot of work for some recognition."
-    p "I know... But you don’t know what it’s like, always having people holding your hand while you do anything, not letting you take your own steps, not letting you take any credit... or maybe you do... or you could at least try understanding."
-    "> At this moment she turns and looks up at you, with both eyes. The moonlight reflects off of them, for a moment captivating you. At this angle you’re able to see her red lips and rosy cheeks. You feel like a pin went through your chest."
-    m "I think I can understand. What if I said that even though I’m here, as your accompanist, I see everything you’ve worked towards, and I think you have definitely proved that you are more than capable of handling yourself?"
+    p "I know... But you don't know what it's like. I've always had people holding my hand while I do everything, not letting me take my own steps, and not letting me take any credit. Maybe you do... If not,  you could at least try understanding it from my perspective."
+    "> At this moment, she turns and looks up to you. The beauty of her red lips and rosy cheeks captivates you for a moment; you feel like a pin went through your chest."
+    m "I think I can understand; What if I said that even though I'm here helping you on your journey, I can see everything you've worked towards on your own. You have definitely proved that you are more than cable of handling yourself!"
     "> She smiles and her eyes look away."
-    p "I’d be happy…"
+    p "Thanks for the words of encouragement. They mean a lot to me."
     "> She sees your watch."
-    p "Oh! it’s almost time to go! Quick smell my perfume, make sure it smells good!"
-    "> She pulls back her hair, and leans forward, exposing her neck to you."
-    "> You don’t have time to react smoothly, you quickly lean in to smell."
-    "> When you breathe in the scent, it’s like fireworks begin going off your head. This feeling travels down through the rest of your body, but you feel something briefly press against your cheek."
+    p "Oh! It's almost time to go! Quick smell my perfume, make sure it smells good!"
+    "> She pulls back her hair and leans forward, exposing her neck to you."
+    "> You quickly lean in to smell."
+    "> When you breathe in the scent, it's like fireworks begin going off your head. This feeling travels down through the rest of your body, but you feel something briefly press against your cheek."
     p "That was for good luck...and for listening to me."
     "> She covers her mouth, and avoids eye contact, blushing."
     m "Thanks..."
-    p "D-don’t look at me like that, you’re wasting time."
-    "> She grabs your hand and leads you through the doors into the building."
+    p "D-don't look at me like that, you're wasting time."
+    "> She grabs your hand and leads you through the doors of the auditorium."
     
     scene bg auditorium
     with fade
     "> You feel like a ragdoll as she makes sharp corners towards back-stage. She stops abruptly and turns around quickly to face you. Her eyes are shining with excitement and nervousness."
     p "Ready?"
-    m "Your palms are sweaty"
+    m "Your palms are sweaty."
     "Oh God, I literally could have said anything else."
     "> She pulls her hand quickly away and picks up her violin."
-    p "Don’t get full of yourself. Let’s do this."
-    "> You walk out onto stage, as you look out you don’t see a single face, but you feel everyone stare. The silence permeates."
+    p "Don't get full of yourself. Let's do this."
+    "> You walk out onto the stage; as you look out you don't see a face, but you feel like everyone is staring at you."
     "> You take a seat at the piano and wait for her signal."
-    "> You hear her draw her bow across her strings. Her playing is colourful and vibrant, full of expression. As the song progresses, you feel her stage presence is powerful, and you do what you can to support her. You notice your head nodding, and feeling the momentum of the keys. You feel each other’s playing styles as you progress to the end."
+    "> You hear her draw her bow across the strings. Her playing is colourful, vibrant, and full of expression.  You can feel her stage presence growing as the song reaches the climax."
     # cue music here
     stop music fadeout 1.0
     if girl2_music_choice == 1:
@@ -1136,7 +1136,7 @@ label outta_girl2_while_loop2:
     stop music fadeout 1.0
     play music "Background Music.mp3" fadein 1.0
     
-    "> You reach the end of the song, and you get up to stand next to her. When you approach her, she holds out her hand in front of you, you grab it then both of you bow. The audience gives you a large applause."
+    "> You reach the end of the song and you get up to stand next to her. When you approach her, she holds out her hand in front of you; you grab it and bow together. The audience gives you a large applause."
     "> Both of you walk off stage."
     p "We did it!"
     menu:
@@ -1144,22 +1144,22 @@ label outta_girl2_while_loop2:
             $ girl2.add_affection(1)
             m "Yeah, good job!"
             "> You hug her. you intended to have a quick hug, but it lingers for a while longer."
-            p "I’m really thankful for you helping me out."
+            p "I'm really thankful for you helping me out."
         "Talk about the Academy":
             $ girl2.add_affection(-1)
-            m "You did it, you’re sure to get in now! I’m glad it went well."
+            m "You did it, you're sure to get in now! I'm glad it went well."
             p "Oh... yeah right. thanks..."
             
     m "We should celebrate!"
-    p "Celebrate? what do you have in mind?"
+    p "Celebrate? What do you have in mind?"
     m "How about Karaoke?"
     p "Karaoke?"
     m "Yeah, that thing where you sing in a room..."
     p "I know what it is, but why Karaoke?"
-    m "Why not? you’ve been so stressed out on music lately, this is a good way to destress with music."
+    m "Why not? You've been so stressed out on music lately; this is a good way to destress."
     "> She sighs."
     p "Okay..."
-    m "GREAT! LET’S GO"
+    m "GREAT! LET'S GO"
     jump music_event_3
             
 label music_event_3:
@@ -1168,56 +1168,56 @@ label music_event_3:
     with fade
     m "Here we are."
     p "Y-yeah..."
-    m "What’s wrong, Cathy?"
-    p "I’ve never sung in front of anyone..."
-    m "So wait, you’re telling me that you can get on a stage in front of hundreds of people, but you can’t sing in front of me?"
-    p "IT’S DIFFERENT, The violin has a good voice."
+    m "What's wrong, Cathy?"
+    p "I've never sung in front of anyone..."
+    m "So wait, you're telling me that you can get on a stage in front of hundreds of people, but you can't sing in front of me?"
+    p "IT'S DIFFERENT!  The violin produces such elegant music."
     menu:
         "Reassure her":
             $ girl2.add_affection(1)
-            m " It can’t be that bad, don’t worry, I’m not here to judge you."
+            m "It can't be that bad. Don't worry, I'm not here to judge you."
             p "Liar..."
             m "PROMISE."
             "> She rolls her eyes."
-            p " Don’t say I didn’t warn you."
+            p " Don't say I didn't warn you."
             
         "Joke":
             $ girl2.add_affection(-1)
-            m "Well that’s a shame, I guess that’s the problem with hiding behind an instrument your whole life."
-            p "Aren’t you a tad bit conceited?"
+            m "Well that's a shame, I guess that's the problem with hiding behind an instrument your whole life."
+            p "Aren't you a tad bit conceited?"
             m "That came out wrong..."
             p "Yeah it did."
     
-    p "Well... let’s get this over with."
+    p "Well... let's get this over with."
     "> You place your hands on her shoulders and guide her into the karaoke room."
-    m "Come on, don’t worry it’s going to be fun!"
-    "> When you sit down, you place songs in the playlist. As one of them is about to begin, you notice out of the corner of your eye, Catherine clutching the mic with both hands. she holds it with her arms retracted close to her chest."
-    m "C’mon lighten up! It’s just us. Okay deep breaths."
+    m " Come on, it's going to be fun!"
+    "> When you sit down, you place songs in the playlist. As one of them is about to begin, you notice out of the corner of your eye, Catherine clutching the mic with both hands. She holds it with her arms retracted close to her chest."
+    m "C'mon, lighten up! This is supposed to be fun! Just imagine I'm not even here."
     "> You take 2 short consecutive breaths out, followed by one drawn out exhale."
     "> She bursts out laughing."
-    p "That’s what you do when you’re giving birth!"
+    p "That's what you do when you're giving birth!"
     m "THEN YOU HAVE NOTHING TO WORRY ABOUT!"
     "> She laughs."
-    p "Alright, alright I’m ready."
+    p "Alright, alright I'm ready."
     "> Her shoulders relax, and she takes a deep breath."
     "> The music starts playing, You start the song slow. following the lyrics her voice takes you by surprise. You are taken back for moment to the point where you stop singing out of disbelief. Her voice actually is powerful and smooth."
     "SHE LIED TO ME"
     "> You decide to just go with it. You have an almost a deja vu moment, as if you were her accompanist again. Naturally, you begin to harmonize with her. It must be from practising with her. At one point of the song, you both feel each other pushing your diaphragms to their limit. You look at each other trying not to laugh."
-    "> You see her under the fluorescent rose lighting of the room, she looks like she’s really having enjoying herself. She looks at you and smiles as the song ends."
+    "> You see her under the fluorescent rose lighting of the room, she looks like she's really having enjoying herself. She looks at you and smiles as the song ends."
     p "That was great!"
     "> She begins laughing uncontrollably while leaning forward."
-    "> She beings to lose balance as she falls forward, and falls in your direction. You react by trying to catch her with both arms, but her momentum catches you off guard and pushes you back. You fall directly on your butt."
-    p "OH! I’M SO SORRY ARE YOU OKAY?"
+    "> She beings to lose balance as she falls forward and falls in your direction. You react by trying to catch her with both arms, but her momentum catches you off guard and pushes you back. You fall directly on your butt."
+    p "OH! I'M SO SORRY ARE YOU OKAY?"
     "> She immediately panics and clumsily tries helping you up."
-    m "Probably just fractured my tailbone, but I’m fine."
+    m "Probably just fractured my tailbone, but I'm fine."
     p "SERIOUSLY?"
-    m "Don’t worry... I’m just kidding"
-    p "Don’t scare me like that..."
+    m "Don't worry... I'm just kidding"
+    p "Don't scare me like that..."
     m "Since when did you start worrying about me so much?"
     "> Her cheeks instantly turn red."
-    p "I-I don’t know what you’re talking about... Idiot."
+    p "I-I don't know what you're talking about... Idiot."
     menu:
-        "Hey, if you want to talk about something, I’m listening":
+        "Hey, if you want to talk about something, I'm listening":
             $ girl2.add_affection(1)
             p "..."
             
@@ -1226,45 +1226,45 @@ label music_event_3:
             p "... Why do you have to be so dense all the time?"
             
     "> She sighs."
-    p "Look... It’s been really hard for me to be comfortable around you."
+    p "Look... It's been really hard for me to be comfortable around you."
     m "What do you mean?"
-    p "In the short time I’ve known you, I don’t think I’ve ever felt so close to anyone. At first I couldn’t stand you being around, but you just kept persisting to help me out and to help you out. Then well I guess you just grew on me."
+    p "In the short time I've known you, I don't think I've ever felt so close to anyone. At first I couldn't stand you being around, but you just kept persisting to help me out and to help you out. Then well I guess you just grew on me."
     m "Is that a bad thing?"
-    p "No… I’m just a little confused, that’s all… I’ve grown up in a well off family, and I always was given opportunities, as if they were served to me on a silver platter. I never felt like I earned anything. I eventually just hated it when people helped me accomplish tasks, people always checking up on me saying 'Do you need help with that?' As if I couldn’t handle myself, as if I was completely incapable of doing anything. I started to be secluded from people, and refuse people that tried to get close to me."
+    p "No... I'm just a little confused, that's all... I've grown up in a well off family and I always was given opportunities, as if they were served to me on a silver platter. I never felt like I earned anything. I eventually just hated it when people helped me accomplish tasks; people always checking up on me saying 'Do you need help with that?' As if I couldn't handle myself, as if I was completely incapable of doing anything. I started to be secluded from people, and refuse people that tried to get close to me."
     m "What about now?"
-    p "I don’t know anymore. I guess you could say that you’re now an exception to the rule."
+    p "I don't know anymore. I guess you could say that you're now an exception to the rule."
     "> She smiles, leans back into the couch, and stares blankly towards the karaoke lyrics rolling."
-    p "You know, it’s funny. I try to push people away, but then one person is just able to push through all the walls I set up. I didn’t want to trust that person, but I end up leaning on them the most, when I’m in need."
-    "> She shifts her weight, so that her rests upon your shoulder."
-    "> You feel a tension while your beats per minute skyrocket. It’s like your head is going to explode from built up pressure."
+    p "You know, it's funny. I try to push people away, but then one person is just able to push through all the walls I set up. I didn't want to trust that person, but I end up leaning on them the most, when I'm in need."
+    "> She shifts her weight so that her rests upon your shoulder."
+    "> You feel a tension while your beats per minute skyrocket. It's like your head is going to explode from built up pressure."
     m "H-hey Ca--"
     p "Just be quiet for a moment..."
-    "> Neither of you move while the karaoke lyrics roll and the rose lights pulsate in the room. From this atmosphere, you just enjoy each other’s presence."
+    "> Neither of you move while the karaoke lyrics roll and the rose lights pulsate in the room. From this atmosphere, you just enjoy each other's presence."
     menu:
         "Hey Cathy, do you want to go out with me?":
             # check affection level
             $ affection = girl2.get_affection("Catherine")
             # if success:
             if affection > 6: # NUMBER CAN VARY
-                p "Does it look like I don’t want to?"
+                p "Does it look like I don't want to?"
                 m "Well maybe you just wanted to be friends."
-                p "Sometimes I can’t believe how clueless you can be... So I’ll say it plainly: I want to go out with you."
-                "> She wraps her arms around your torso, smiling. You both continue to bask in the emotions until it’s time to go."
-                p "Thank you for everything, I’m really glad to have met you in my life..."
+                p "Sometimes I can't believe how clueless you can be... So I'll say it plainly: I want to go out with you."
+                "> She wraps her arms around your torso, smiling. You both continue to bask in the emotions until it's time to go."
+                p "Thank you for everything, I'm really glad to have met you in my life..."
                 jump music_event_3_part_2
             # if failure:
             else:
-                p "Does it look like I don’t want to?"
+                p "Does it look like I don't want to?"
                 m "Well maybe you just wanted to be friends."
-                p "Sometimes I can’t believe how clueless you can be... But, I can’t..."
+                p "Sometimes I can't believe how clueless you can be... But, I can't..."
                 m "..."
                 p "I got into the academy..."
                 m "Oh... Congrats..."
                 "> She wraps her arms around your torso, and begins to have tears streaming down her face."
-                p "I’m so sorry... as much as I want to be with you... this is a really important opportunity."
-                m "No of course... I couldn’t expect you to drop everything for me..."
-                "> You both sit and try to savour the moment. She latches onto you tight, not wanting to let go. You sit trying to hold on to each other’s presence inevitably comes to an end."
-                p "Thank you for everything, I’m really glad to have met you in my life..."
+                p "I'm so sorry... as much as I want to be with you... this is a really important opportunity."
+                m "No of course... I couldn't expect you to drop everything for me..."
+                "> You both sit and try to savour the moment. She latches onto you tight, not wanting to let go. You sit trying to hold on to each other's presence inevitably comes to an end."
+                p "Thank you for everything, I'm really glad to have met you in my life..."
                 jump girl2_fail_end
     
 label music_event_3_part_2:
@@ -1283,9 +1283,9 @@ label music_event_3_part_2:
             m "I'll see you at the music room then."
             
         "Oh I see, how do you feel about it?":
-            p "Hmm... I don’t know if I really want to go anymore."
+            p "Hmm... I don't know if I really want to go anymore."
             m "What about being the greatest violinist ever?"
-            p "Well I just wanted to talk to you about it too, wanna meet in the music room?"
+            p "Well I just wanted to talk to you about it too. Wanna meet in the music room?"
             m "Sure."
             
     scene bg music_room
@@ -1295,9 +1295,9 @@ label music_event_3_part_2:
     m "Hey, Cathy."
     p "Hey..."
     m "Did you want to talk about it?"
-    p "I’ll just get to the point: Do you want me to go or not?"
-    m "Wait what? For the Academy? why does my opinion matter?"
-    p "Because it matters to me... because you’re important to me."
+    p "I'll just get to the point: Do you want me to go or not?"
+    m "Wait what? For the Academy? Why does my opinion matter?"
+    p "Because it matters to me... because you're important to me."
     m "Oh..."
     p "So tell me, do you want me to stay or not?"
     menu:
@@ -1310,19 +1310,19 @@ label music_event_3_part_2:
             m "Yeah, of course."
             "> She sighs."
             p "Well I guess this is what I asked for."
-            m "Don’t worry, I think you’ll go really far with it. You’ll be able to experience a lot of great things, especially living in the UK independently."
-            p "Yeah you’re right..."
+            m "Don't worry, I think you'll go really far with it. You'll be able to experience a lot of great things, especially living in the UK independently."
+            p "Yeah you're right..."
             "> She seems frustrated about something."
-            p "I don’t get it! I haven’t even known you for that long, but all the sudden you’ll be out of my life. I tried so hard to be independent and do things on my own, and when I finally get the chance, I don’t want it. I end up depending on you anyways. I even said 'yes', when you asked me out!"
+            p "I don't get it! I haven't even known you for that long, but all the sudden you'll be out of my life. I tried so hard to be independent and do things on my own, and when I finally get the chance, I don't want it. I end up depending on you anyways. I even said 'yes', when you asked me out!"
             menu:
                 "We can still keep in touch":
-                    m "Hmm... You didn’t necessarily depend on me, you could always do it by yourself, I was just an accompanist. Besides we can still keep in touch."
-                    p "Yeah... that’s a fair argument."
+                    m "Hmm... You didn't necessarily depend on me, you could always do it by yourself, I was just an accompanist. Besides we can still keep in touch."
+                    p "Yeah... that's a fair argument."
                     "> She shoves her face into your chest and latches around your torso."
                     p "...Will you remember me?"
                     m "What if told you I will?"
                     p "That would make me happy... Well... Goodbye then..."
-                    m "This isn’t 'goodbye', it’s just a 'see you later'..."
+                    m "This isn't 'goodbye', it's just a 'see you later'..."
                     jump girl2_bad_end
                     
                 "Change your mind":
@@ -1331,13 +1331,13 @@ label music_event_3_part_2:
                     
         "You should make the decision yourself":
             "> Catherine seems frustrated."
-            p "I don't get it! I haven't even known you for that long, but all the sudden you'll be out of my life. I tried so hard to be independent and do things on my own, and when I finally get the chance, I don’t want it. I end up depending on you anyways. I even said 'yes', when you asked me out!"
+            p "I don't get it! I haven't even known you for that long, but all the sudden you'll be out of my life. I tried so hard to be independent and do things on my own, and when I finally get the chance, I don't want it. I end up depending on you anyways. I even said 'yes', when you asked me out!"
             m "This is finally your chance to be independent."
             m "This is what you wanted. What you worked for. You made it and you shouldn't let me hold you back."
-            p "...Is it so wrong to have someone to lean on at least sometimes...I thought I could depend on you. We’ve been through a lot together...I really had feelings for you."
-            m " I didn’t mean it like that..."
-            p "Forget it. You’re right. I don’t know what I was thinking. I’ll go ahead with the academy. Thank you for everything. Let’s both work hard on our separate paths."
-            "> Catherine starts walking towards the door but stops at your side. She glances up towards you quickly but then looks away and continues out the door, leaving you behind. You’re left alone standing in the silent music room and you have a feeling you won’t be playing the piano for a long time."
+            p "...Is it so wrong to have someone to lean on at least sometimes...I thought I could depend on you. We've been through a lot together...I really had feelings for you."
+            m " I didn't mean it like that..."
+            p "Forget it. You're right. I don't know what I was thinking. I'll go ahead with the academy. Thank you for everything. Let's both work hard on our separate paths."
+            "> Catherine starts walking towards the door but stops at your side. She glances up towards you quickly but then looks away and continues out the door, leaving you behind. You're left alone standing in the silent music room and you have a feeling you won't be playing the piano for a long time."
             jump girl2_bad_end
 
 label girl2_failure:
@@ -1350,17 +1350,17 @@ label girl2_bad_end:
 
 label girl2_good_end:
     "> She smiles."
-    p "hahaha! You’re funny."
+    p "hahaha! You're funny."
     "> She continues to laugh at you, but you stand there confused at what just happened."
     m "I think I'm lost."
-    p "I already declined the offer, so whether you like it or not, looks like you’re going to be stuck with me."
+    p "I already declined the offer so whether you like it or not; it looks like you're going to be stuck with me."
     m "Oh hahaha... I thought you were asking seriously."
     p "Well I was asking, then I could figure out how much you like me hehe..."
-    m "charming haha..."
+    m "Charming haha..."
     p "So? what say you? Do I need to make you smell my perfume again?"
     m "Yeah... yeah, I do."
-    "> She leans over, then you feel something press against your cheek."
-    p "Besides, I already said yes to you. You’re my new dream. You’re mine."
+    "> She leans over then you feel something press against your cheek."
+    p "Besides, I already said yes to you. You're my new dream. You're mine."
     
     "YOU WIN"
     return
@@ -1380,17 +1380,17 @@ label home_ec_room:
     "> In front of the Home-Ec Room."
     "> As you enter the room, you hear a sizzling noise. The fragrances tickle your nose as you enter the room. Your sight is drawn to the centre of the room, to a girl. She looks up to acknowledge you and she gives a friendly, but shy smile."
     
-    p "Hello, I haven’t seen your face around, are you new?"
+    p "Hello, I haven't seen your face around, are you new?"
     
     m "Yeah, I just transferred here recently. Is this the cooking club?"
     
-    p "Yes! you’ve come to the right place."
+    p "Yes! you've come to the right place."
     
     m "Where do I sign up?"
     
-    p "Well… you kind of need to cook in this club. Show me what you can do first, and then we can talk about your membership."
+    p "Well... you kind of need to cook in this club. Show me what you can do first, and then we can talk about your membership."
     
-    "> You realize that you’ve only been here for a day, and the only culinary experience you have comes from instant ramen. But how hard could it be?"
+    "> You realize that you've only been here for a day, and the only culinary experience you have comes from instant ramen. But how hard could it be?"
     
     p "...Hello? You blanked out for a second, haha. What do you plan on making for me?"
     
@@ -1412,7 +1412,7 @@ label home_ec_room:
                 jump girl_1_convo_1
         
         "Instant Ramen (No reqs)":
-            "> You decide that it’s would be more efficient to make what you know the best. Conveniently, you remember that you brought along a spare package of instant noodles to school with you. You pull it out of your backpack and proceed to open the plastic wrapping."
+            "> You decide that it's would be more efficient to make what you know the best. Conveniently, you remember that you brought along a spare package of instant noodles to school with you. You pull it out of your backpack and proceed to open the plastic wrapping."
             $ girl1.add_closeness(-1)
             $ stats.set_food_choice(2)
             jump girl_1_convo_1
@@ -1429,13 +1429,13 @@ label home_ec_room:
             
 label girl_1_convo_1:
 
-    "> As you’re working, you can’t help notice the awkward silence settling in. You glance over to her and end up making eye contact. You could probably use this time to get to know her."
+    "> As you're working, you can't help notice the awkward silence settling in. You glance over to her and end up making eye contact. You could probably use this time to get to know her."
 
     menu: 
         "Ask her for her name":
-            m "Soooo… I actually never caught your name, my names %(player_name)s."
+            m "Soooo... I actually never caught your name, my names %(player_name)s."
     
-            p "Oh, sorry about that! I’m Mary, I am president of the cooking club. I'm also in my senior year."
+            p "Oh, sorry about that! I'm Mary, I am president of the cooking club. I'm also in my senior year."
             # change the name of p to Mary
             $ unknown_name = "Mary"
             
@@ -1448,9 +1448,9 @@ label girl_1_convo_1:
             
             menu:
                 "Ask her for her name":
-                    m "Soooo… I actually never caught your name, my names %(player_name)s."
+                    m "Soooo... I actually never caught your name, my names %(player_name)s."
     
-                    p "Oh, sorry about that! I’m Mary, I am president of the cooking club. I'm also in my senior year."
+                    p "Oh, sorry about that! I'm Mary, I am president of the cooking club. I'm also in my senior year."
                     # change the name of p to Mary
                     $ unknown_name = "Mary"
             
@@ -1469,10 +1469,10 @@ label girl_1_convo_1:
     elif get_food == 1:
         jump made_bad_food_1
     elif get_food == 2:
-        "> You peek at her eyes to get some idea of what she may be thinking, but it’s not really discernible. You watch nervously as she takes a bite. This is your favorite flavor of instant noodles. After swallowing, she hesitates for a moment, and her eyes bulge. Violently she clasps her mouth and supports herself with the edge of the counter. She spits out your creation."
+        "> You peek at her eyes to get some idea of what she may be thinking, but it's not really discernible. You watch nervously as she takes a bite. This is your favorite flavor of instant noodles. After swallowing, she hesitates for a moment, and her eyes bulge. Violently she clasps her mouth and supports herself with the edge of the counter. She spits out your creation."
         jump made_bad_food_1
     else:
-        "> You peek at her eyes to get some idea of what she may be thinking, but it’s not really discernible. You watch nervously as she takes a bite, wondering if you put in enough sriracha sauce to mask the overbearing taste of durian. After swallowing, she hesitates for a moment, and her eyes bulge. Violently she clasps her mouth and supports herself with the edge of the counter. She spits out your creation."
+        "> You peek at her eyes to get some idea of what she may be thinking, but it's not really discernible. You watch nervously as she takes a bite, wondering if you put in enough sriracha sauce to mask the overbearing taste of durian. After swallowing, she hesitates for a moment, and her eyes bulge. Violently she clasps her mouth and supports herself with the edge of the counter. She spits out your creation."
         jump made_bad_food_1
         
 label made_bad_food_1:
@@ -1483,7 +1483,7 @@ label made_bad_food_1:
 
     m "Sorry about that, maybe you can teach me some basics?"
     
-    p "mmm… that sounds okay i suppose...come by tomorrow and I’ll teach you a little of what I know."
+    p "mmm... that sounds okay i suppose...come by tomorrow and I'll teach you a little of what I know."
     
     jump end_day_1
     
@@ -1493,15 +1493,15 @@ label made_good_food_1:
     
     "> Mary gives a warm smile"
     
-    # change it to something without sous chef. No relevancy. Just be like Okay you’ve proven yourself. You are free to come by tomorrow after classes or something 
-    p "I’ll let you into the club! I need a sous chef to help me with a project. If you’re free come by tomorrow after class"
+    # change it to something without sous chef. No relevancy. Just be like Okay you've proven yourself. You are free to come by tomorrow after classes or something 
+    p "I'll let you into the club! I need a sous chef to help me with a project. If you're free come by tomorrow after class"
     
     jump end_day_1
     
 label end_day_1:
     
     # show image of bedroom at night?
-    m "That was a long day, time to hit the sack."
+    m "That was a long day; it's time to hit the sack."
     $ stats.increment_days()
     
     jump start_day_2
@@ -1902,11 +1902,11 @@ label mary_backstory1 :
     
     $ cafe_trigger = 1
     
-    p "Hmm... I don’t know. It’s not the most stable career out there, ahah."
+    p "Hmm... I don't know. It's not the most stable career out there, ahah."
     
     m "So?"
     
-    p "Soooo… that’s being pretty unrealistic… It’s too selfish for me to just think about what I want to do… I mean, when I get older I have to think about supporting a family, and taking care of kids, so that they can go to university. At least that’s what my mom thinks."
+    p "Soooo... that's being pretty unrealistic... It's too selfish for me to just think about what I want to do... I mean, when I get older I have to think about supporting a family, and taking care of kids, so that they can go to university. At least that's what my mom thinks."
     
     "> Mary lets out a heavy sigh as her eyes roll back and she leans back into her chair. Her posture sinks and her eyes fall down to her cup."
     menu: 
@@ -1941,7 +1941,7 @@ label cafe_date_goodending :
     
     p "I really enjoyed this. We should get together more often."
     
-    "> You hold the door open for her and you guys part ways. as you’re walking, you look back to catch her peeking over her shoulder, as well. You both wave at each other."
+    "> You hold the door open for her and you guys part ways. as you're walking, you look back to catch her peeking over her shoulder, as well. You both wave at each other."
     
     "> The date was a success! You managed to get closer to Mary"
     
@@ -1967,7 +1967,7 @@ label cafe_date_badending :
 
 label restaurant_date1 :
     if not rest1_asked2 and not rest1_asked3 :
-        "> The hostess leads you to your table, and both of you get in each other’s way trying to decide where each of you will sit. As you two take your respective seats, you chuckle to each other."
+        "> The hostess leads you to your table, and both of you get in each other's way trying to decide where each of you will sit. As you two take your respective seats, you chuckle to each other."
     
         p "Ahah, wow.. this place sure is fancy." 
     
@@ -1984,7 +1984,7 @@ label restaurant_date1 :
             $girl1.add_affection(1)
             p "O-Oh."
             
-            "> Mary blushes and can’t seem to look you in the eye. You hope this is a good sign? Your compliment doesn’t do anything to spark any conversation, rather, she seems even more flustered. "
+            "> Mary blushes and can't seem to look you in the eye. You hope this is a good sign? Your compliment doesn't do anything to spark any conversation, rather, she seems even more flustered. "
             jump restaurant_date1
             
         "What else do you like about cooking?" : 
@@ -2007,11 +2007,11 @@ label restaurant_date2:
     if not rest2_asked1:
         "> The corners of her mouth raise ever so slightly, but her eyes wince a little."
             
-        p "I’ve been really curious about ever since I was little. Cooking made me feel some sort of wonder and eventually it just grew into a passion."
+        p "I've been really curious about ever since I was little. Cooking made me feel some sort of wonder and eventually it just grew into a passion."
             
         "> She shifts her glass back and forth. Her eyes follow the glass. She lets out a shallow sigh."
             
-        p "Something about cooking makes me feel unique, you know? Haha, sometimes I like to pretend that I’m really good at it. "
+        p "Something about cooking makes me feel unique, you know? Haha, sometimes I like to pretend that I'm really good at it. "
         
         "> Her glass slows down, and her smile fades to concern."
             
@@ -2025,7 +2025,7 @@ label restaurant_date2:
             $ reassure = True
             m "Just a hobby? But you're the president of the cooking club!"
             
-            p "Titles don’t really mean a whole lot, you haven’t even tried my cooking."
+            p "Titles don't really mean a whole lot, you haven't even tried my cooking."
             
             menu :
                 "> Be bold" : #stat requirement to say? (+2)
@@ -2049,7 +2049,7 @@ label restaurant_date2:
                     "> Mary forces a smile."
                 
                 "> Be polite":
-                    m "You’ve tried mine. We should make something together, and you can teach me a few things."#(+1)
+                    m "You've tried mine. We should make something together, and you can teach me a few things."#(+1)
                     $ girl1.add_affection(1)
                     $ girl1.add_closeness(1)
                     p "Sounds like a fun time. Haha, alright then."
@@ -2066,27 +2066,27 @@ label restaurant_date2:
 label mary_backstory2:
     "> Mary rolls her eyes, she sits back in her chair, while letting her posture sink and her sight drops to her glass."
     
-    p "I know she means well, and it’s not like she’s being mean about it. I just feel this pressure not to disappoint her? I don’t even know why I’m telling you all of this. I’ve only known you for a couple days, sorry."
+    p "I know she means well, and it's not like she's being mean about it. I just feel this pressure not to disappoint her? I don't even know why I'm telling you all of this. I've only known you for a couple days, sorry."
     
-    m "Honestly Mary, don’t worry I’m completely fine with it. Have you ever told her how you feel about cooking?"
+    m "Honestly Mary, don't worry I'm completely fine with it. Have you ever told her how you feel about cooking?"
     
-    p "I’ve sort of suggested being a chef, but she avoids really talking about it much. she redirects the conversation, or tells me that 
+    p "I've sort of suggested being a chef, but she avoids really talking about it much. she redirects the conversation, or tells me that 
        “It would be better to keep it as a hobby.”... My dad was a chef, and my mom loved him, but she would sometimes get worried that he was a little too invested in his passion for cooking. 
-       When he had holidays, brought me into the kitchen, and taught me how to cook. I really loved those moments, and that’s when I fell in love with cooking hehe..."
+       When he had holidays, brought me into the kitchen, and taught me how to cook. I really loved those moments, and that's when I fell in love with cooking hehe..."
     
     m "What about your dad? what does he think?"
     
     "> Mary pauses for a moment. She takes a prolonged deep breath."
     
     p " He would have said “do it!” He was the nonchalant character that brought life to the family. 
-        My mom and dad were a strange couple, they both worked hard, but it’s funny cause my mom was the bread-winner, my dad baked the bread. hahaha... 
-        But he’s not here to say that anymore..."
+        My mom and dad were a strange couple, they both worked hard, but it's funny cause my mom was the bread-winner, my dad baked the bread. hahaha... 
+        But he's not here to say that anymore..."
     
     m "I'm really sorry to hear that..."
     
-    p "Thanks. I was about 14 at the time, so I’ve come to accept it… He really loved his work. Sometimes my dad would work 16 hours a day, prepping the restaurant, and working late. "
+    p "Thanks. I was about 14 at the time, so I've come to accept it... He really loved his work. Sometimes my dad would work 16 hours a day, prepping the restaurant, and working late. "
     
-    p "The doctors said that he needed to take more breaks or he may suffer from stress, but my dad is the kind of guy who wouldn’t accept that. He had a heart attack, and it almost seemed out of the blue. 
+    p "The doctors said that he needed to take more breaks or he may suffer from stress, but my dad is the kind of guy who wouldn't accept that. He had a heart attack, and it almost seemed out of the blue. 
        It turns out the stressed caused high blood pressure and lead to heart failure."
 
     p "My mom and I were devastated. Cooking for me lets me keep a memory of him living. I think for my mom, seeing me cook, just reminds her of a passion that took dad away."
@@ -2105,9 +2105,9 @@ label mary_backstory2:
             "> Mary goes silent for a moment. She doesn't seem to be feeling well." 
             
         "Don't listen to your mom." :
-            m "It’s really considerate of you to try and make your mom happy, but I think you deserve to be happy too, even if it means going against her wishes."
+            m "It's really considerate of you to try and make your mom happy, but I think you deserve to be happy too, even if it means going against her wishes."
             
-            p "But how can I have happiness without my mom’s approval? She’s still important to me so her wishes are important as well...."
+            p "But how can I have happiness without my mom's approval? She's still important to me so her wishes are important as well...."
             
             p "...Sorry. I know you're just trying to help. That means a lot to me. Thanks."
             
@@ -2115,11 +2115,11 @@ label mary_backstory2:
             
         "Talk to your mom about it.":
             $ girl1.add_closeness(2)
-            m "It sounds like you’re pretty torn and I think expressing your feelings towards your mom would be a pretty good step forward. She probably wants you to be as happy just as much as you want her to be happy."
+            m "It sounds like you're pretty torn and I think expressing your feelings towards your mom would be a pretty good step forward. She probably wants you to be as happy just as much as you want her to be happy."
             
             "> Mary looks contemplative. Her expression turns sour."
             
-            p"No…I can’t. You don’t know my mom. She would never understand. This is important to me. What if I end up losing all of it? I wouldn’t be able to…"
+            p"No...I can't. You don't know my mom. She would never understand. This is important to me. What if I end up losing all of it? I wouldn't be able to..."
             
             "> Mary looks like she's on the verge of tears."
             
@@ -2146,7 +2146,7 @@ label mary_backstory2:
 label girl1_home_date:
 
     if reassure:
-        m "Hey Mary. I remember before you mentioned that I never tasted your cooking. If it’s okay with you, I’d really like to try some today."
+        m "Hey Mary. I remember before you mentioned that I never tasted your cooking. If it's okay with you, I'd really like to try some today."
 
         p "Oh! so you did remember!" 
 
@@ -2164,39 +2164,39 @@ label girl1_home_date:
         
         "> Mary smiles shyly."
 
-    m "I remember you mentioned before that I never tasted your cooking. If it’s okay with you, I’d really like to try some today."
+    m "I remember you mentioned before that I never tasted your cooking. If it's okay with you, I'd really like to try some today."
 
     p "Oh, so you did remember!" 
 
     "{i}she seems shy but happy{/i}"
 
-    p "Then, why don’t we go back to my house? I have all the ingredients there."
+    p "Then, why don't we go back to my house? I have all the ingredients there."
 
-    "> You and Mary head back to her place. You feel tenser than usual, despite the fact you’ve recently spent a lot of time with her. In the corner of your eye you catch her peeking slightly in your directly, but she immediately redirects her vision forward after being noticed."
+    "> You and Mary head back to her place. You feel tenser than usual, despite the fact you've recently spent a lot of time with her. In the corner of your eye you catch her peeking slightly in your directly, but she immediately redirects her vision forward after being noticed."
 
-    p "Today is really beautiful, although I don’t know what we’d do if there wasn’t a breeze."
+    p "Today is really beautiful, although I don't know what we'd do if there wasn't a breeze."
 
-    p "Then.. Instead of cooking it here, Why don’t we go to my house? There's plenty of ingredients there."
+    p "Then.. Instead of cooking it here, Why don't we go to my house? There's plenty of ingredients there."
     
     m "S-sure."
     
     "> A nervous tension suddenly fills the air."
     #fade out
 
-    "> You and Mary head back to her place after club activities. You feel tenser than usual, despite the fact you’ve recently spent a lot of time with her." 
+    "> You and Mary head back to her place after club activities. You feel tenser than usual, despite the fact you've recently spent a lot of time with her." 
     "> In the corner of your eye you catch her peeking slightly in your direction, but she immediately redirects her vision forward after being noticed."
 
     p "It's a really beautiful day today isn't it?"
     
     "> It seems that Mary's trying her hardest to cope with the awkwardness."
     "> As you approach her house, your eyes follow her as she leaps ahead. She moves forward and her hair swings, pushing its scent towards you."
-    "> For a second you get hung on the scent as you’re both entering. She turns to notice you."
+    "> For a second you get hung on the scent as you're both entering. She turns to notice you."
 
-    p "You look like you’re lost."
+    p "You look like you're lost."
 
     m "E-ehh. My bad."
 
-    "> You look around her house, a bit flustered that you don’t know how to recover smoothly."
+    "> You look around her house, a bit flustered that you don't know how to recover smoothly."
     
     p "Hehehe, the kitchen is this way."
 
@@ -2225,17 +2225,17 @@ label girl1_home_date:
             "> You pick one with her flour all over her face as a kid, her glasses caked in powder. Her smile was the only distinguishable feature."
             p "..What are you up to?"
             "> Mary peeks in from the kitchen."
-            p "Ah! Nooo! That’s such an embarrassing picture of me! Don't look!"
-            m "Hahaha! I think it’s cute."
+            p "Ah! Nooo! That's such an embarrassing picture of me! Don't look!"
+            m "Hahaha! I think it's cute."
             "> Her cheeks grow red."
-            p "D-don’t say things like that!" 
+            p "D-don't say things like that!" 
             "> Despite saying that, it was obvious she was forcing herself to hold back her smile." 
             p "I-I think you should stay put in the kitchen from now on!"
             menu:
                 "If you say so.":
                     jump girl1_home_date_kitchen
                 "Why is this the only happy photo?":
-                    p "I don’t really know. That was the first time my mom let me bake all by myself. I ended up dropping the flour bag and making a huge mess all over the place." 
+                    p "I don't really know. That was the first time my mom let me bake all by myself. I ended up dropping the flour bag and making a huge mess all over the place." 
                     p "As for the other photos, I was just never excited about those things."
                     p "My mom really wanted me to get good grades, so I was told avoid any extra-curricular activity because she felt they would get in the way." 
                     p "'Mary you have to do well so I can get into a good university and find a stable job.'"
@@ -2258,7 +2258,7 @@ label girl1_home_date:
                             "> The two of you stand silent for a while before finally letting go of each other."
                             p "U-uumm... Thank you. Sorry if I made you feel uncomfortable."
                             m "We should probably head back to the kitchen."
-                            P "Y-yeah! Of course!"
+                            p "Y-yeah! Of course!"
                     "> Mary grabs on to your arm and brings you back into the kitchen."
                     jump girl1_home_date_kitchen
             
@@ -2273,23 +2273,23 @@ label girl1_home_date_kitchen:
     "> The two of you watch as the parts slowly come together. You feel her elbow brushes against yours every now and then."
     p "Sorry!"
     "> She looks up at you for a brief moment and catches your gaze."
-    m "Don’t apologize. It’s alright." 
+    m "Don't apologize. It's alright." 
     "> Her eyes widen slightly, but immediately her face turns back to focus on the preparations."
     "> You notice a bead of sweat trail down from her temple to the front of her neck. Her cheeks flooded with red."
     "> A sense of nervousness and excitement fills your mind. Your breathing becomes shallow."
-    p "Uhh.. It’s getting a little warm in here. How hot did you preheat that oven exactly?"
+    p "Uhh.. It's getting a little warm in here. How hot did you preheat that oven exactly?"
     "> Mary turns to the oven." 
     p "Oh! 350 degrees. Perfect! Uhhm.. I guess the weather is pretty today." 
     "> Frantically, she tries to clear her sweat, however she knocks the bowl of flour off the counter top." 
     p "OH NO!"
     "> You manage save the bowl, however all the flour that was in it is now spread across the floor."
     menu:
-        "Somebody’s got a lot of cleaning to do...":
+        "Somebody's got a lot of cleaning to do...":
             #negative
             $ girl1.add_affection(-1)
             p "Just get me more flour."
             "> After clearing the mess, you head into the pantry and find an extra-large bag of flour up on the top shelf."
-        "Don’t worry! I’ll grab you some more flour.":
+        "Don't worry! I'll grab you some more flour.":
             #positive
             $girl1.add_affection(1)
             p "Haha. So dependable."
@@ -2298,12 +2298,12 @@ label girl1_home_date_kitchen:
     "> The two of you struggle with the heavy bag as you try to get it. The shifting of the bag causes it to tip over."
     "> Unable to realize that the top of the bag was unsealed, a torrent of flour rains down and covers both your faces."
 
-    m "You got some… Umm.. flour all over you."
+    m "You got some... Umm.. flour all over you."
 
     #says both of you have flour all over your faces , but u only wipe off hers . Maybe put a text saying u wipe your face first
     "> You brush the flour off her shoulders, trying to avoid making awkward physical contact."
 
-    p "Well… I could only assume. My lenses are completely covered. I can’t see a thing."
+    p "Well... I could only assume. My lenses are completely covered. I can't see a thing."
                 
     m "Here I got it for you."
 
@@ -2318,16 +2318,16 @@ label girl1_home_date_kitchen:
             "> ..."
             "> ... You feel something press against your lips..."
             "> ..."
-            "> Something doesn’t feel right..." 
+            "> Something doesn't feel right..." 
             "> As you open your eyes you find your mouth, cupped by her hand."
             #SPLIT HERE BASED ON AFFECTION
             if girl1.affection >= 7:
                 "> Mary's eyes still wide open, smiling."
-                p "I may not be able to see that well without glasses, but I’m not blind."
-                p "Don’t get me wrong, I can’t deny that I have feelings for you, but let’s take it slow."
+                p "I may not be able to see that well without glasses, but I'm not blind."
+                p "Don't get me wrong, I can't deny that I have feelings for you, but let's take it slow."
                 "> She lifts your hands off of her, she holds you palm open and examines it. You both turn slightly towards the counter to face shoulder to shoulder."
-                "> Still examining your hand, she places her hand on top of your’s as if comparing hand sizes."
-                p "You know, you have pretty soft hands. I think I’ll hold on to them for a while."
+                "> Still examining your hand, she places her hand on top of your's as if comparing hand sizes."
+                p "You know, you have pretty soft hands. I think I'll hold on to them for a while."
                 "> Both your hands begin to offset a little. You decide not to resist and allow your fingers to interlock."
                 jump mom_drama
                 
@@ -2345,13 +2345,13 @@ label girl1_home_date_kitchen:
                 m "..."
                 p "A relationship right now would be too distracting for me.... "
                 p "Also.. I need to focus on other things, like school..." 
-                p "...It’s going to be hard to go back to the way things were before."
+                p "...It's going to be hard to go back to the way things were before."
                 m "... Yeah."
                 "> You both get up."
                 "> You feel as if your legs are about to give out. "
                 m "I should probably go..."
                 p " ...Yeah."
-                "> Mary leads you to the exit. You can’t think of much to say without making it more awkward, so you just keep walking." 
+                "> Mary leads you to the exit. You can't think of much to say without making it more awkward, so you just keep walking." 
                 "> You look back. The door is closed."
                 m "{i} I guess that's it, huh...? {/i}"
                 #jump bad ending
@@ -2362,14 +2362,14 @@ label girl1_home_date_choice:
         "Deep-fried sushi" :
             p "Wow! Your taste is pretty extravagant, huh?"
             menu:
-                "You don’t have to cook it if you don't want to.":
-                    p "You don’t think I can do it?"
-                    p "I’ll prove you wrong."
+                "You don't have to cook it if you don't want to.":
+                    p "You don't think I can do it?"
+                    p "I'll prove you wrong."
                     "> Mary seems motivateds all of a sudden."
                     #negative
                 " I really want to eat this.":
                     "{i}Mary seems intimidated by the challenge but finds her resolve.{/i}"
-                    p "I’ll do my best!"
+                    p "I'll do my best!"
                     "> Mary seems motivateds all of a sudden."
                     #positive/neutral 
         "Instant noodles":
@@ -2380,64 +2380,64 @@ label girl1_home_date_choice:
         "Triple Layer Chocolate Cake":
             "{i}She seems surprised by your request{/i}"
 
-            p "I thought you’d choose something more difficut. Why did you choose a cake?"
+            p "I thought you'd choose something more difficut. Why did you choose a cake?"
             menu:
-                "I didn’t want you to work too hard.":
-                    p "What? Don’t worry so much...I can handle it. But alright, I'll make the cake if that’s what you want."
+                "I didn't want you to work too hard.":
+                    p "What? Don't worry so much...I can handle it. But alright, I'll make the cake if that's what you want."
                     #negative
-                "So we can share it when you’re done.":
-                    p "Haha, Are you usually this corny? But alright, if that’s what you want."
+                "So we can share it when you're done.":
+                    p "Haha, Are you usually this corny? But alright, if that's what you want."
                     #neutral 
                 "It has a special meaning.":
                     $ girl1.add_affection(1)
                     p "Meaning?"
-                    m "Yeah. Each layer of the cake represents each place we’ve spent time together and how far we’ve come building on our relationship. One layer at a time."
+                    m "Yeah. Each layer of the cake represents each place we've spent time together and how far we've come building on our relationship. One layer at a time."
                     "> Mary's face turns red as she tries hard to hold back her laughter."
                     p "Were you always this corny?"
                     "> Mary seems pleased by your thought."
-                    p " Alright, I’ll get started then." 
+                    p " Alright, I'll get started then." 
 
                     #positive
-    "> Mary begins cooking the dish and you’re left sitting in her living room alone."
+    "> Mary begins cooking the dish and you're left sitting in her living room alone."
     return 
     
 label mom_drama:
     #mom drama stuff
     "> You hear the door bell ring. An unfamiliar voice calls from the door."
 
-    mom "Hey Mary, I’m home from my business trip!"
+    mom "Hey Mary, I'm home from my business trip!"
 
     p "What?! She's home a day early! Why?!"
 
     "> Mary looks around at all the cooking equipment and ingredients splayed out on the counters and looks helpless."
-    "> She’s visibly panicking and attempts to make a move to put things away but it’s futile. "
-    "> You don’t have much time to react before her mom comes into the kitchen."
+    "> She's visibly panicking and attempts to make a move to put things away but it's futile. "
+    "> You don't have much time to react before her mom comes into the kitchen."
     "> Her mom spots you."
 
     mom "Who is this, Mary? Why are you guys alone together?"
 
     p  "Uh, this is my friend, %(player_name)s. We are just hanging out after school mom. That's all.."
 
-    mom "You shouldn’t be inviting people over when I’m away on a business trip. Shouldn’t you be studying too? It’s a school night!"
+    mom "You shouldn't be inviting people over when I'm away on a business trip. Shouldn't you be studying too? It's a school night!"
 
-    p "I-I just wanted to relieve some stress, it’s just a little bit of cooking."
+    p "I-I just wanted to relieve some stress, it's just a little bit of cooking."
 
     "> The tension is getting heavy as you stand there as if you are not even in the room"
 
     mom "Mary, you should be using your time more wisely. What happen to the money I gave you to buy food with? You should be focusing on getting into university so you can get a career."
     "> Mary's mom's eyes turn to the kitchen counter."
     mom "What is all this doing out here?"
-    "> Mary’s mom gestures to all of the equipment and ingredients out in the open."
-    "> Mary’s face is flushed of all its color and her voice is small."
-    p " I didn’t use the money; it’s still in your office. As for all of this...I-  What if I wanted to be a chef?...Like dad?"
+    "> Mary's mom gestures to all of the equipment and ingredients out in the open."
+    "> Mary's face is flushed of all its color and her voice is small."
+    p " I didn't use the money; it's still in your office. As for all of this...I-  What if I wanted to be a chef?...Like dad?"
     
     "> Her mom, is taken back for a moment but then her voice is heightened."
 
-    mom "Don’t you remember what happened to your father? Why would you do this? I can’t let that happen to you, Mary, I can’t lose both of you like that." 
+    mom "Don't you remember what happened to your father? Why would you do this? I can't let that happen to you, Mary, I can't lose both of you like that." 
     
     p "But.."
     "> Mary looks down and appears defeated."
-    mom "No buts! Don’t try to argue with me. Escort your friend out and then go to your room."
+    mom "No buts! Don't try to argue with me. Escort your friend out and then go to your room."
     
     "> Mary turns to you with some tears escaping her eyes and falling down her cheeks."
     p "I'm sorry %(player_name)s... I'm sorry about all of this.. Can you please leave?"
@@ -2447,35 +2447,35 @@ label mom_drama:
             return
             #replace return with jump to game over screen
         "Confront Mary's mom":
-            "> You gather all the courage you can muster and take a purposeful step forward, looking at Mary’s mother in the eye."
+            "> You gather all the courage you can muster and take a purposeful step forward, looking at Mary's mother in the eye."
             m "I'm sorry. I can't leave like this."
             mom "What? How dare you! This is my house."
             "> Mary looks shocked."
             p "%(player_name)s?"
-            m"Hear me out, please. Mary told me about what happened with her father. It must’ve been terrible. By the way Mary talks about him, you both must have loved him very much."
+            m"Hear me out, please. Mary told me about what happened with her father. It must've been terrible. By the way Mary talks about him, you both must have loved him very much."
             "> Her mom seems agitated by a stranger bringing up family matters and she snaps at you."
             mom "What of it?"
-            "> Mary’s mom’s eyes are full of anger and at the same time hurt. You feel beads of sweat forming on your neck as you feel the pressure. "
+            "> Mary's mom's eyes are full of anger and at the same time hurt. You feel beads of sweat forming on your neck as you feel the pressure. "
             "> Your resolve is cracking under the weight of her glare and aura." 
             "> You glance over to Mary, whose eyes are wide and full of tears. "
             "> Seeing Mary strengthens your resolve and you look back to her mom."
             menu: 
                 "Ease into it":
-                    m "Well..I think there’s a misunderstanding between you and Mary right now...You’re not really on the same page. "
-                    mom "What are you saying? You think you know my daughter more than I know her? I’ve raised her and I know what’s best for her." 
-                    m "I’m not saying that I know her more..I just mean.."
+                    m "Well..I think there's a misunderstanding between you and Mary right now...You're not really on the same page. "
+                    mom "What are you saying? You think you know my daughter more than I know her? I've raised her and I know what's best for her." 
+                    m "I'm not saying that I know her more..I just mean.."
                     mom "Who do you think you are?"
-                    m "{i}This isn’t going so well...{/i}"
+                    m "{i}This isn't going so well...{/i}"
                     menu:
                         "Talk about Mary's Dad":
-                             m "I’m sure you remember your husband’s passion for cooking! It made him happy and it made Mary happy too!"
-                             mom "Don’t act like you know everything. He’s gone now because of that passion. He’s gone so I can only look after Mary and her well-being now."
+                             m "I'm sure you remember your husband's passion for cooking! It made him happy and it made Mary happy too!"
+                             mom "Don't act like you know everything. He's gone now because of that passion. He's gone so I can only look after Mary and her well-being now."
                              m "..."
-                             mom "You might mean well, but please. You’re not helping anyone here. Bringing up past pain will not help Mary now. Just leave." 
-                             "> You stand there for a moment and Mary’s look of disappointment and sadness is enough to tell you that you’ve failed."
+                             mom "You might mean well, but please. You're not helping anyone here. Bringing up past pain will not help Mary now. Just leave." 
+                             "> You stand there for a moment and Mary's look of disappointment and sadness is enough to tell you that you've failed."
                              "> You move your legs mechanically out of the kitchen and out of the house."
-                             "> You've tried your best but it wasn’t enough." 
-                             "> You probably won’t be able to spend as much time with Mary anymore.."
+                             "> You've tried your best but it wasn't enough." 
+                             "> You probably won't be able to spend as much time with Mary anymore.."
                              return
                              #jump bad ending
                         "Talk about Mary":
@@ -2485,48 +2485,48 @@ label mom_drama:
                 
             
 label be_blunt:
-    m " To be straightforward, Mary’s the president of the cooking club at school and she’s been cooking for a long time behind your back."
-    "> Mary’s mom sharply turns to Mary in disbelief and Mary cowers even more."
-    p "%(player_name)s!! I-It’s not what you think, mom…"
+    m " To be straightforward, Mary's the president of the cooking club at school and she's been cooking for a long time behind your back."
+    "> Mary's mom sharply turns to Mary in disbelief and Mary cowers even more."
+    p "%(player_name)s!! I-It's not what you think, mom..."
     m "It's exactly how it looks."
     mom "Mary..Why haven't you been listening to me? You know exactly why I forbid you to cook." 
-    m "She does it because it’s her passion." 
+    m "She does it because it's her passion." 
     m "A passion that was fostered by your husband. She does it to honor him and ultimately, because it makes her happy. Is that really so bad?"
-    "> Mary’s mom stares at you for a moment."
-    mom "Do you think I don’t know what’s best for my own daughter?"
-    m "Please, I’m not trying to undermine you or your ideals." 
-    m "But I think it’d be great for both you and Mary if you would even just consider the idea of letting her cook as a hobby and potentially even going further as a career." 
-    mom "She..she can’t. Or else she’ll end up just like her father." 
+    "> Mary's mom stares at you for a moment."
+    mom "Do you think I don't know what's best for my own daughter?"
+    m "Please, I'm not trying to undermine you or your ideals." 
+    m "But I think it'd be great for both you and Mary if you would even just consider the idea of letting her cook as a hobby and potentially even going further as a career." 
+    mom "She..she can't. Or else she'll end up just like her father." 
     "> Her eyes seem less hard now, and more sad."
-    m "In some ways. She’ll definitely be happier. More passionate. I can see why you worry about her...I do too." 
+    m "In some ways. She'll definitely be happier. More passionate. I can see why you worry about her...I do too." 
     "> You look over at Mary again and your eyes lock. She smiles a little bit."
-    m" But you should trust her to know her limits - I know I’ve come to." 
-    m "She’s smart, she’s reasonable. she knows her abilities and her talents. Honestly, she’s great. Limiting her is putting on more stress than not. "
-    "> Mary’s mom is silent. She then looks over to Mary."
+    m" But you should trust her to know her limits - I know I've come to." 
+    m "She's smart, she's reasonable. she knows her abilities and her talents. Honestly, she's great. Limiting her is putting on more stress than not. "
+    "> Mary's mom is silent. She then looks over to Mary."
     mom "Is..all of this true?"
-    p "Yes, mom...I’ve always loved cooking and I haven't stopped even if dad has died." 
-    p "I’m sorry..I never wanted you to find out like this.."
+    p "Yes, mom...I've always loved cooking and I haven't stopped even if dad has died." 
+    p "I'm sorry..I never wanted you to find out like this.."
     mom "..."
     p "Please mom..This is what I really want to do. I know you loved dad because he was very passionate as well.."
-    "> Mary’s mom looks away from the both you and Mary."
-    mom "I didn’t mean to drive a wall between us. You really kept all of this a secret from me?" 
-    p "I was too scared..I didn’t want to hurt you too. But this is who I am.."
-    "> Mary’s mom turns around and embraces Mary."
-    mom "I’m sorry." 
-    "> It seems like she’s unable to say anything else as her voice starts wavering. Mary is crying too." 
-    "> You decide that you shouldn’t intrude and you leave the room."
+    "> Mary's mom looks away from the both you and Mary."
+    mom "I didn't mean to drive a wall between us. You really kept all of this a secret from me?" 
+    p "I was too scared..I didn't want to hurt you too. But this is who I am.."
+    "> Mary's mom turns around and embraces Mary."
+    mom "I'm sorry." 
+    "> It seems like she's unable to say anything else as her voice starts wavering. Mary is crying too." 
+    "> You decide that you shouldn't intrude and you leave the room."
     "> ..."
-    "> Time passes as you wait outside. You wonder if you could have said anything else, but it’s up to Mary now." 
+    "> Time passes as you wait outside. You wonder if you could have said anything else, but it's up to Mary now." 
     "> After a while, the door opens behind you and you turn to see Mary coming out."
     m "Hey. You okay?" 
     "> Mary nods and a huge smile breaks out on her face."
-    p "She’s letting me continue to cook! Can you believe it?"
-    p "We talked it over and she’s letting me have my shot at being a chef like my dad! She said I had to keep my grades up but that’s all fine."
-    p "I’m so glad! It’s all thanks to you, %(player_name)s. You stood up for me." 
+    p "She's letting me continue to cook! Can you believe it?"
+    p "We talked it over and she's letting me have my shot at being a chef like my dad! She said I had to keep my grades up but that's all fine."
+    p "I'm so glad! It's all thanks to you, %(player_name)s. You stood up for me." 
     m "I wanted to protect you." 
     "> Mary smiles even more and hugs you."
-    p "I’m so thankful for you..thank you so much.."
-    "> You give her a hug back and you both relish in each other’s happiness."
+    p "I'm so thankful for you..thank you so much.."
+    "> You give her a hug back and you both relish in each other's happiness."
     jump mary_good_end
 
 
