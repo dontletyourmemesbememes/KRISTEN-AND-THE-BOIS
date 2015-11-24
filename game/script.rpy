@@ -1,33 +1,60 @@
-﻿# You can place the script of your game in this file.
+# You can place the script of your game in this file.
 
 # Declare images below this line, using the image statement.
 # eg. image eileen happy = "eileen_happy.png"
+image bg auditorium = "Auditorium.png"
+image bg balcony = "Balcony.png"
+image bg cafe = "Cafe.png"
+image bg classroom = "Classroom.png"
+image bg hallway = "Hallway.png"
+image bg home_ec_room = "Home_ec_room.png"
+image bg house = "House.png"
+image bg karaoke = "Karaoke.png"
+image bg music_room = "Music_room.png"
+image bg office = "Office.png"
+image bg outside_house = "Outside_house.png"
+image bg restaurant = "Restaurant.png"
 
 init python:
     import random
-
-    class QuestionManager:
-        def __init__(self):
-            self.question_list = []
-        def get_random_question(self):
-            # do something FIX IT
-            self.question_list = []
 
     class Question:
         def __init__(self,desc,choices,answer):
             self.description = desc
             self.choices = choices
-            self.answer = answer
+            self.answer = choices[answer]
 
         def get_description(self):
             return self.description
 
         def get_choices(self):
             random.shuffle(self.choices)
-            return choice_list
+            return self.choices
+
+        def get_menu_choices(self):
+            menu_list = []
+            choice_list = self.get_choices()
+            for choices in choice_list:
+                if choices == self.answer:
+                    t = (choices,True)
+                else:
+                    t = (choices,False)
+                menu_list.append(t)
+
+            return menu_list
 
         def check_answer(answer):
             return answer == self.answer
+
+    class QuestionManager:
+        def __init__(self):
+            self.question_list = []
+        def get_random_question(self):
+            return self.question_list[renpy.random.randint(0,len(self.question_list)-1)]
+        def add_question(self,desc,choices,answer):
+            question = Question(desc,choices,answer)
+            self.question_list.append(question)
+
 
     class Stats:
         def __init__(self):
@@ -110,7 +137,10 @@ init python:
             
         def add_affection(self,amount):
             self.affection += amount
-            
+
+        def get_affection(self,name):
+            return self.affection
+
         def set_name(self,name):
             self.name = name
             
@@ -125,7 +155,6 @@ init python:
 
 
 # Declare characters used by this game.
-image bg placeholderbg = "background.png"
 
 define p = DynamicCharacter("unknown_name", color="#c8ffc8")
 define m = DynamicCharacter("player_name")
@@ -145,13 +174,27 @@ define rest1_asked3 = False
 define rest2_asked1 = False
 define reassure = False
 
+#Music girl variables~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+define girl2_event1_asked1 = False
+
 # The game starts here.
 # Initialize stuff here and shove all the tutorial intro stuff here as well.
 label start:
+    scene bg office
+    with fade
+    $ bio_qman = QuestionManager()
+    $ gym_qman = QuestionManager()
+    $ drama_qman = QuestionManager()
+
+    $ bio_qman.add_question("description",["wrong1","wrong2","wrong3","correct"],3)
+    $ gym_qman.add_question("description",["wrong1","wrong2","wrong3","correct"],3)
+    $ drama_qman.add_question("description",["wrong1","wrong2","wrong3","correct"],3)
+
 
     $ player_name = renpy.input("Most of the documents seem to be in order. Can I get you to sign your name below please?")
     $ stats = Stats()
     $ girl1 = Girl("Mary")
+    $ girl2 = Girl("Catherine")
     $ unknown_name = "???"
     principal "Alright %(player_name)s, I believe we're good to go now!"
     
@@ -184,6 +227,8 @@ label intro:
     
 label school_tour:
     
+    scene bg hallway
+    with fade
     "> The principal shows you through most of the building and classrooms. Nothing about this school seems particulary unusual." 
     "> Nothing the principal is saying seems particulary important..."
     
@@ -191,24 +236,28 @@ label school_tour:
     
     "> Oh. Time to pay attention."
     
+    scene bg home_ec_room
+    with fade
     #show image of economics room
     principal "This is the home economics room. Students come here to learn essential life skills like cooking." 
     "> You notice there's someone in the room. Let's take a look!"
-    #show image of girl cooking
+    #show image of Mary cooking
     principal "Keep in mind that the most sophisticated dishes require a certain amount of stamina as well as some creative style."
     principal "Moving on..."
     
   
     #fade out
-    
+    scene bg music_room
+    with fade
     #show image of music room
     principal "This is the music room. If you ever want to develop your musical capabilities, then this is the perfect spot to practice!"
     "> You hear someone playing inside. Let's take a peek!"
-    #show tsundere playin violin
+    #show Catherine playing violin
     principal "Keep in mind that music is an expression of your personality, but also requires a lot of thought process."
     
     
     #fade out
+
     
     #show image of the gym
     #JUST THE TWO CLUBS FOR NOW
@@ -219,23 +268,29 @@ label school_tour:
     principal "Moving on to the next club..."
     #fade out
     "> The other club rooms didn't seem to interest you at all..."
-    
+
     #go to general image, office or something
+    scene bg office
+    with fade
     principal "Well those are just examples of the many facilities this school provides."# Make use of your time and be sure to work hard on your academics."
     principal "So... Did you enjoy checking out some of the female students instead of paying attention to what I was saying?"
     principal "Haha, don't worry, you're a young man, so I understand."
     principal "Some words of advice if you're aiming for a relationship. I'm only going to say this once."
-    principal "Don't cheat. It's not cool. If you choose someone you're stuck with it. It's how this world works."
     principal "Don't wait. If too much time passes before you make a significant move, any girl is going to think you have no intention to be in a relationship."
-    principal "Follow these rules and you won't end up lonely and single for the {b}REST OF YOUR HIGH SCHOOL LIFE.{/b}"
-    principal "Remember that this is an elite school and your studies are very important. However, your social life and extra curriculars are crucial for a healthy high school experience too." 
-    principal "Best wishes to you!"
+    principal "Follow this rule and you won't end up lonely and single for the {b}REST OF YOUR HIGH SCHOOL LIFE.{/b}"
+    principal "Remember that we are an elite school where studies are valued, so we restrict students to joining only one club." 
+    principal "But keep in mind that your social life and extra curriculars are crucial for a healthy high school experience too." 
+    principal "Now then. I think I've said enough."
+    principal "Best wishes to you, %(player_name)s."
     
     $ stats.reset_classes()
 
     jump make_schedule
 
 label make_schedule:
+    
+    scene bg classroom
+    with fade
     
     if len(stats.get_picked_classes()) == 0:
         m "It looks like I have to choose 2 classes to attend this afternoon."
@@ -275,21 +330,59 @@ label end_day_0:
     
 label gym:
     $ stats.pick_classes("Gym (+1 Strength)")
-    $ stats.add_stats("str", 1)
+
+    #$ stats.pick_classes("Gym")
+    $ question = gym_qman.get_random_question()
+    $ desc = question.get_description()
+    "Question: %(desc)s"
+    $ choices = question.get_menu_choices()
+    $ result = renpy.display_menu(choices)
+    if result == True:
+        $ stats.add_stats("str", 1)
+        "Stat raised"
+    else:
+        "No Stats raised"
+
     if len(stats.get_picked_classes()) < stats.max_classes:
         m "Guess I'll choose Gym for one choice, I still need to pick another."
     return
     
 label drama:
+
     $ stats.pick_classes("Drama (+1 Charm)")
-    $ stats.add_stats("cha", 1)
+
+    #$ stats.pick_classes("Drama")
+    $ question = drama_qman.get_random_question()
+    $ desc = question.get_description()
+    "Question: %(desc)s"
+    $ choices = question.get_menu_choices()
+    $ result = renpy.display_menu(choices)
+    if result == True:
+        $ stats.add_stats("cha", 1)
+        "Stat raised"
+    else:
+        "No Stats raised"
+
     if len(stats.get_picked_classes()) < stats.max_classes:
         m "Guess I'll choose Drama for one choice, I still need to pick another."
     return 
     
 label biology:
+
     $ stats.pick_classes("Biology (+1 Intelligence)")
-    $ stats.add_stats("int", 1)
+
+    #$ stats.pick_classes("Biology")
+    $ question = bio_qman.get_random_question()
+    $ desc = question.get_description()
+    "Question: %(desc)s"
+    $ choices = question.get_menu_choices()
+    $ result = renpy.display_menu(choices)
+    if result == True:
+        $ stats.add_stats("int", 1)
+        "Stat raised"
+    else:
+        "No Stats raised"
+
     if len(stats.get_picked_classes()) < stats.max_classes:
         m "Guess I'll choose Biology for one choice, I still need to pick another."
     return
@@ -299,17 +392,869 @@ label extracurricular:
     $ chosen_girl = stats.get_chosen_girl()
     
     if chosen_girl == 0:
+        
         menu:
             "Home Economics Room":
                 jump home_ec_room
             "Music Room":
-                jump music_room_0
-           # "Fitness Centre":
-           #     jump fitness_room
+                "I heard there was a music room. I should go check it out."
+                jump music_room 
+
     
     elif chosen_girl == 1: # Mary is chosen
         
         jump home_ec_day_2
+        
+    elif chosen_girl == 2: # music girl chosen
+        
+        jump music_day_2
+
+#-----------------------------START OF MUSIC GIRL---------------------------------------------#
+
+label music_room:
+    scene bg music_room
+    with fade
+    
+    "> As you get closer to the music room, you notice the door cracked open an inch. As you approach, you hear sustained instrument that cuts through the opening."
+    # fade to show entering room
+    "> Upon entering, you find a girl drawing her bow flawlessly across the strings. She faces the opposite direction, displaying her hair that follows the dynamics of her playing. You’re compelled to sit down at the piano bench, as your eyes and ears perked up to witness her welcoming and mellow style."
+    "> The song grows in depth, as the notes create an atmosphere, sustained in emotion. Her upper body sways intimately with the music, while the hair on the back of your neck rise gradually. you find yourself enveloped by her music."
+    
+    "Wow… she’s pretty amazing, I need to know this girl’s name."
+    "> Her playing approaches the end. You feel anxiety rising up as you stand to attempt talking to her."
+    "Now’s my chance to talk to her!"
+    
+    m "Hey, I just heard you playing and you were pretty awesome!"
+    "> She looks back to be slightly surprised, not knowing you were there. Her expression instantly reads 'who the hell are you?'"
+    p "I thought I closed the door, how did you get in?"
+    m "Oh no, it was opened. Sorry I didn’t know know you wanted to be alone."
+    p "I’m practicing, so if you don’t mind, I have a concert to prepare for."
+    "> Immediately she gets back to playing, but this time. Her playing loses its warmth, and immediately has an air of superiority."
+    
+    m "I never caught your name, by the way."
+    "> The violin lets out a shriek, and she turns to you in frustration."
+    p "Did you not hear me earlier?"
+    m "I did, but I don't want to."
+    "> Looking frustrated and agitated, she clenches the neck of the violin and stick."
+    p "Ugh! Who do you think you are anyways!?"
+    m "I’m %(player_name)s. Your playing was pretty inspiring to listen to. What’s your name?"
+    "> She holds a frown."
+    p "Catherine… I suppose it’s not a HUGE inconvenience if you listen, just try to keep quiet, and don’t do anything to distract me or I am going to kick you out."
+    $ unknown_name = "Catherine"
+    "This girl’s scary."
+    "> She moves to her music stand again raising her bow into position. This time she continues to play, but still not as welcoming and warm as the first time."
+    "> You start to get into the music, leaning back while tapping your feet."
+    "> Noticing the dust on your elbows after sitting back, you notice the piano."
+    "Oh man, this piano’s pretty dusty. I also haven’t touched one of these in a couple years. Now let’s see what we have here…"
+    "> You lift the key covering."
+    
+    $ int_check = stats.get_stats("int")
+    menu:
+        "Play with her":
+            jump play_with_her
+        
+        "Just sit and listen to her play the violin":
+            "> You stay seated and simply listen to her playing."
+            menu:
+                "Play with her":
+                    jump play_with_her
+                
+                "Attempt to talk to Catherine as shes playing":
+                    m "How did you get into playing violin?"
+                    "> She plays louder and more aggressively."
+                    $ girl2.add_closeness(-1)
+                    menu:
+                        "Play with her":
+                            jump play_with_her
+                            
+        "Attempt to talk to Catherine as shes playing":
+            m "How did you get into playing violin?"
+            "> She plays louder and more aggressively."
+            $ girl2.add_closeness(-1)
+            
+            menu: 
+                "Play with her":
+                    jump play_with_her
+                
+                "Just sit and listen to her play the violin":
+                    "> You stay seated and simply listen to her playing."
+                    menu:
+                        "Play with her":
+                            jump play_with_her         
+   
+label play_with_her:
+    if int_check >= 1:
+        $ girl2.add_closeness(1)
+        "> You pick up where there’s an opening, and accompany her. The first few moments feel sluggish and your hands feel clumsy, but after a few bars you’re able to familiarize yourself. You peek over your shoulder to notice that Catherine’s posture is rigid; she doesn’t seem like she’s used to someone playing with her. Her playing begins to become harsher and her facial expression suddenly becomes unimpressed."
+        "Hmm…She hasn’t stopped playing yet... I’ll just keep going to see where this takes me."
+        "> You listen to her carefully and do your best to follow her, trying to avoid taking over or not supporting her enough. You remember the feeling from before: the chill in your spine, hair upright, and heightened senses."
+        "> You can’t see her now, but you’d like to imagine she also is feeling the same way you do."
+        "> You listen carefully, and end the song."
+        "I think my finish was coordinated with her pretty well. Granted not perfect, but pretty good I think."
+        p "That was terrible."
+        "> Catherine crosses her arms again and turns her back on you with a puff of air."
+        p "But..not bad for an impromptu."
+        "> You can’t see the expression on her face but her response makes you smile."
+        
+        menu:
+            "Lightly joke":
+                m "You’re amazing at the violin. But yeah, thanks, Cathy!"
+                $ girl2.add_closeness(-1)
+                p "That’s not my name, I hate being called Cathy."
+                m "I’m sorry. It’s nice to meet you Catherine!"
+            "Be humble":
+                m "Thanks Catherine, but I’m still pretty rusty. I haven’t played since junior high. Your playing earlier inspired me!"
+                "> Catherine looks flustered but trying keep an exaggerated mature composure" # guess image here instead of description
+                p "..."
+                p "Of course! I’m training to be the best you know. It’s nice to meet you too I guess."
+        
+        m "Well, I think i might take another shot at playing the piano."
+        p "What!? what do you mean?"
+        m "I’ll be around the music room more often, I like listening to you play and the way you played the violin has inspired me to get back into playing the piano."
+        p "Who said you could be in here?"
+        m "Would you be opposed? I need to practice a little more, and you could tell me how I’m doing."
+        p "I don’t have time to deal with an amateur like you. Ugh....but I guess it’s sort of useful having an accompanist. JUST FOR PRACTICE. Come by tomorrow, don’t be late or else I’ll kick you out."  
+        
+        # end day
+        
+    else:
+        "> You try to think of what to play, but the keys starts to look more and more like a puzzle. You play the keys but it just makes a loud obstruction to The girl’s music."
+        "> She stops midway, pointing the violin bow at you."
+        p "What did I just say? Why are you even touching the piano, if you don’t have the capacity to play it?"
+        m "{i}Oh crap.{/i}"
+        m "W-well I haven’t played since junior high, so I’m rusty, I mean just a little rusty or maybe a lot depending on who’s judging that is. I’m usually better I just need to brush up. Actually, I think I might take another shot at playing the piano if you’ll give me a chance."
+        p "What? what do you mean?"
+        m "I want to be around the music room more often, I like listening to you play and the way you played the violin has inspired me to get back into playing the piano."
+        p "You’re terrible. Why should I even give you another chance."
+        "> Catherine's eyes look hard and unforgiving."
+        m "Please give me another chance! I won’t disappoint you. I’ll leave you alone if I do not meet your standards next time!"
+        "> Catherine’s eyes suddenly soften but turns cold again so fast that you’re not sure if you were seeing right."
+        p "I..Fine. I’ll give you a shot. Be here tomorrow and don’t be late, or else."
+        "> She turns her back to you again. You’re not sure what else to say and you take this as your cue to leave. You get up and just about as you exit the room, you hear Catherine say something else."
+        p "If you’re really serious about this, you don’t want to waste your chance or you’ll regret it. Believe me."
+        "> She immediately lifts her bow again and starts up playing again, ignoring you. You leave."
+    
+    # show image of bedroom at night?
+    m "That was a long day, time to hit the sack."
+    $ stats.increment_days()
+        
+    "Another day at school..." 
+    $ stats.reset_classes()
+    call make_schedule
+    jump music_day_2
+        
+label music_event_check_1:
+    # music room option
+    $ closeness = girl2.get_closeness("Catherine")
+    $ day = stats.get_days()
+    $ event_num = girl2.get_event("Catherine")
+    
+    if day < 5 and closeness > -3 and closeness < 5:
+        # continue on with music
+        return
+    elif day >= 5:
+        # too long trigger failure event
+        jump girl2_failure
+    elif closeness <= -3:
+        # lost too much closeness
+        jump girl2_failure
+    elif day < 5 and closeness >= 5 and event_num == 0:
+        # trigger event 1 as day < 5 and closess > 5
+        # set the event value to 1
+        $ girl2.add_event()
+        jump music_event_1
+    
+label music_event_check_2:
+    
+    $ closeness = girl2.get_closeness("Catherine")
+    $ event_num = girl2.get_event("Catherine")
+    if closeness >= 8 and event_num == 1:
+        $ girl2.add_event()
+        jump music_event_2
+    else:
+        return
+    
+label music_day_2:
+    # should not go to events yet for now
+    #call music_event_check_1
+    #call music_event_check_2
+    #call music_event_check_3
+    
+    scene bg music_room
+    with fade
+    
+    "> You enter the music room to see Catherine already practicing on her violin"
+    p "Hey, you actually came. I hope you are prepared."
+    m "I think so! I practiced all of last night!"
+    $ str_check = stats.get_stats("str")
+    $ int_check = stats.get_stats("int")
+    $ cha_check = stats.get_stats("cha")
+    
+    menu:
+        "Classical (no reqs)":
+            "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
+            p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again… It was kind of fun."
+            $ girl2.add_closeness(1)
+            
+        "Rock (Strength 2, Charm 2)":
+            p "Rock today? okay I’ll give it a try."
+            if str_check >= 2 and cha_check >=2:
+                "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
+                p "That went better than I thought." # she coughs
+                p "I meant for you obviously, I knew that I would be great. That was interesting though. Maybe we should experiment like this more."
+                $ girl2.add_closeness(2)
+            else:
+                "> As you begin to play for the first few bars, you are able to stay on beat with Catherine, However, as the song intensifies, you stress out and begin to play fast and louder. The sounds created by piano overpowers the violin and there is dissonance in the music being played. Despite this, Catherine and  you imagine to finish the piece."
+                p "That was terrible. The piano is suppose to accompany the violin not the other way around... But I guess this is a huge improvement from yesterday. I guess I will let you continue coming to the music room because you are dedicated to improve and you kind of have potential.."
+                $ girl2.add_closeness(-2)
+        
+        "Jazz (Charm 2, Intelligence 2)":
+            p "OH! I LOVE JAZZ!"
+            if cha_check >= 2 and int_check >= 2:
+                "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
+                p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again… It was kind of fun."
+                $ girl2.add_closeness(2)
+            else:
+                "> As you begin to play for the first few bars, you are able to stay on beat with Catherine, However, as the song intensifies, you stress out and begin to play fast and louder. The sounds created by piano overpowers the violin and there is dissonance in the music being played. Despite this, Catherine and  you imagine to finish the piece."
+                p "That was terrible. The piano is suppose to accompany the violin not the other way around... But I guess this is a huge improvement from yesterday. I guess I will let you continue coming to the music room because you are dedicated to improve and you kind of have potential.."
+                $ girl2.add_closeness(-2)
+                
+    m "That was a long day, time to hit the sack."
+    $ stats.increment_days()
+    
+    "Another day at school..." 
+    $ stats.reset_classes()
+    call make_schedule
+    jump music_day_3
+
+label music_day_3:
+    # check for events
+    scene bg music_room
+    with fade
+    
+    if girl2_event1_asked1 == False:
+        call music_event_check_1
+        call music_event_check_2
+    $ girl2_event1_asked1 = False
+    "> You enter the music room to see Catherine already practicing on her violin"
+    p "Hey, you actually came. I hope you are prepared."
+    m "I think so! I practiced all of last night!"
+    $ str_check = stats.get_stats("str")
+    $ int_check = stats.get_stats("int")
+    $ cha_check = stats.get_stats("cha")
+    
+    menu:
+        "Classical (no reqs)":
+            "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
+            p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again… It was kind of fun."
+            $ girl2.add_closeness(1)
+            
+        "Folk (Strength 2, Charm 3)":
+            p "Really? Okay, I’m not very used to folk, but if you want."
+            if str_check >= 2 and cha_check >=3:
+                "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
+                p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again… It was kind of fun."
+                $ girl2.add_closeness(2)
+            else:
+                "> As you begin to play for the first few bars, you are able to stay on beat with Catherine, However, as the song intensifies, you stress out and begin to play fast and louder. The sounds created by piano overpowers the violin and there is dissonance in the music being played. Despite this, Catherine and  you imagine to finish the piece."
+                p "That was terrible. The piano is suppose to accompany the violin not the other way around... But I guess this is a huge improvement from yesterday. I guess I will let you continue coming to the music room because you are dedicated to improve and you kind of have potential.."
+                $ girl2.add_closeness(-2)
+        
+        "Blues (Charm 2, Intelligence 3)":
+            p "Alright, if you want."
+            if cha_check >= 2 and int_check >= 3:
+                "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
+                p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again… It was kind of fun."
+                $ girl2.add_closeness(2)
+            else:
+                "> As you begin to play for the first few bars, you are able to stay on beat with Catherine, However, as the song intensifies, you stress out and begin to play fast and louder. The sounds created by piano overpowers the violin and there is dissonance in the music being played. Despite this, Catherine and  you imagine to finish the piece."
+                p "That was terrible. The piano is suppose to accompany the violin not the other way around... But I guess this is a huge improvement from yesterday. I guess I will let you continue coming to the music room because you are dedicated to improve and you kind of have potential.."
+                $ girl2.add_closeness(-2)
+                
+    m "That was a long day, time to hit the sack."
+    $ stats.increment_days()
+    
+    "Another day at school..." 
+    $ stats.reset_classes()
+    call make_schedule
+    jump music_day_4
+    
+label music_day_4:
+    
+    scene bg music_room
+    with fade
+    
+    # check for events, day is 4 here
+    if girl2_event1_asked1 == False:
+        call music_event_check_1
+        call music_event_check_2
+    $ girl2_event1_asked1 = False # reset it now that checks are done
+    
+    "> You enter the music room to see Catherine already practicing on her violin"
+    p "Hey, you actually came. I hope you are prepared."
+    m "I think so! I practiced all of last night!"
+    $ str_check = stats.get_stats("str")
+    $ int_check = stats.get_stats("int")
+    $ cha_check = stats.get_stats("cha")
+    
+    menu:
+        "Classical (no reqs)":
+            "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
+            p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again… It was kind of fun."
+            $ girl2.add_closeness(1)
+            
+        "Latin (Strength 3, Charm 4)":
+            p "Very very interesting. I don’t know how to start… ummm… here goes nothing."
+            if str_check >= 3 and cha_check >=4:
+                "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
+                p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again… It was kind of fun."
+                $ girl2.add_closeness(2)
+            else:
+                "> As you begin to play for the first few bars, you are able to stay on beat with Catherine, However, as the song intensifies, you stress out and begin to play fast and louder. The sounds created by piano overpowers the violin and there is dissonance in the music being played. Despite this, Catherine and  you imagine to finish the piece."
+                p "That was terrible. The piano is suppose to accompany the violin not the other way around... But I guess this is a huge improvement from yesterday. I guess I will let you continue coming to the music room because you are dedicated to improve and you kind of have potential.."
+                $ girl2.add_closeness(-2)
+        
+        "J-pop (Charm 3, Intelligence 4)":
+            p "Oh great! I have this song from a dating sim game I wanted to play!"
+            if cha_check >= 3 and int_check >= 4:
+                "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
+                p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again… It was kind of fun."
+                $ girl2.add_closeness(2)
+            else:
+                "> As you begin to play for the first few bars, you are able to stay on beat with Catherine, However, as the song intensifies, you stress out and begin to play fast and louder. The sounds created by piano overpowers the violin and there is dissonance in the music being played. Despite this, Catherine and  you imagine to finish the piece."
+                p "That was terrible. The piano is suppose to accompany the violin not the other way around... But I guess this is a huge improvement from yesterday. I guess I will let you continue coming to the music room because you are dedicated to improve and you kind of have potential.."
+                $ girl2.add_closeness(-2)
+                
+    m "That was a long day, time to hit the sack."
+    $ stats.increment_days()
+    
+    "Another day at school..." 
+    $ stats.reset_classes()
+    call make_schedule
+    jump girl2_failure
+    
+label music_event_1:
+    # triggered from closeness
+    scene bg music_room
+    with fade
+    $ day = stats.get_days()
+    "> You enter the music room quietly; you see Catherine on the floor curled up in a kneeling position. Sprawled around her are vibrantly coloured posters and unopened markers."
+    menu:
+        "Hey Catherine… should I come by another time? You look busy right now..":
+            p "I am busy at the moment. Leave me alone."
+            $ girl2.add_affection(-1)
+            "> You decide to leave her alone"
+            $ girl2_event1_asked1 = True 
+            if day == 3:
+                jump music_day_3
+            elif day == 4:
+                jump music_day_4
+            
+        "Don't say anything yet":
+            "> You decide to watch her and see what she’s doing. You notice her tugging on her hair occasionally and letting out fits of frustration"
+            "> ring ring ring"
+            p "sigh..."
+            p "Hi Mom."
+            p "… I’m at school still making posters for the concert."
+            p "… No, I don’t think I’ll be home in time for dinner."
+            p "… I know, I still need to practice, don’t worry I’ll be fine."
+            "> Catherine’s tone sounds a little frustrated at this point"
+            p "… Don’t worry about it-- I said I’ll be fine!"
+            p "… I’m sorry for lashing out, I am just frustrated right now."
+            p "… You too, bye..."
+            "I wonder why she sounded so angry at the end of her conversation."
+            "> You walk nearer to her without her noticing and upon closer inspection, notice that she’s making posters for some sort of concert"
+            m "Hey Catherine, what are all these for? Do you need help with something?"
+            p "Oh! Hi %(player_name)s."
+            "> She seems embarrassed that you’re seeing her like this"
+            p "I’m trying to make posters for this concert; I need to promote it. No need for help, I’m perfectly capable of doing this myself."
+            m "Of course, of course! If I help you now though we’ll have time to play some music. I’ve been looking forward to it all day."
+            p "Hmmm...Fine! Do whatever you want."
+            "> She still seems embarrassed for accepting your help but at the same time, satisfied"
+            "> You end up kneeling beside her. As you sit she retracts a couple inches away from where you’re sitting"
+            "She doesn’t seem that comfortable with me maybe I should try to make some conversation."
+            menu:
+                "What is the concert for?":
+                    $ girl2.add_affection(1)
+                    p "This is my opportunity to be the greatest violinist of our time."
+                    m "What…?"
+                    p "A representative from the most prestigious music schools in the UK was invited to view my performance. Basically I’m being evaluated before actually going there to do my audition for the school."
+                    m "Uh huh... congrats, Cathy!"
+                    p "Idiot. Don't call me that."
+                    m "hahahahaha!"
+                    "> She furiously starts sketching her posters"
+                    menu:
+                        "What do you need me to do?":
+                            jump music_event_1_part_2
+                    
+                "What do you need me to do?":
+                    jump music_event_1_part_2
+        
+label music_event_1_part_2:
+    p "Can you just sketch details, in pencil?"
+    m "Don’t you want me to do more than that?"
+    p "No. I can’t have any clumsy mistakes."
+    "> You look at the posters in front of her"
+    m "But you didn’t even colour in the lines."
+    "> Caterine is flustered"
+    p "N-no! That’s for visual effect! I guess it’s hard to appreciate for an uncultured eye."
+    m "That is debatable."
+    p "Just get to work!"
+    
+    "> You work for some time, not saying anything to each other"
+    "> You look at your clock and notice that the sun is starting to set"
+    "> You look towards the window and you see the sunlight give a warm colouring to the surroundings. The chalk dust in the air highlights the sun rays giving the room a calm atmosphere"
+    "> Your eye wander the room and lead to Catherine, in the middle of the room and under the sun rays. She’s intently finishing up the final touches on the posters"
+    "> She looks like she’s in a spotlight. She looks so natural in it, like she was made to be in a spotlight. Light passes through her hair giving it an ethereal look. It drapes down, and on her shoulders. By observing her alone, you feel unsettled and begin to feel hot. From your chest and back, traveling up to the side of your neck, your body is uncomfortably warm"
+    "> She tucks her hair behind her ear, as she finishes up the final touches, but is then surprised catching you staring at her, from the side of her view"
+    
+    p "...Why are you staring at me?"
+    menu:
+        "Is it hot in here?":
+            $ girl2.add_affection(-1)
+            p "No not really, why are you sweating? That’s kinda gross."
+            "WHY AM I SWEATING???"
+            m "uh gah… don’t worry about it. It’s just hot."
+            p "... o--okay..."
+            menu:
+                "Sorry you just looked really good today":
+                    $ girl2.add_affection(-1) 
+                    p "Creep."
+                    "Uhhh maybe I shouldn’t have said that, she probably thinks I’m weird."
+                    "> You don’t really know how to follow up on that response, so you decide to let the awkward space settle for a moment"
+                    menu:
+                        "Wow, the posters look amazing! We did a good job":
+                            jump music_event_1_part_3
+                "Wow, the posters look amazing! We did a good job":
+                    jump music_event_1_part_3
+                    
+        "Sorry you just looked really good today":
+            $ girl2.add_affection(-1)
+            p "Creep."
+            "Uhhh maybe I shouldn’t have said that, she probably thinks I’m weird."
+            "> You don’t really know how to follow up on that response, so you decide to let the awkward space settle for a moment"
+            menu:
+                "Is it hot in here?":
+                    $ girl2.add_affection(-1) 
+                    p "No not really, why are you sweating? That’s kinda gross."
+                    "WHY AM I SWEATING???"
+                    m "uh gah… don’t worry about it. It’s just hot."
+                    p "... o--okay..."
+                    menu:
+                        "Wow, the posters look amazing! We did a good job":
+                            jump music_event_1_part_3
+                "Wow, the posters look amazing! We did a good job":
+                    jump music_event_1_part_3
+                            
+        "Wow, the posters look amazing! We did a good job":
+            jump music_event_1_part_3
+
+label music_event_1_part_3:
+    $ girl2.add_affection(1) 
+    "> She looks happy at your comment"
+    p "I guess you aren’t that useless."
+    m "Thanks?..."
+    "At least I’m not ‘super useless’..."
+    m "I was thinking we should probably get to practicing soon."
+    p "Oh! Of course, I didn’t forget about that---"
+    "Sureee..."
+    
+    scene bg hallway
+    with fade
+    "> Catherine and you are finished making the posters for the concert and put them around the school"
+    
+    scene bg music_room
+    with fade
+    
+    m "Do you want to play now?"
+    p "Uh. Sure. What do you want to play?"
+    menu: 
+        "Beethoven violin Sonata o. 9 Op.47":
+            "play beethoven" #ADD MUSIC
+        "Chopin Tristesse Etudes in E major":
+            "play chopin" #ADD MUSIC
+        "Rondo Capriccioso- Saint-Saens":
+            "play rondo" #ADD MUSIC
+    # "> After music plays for x time or whatever"
+    m "That was fun!"
+    p "Yeah.. You're getting better."
+    m "Here's an idea... do you think that I could play with you in your concert?"
+    p "OF COURSE NOT!!! This is actually important."
+    menu:
+        "Change your mind":
+            $ girl2.add_affection(-1)
+            m "Whatever, It’s not like I cared enough to help anyways."
+            "> She looks pretty mad at that last comment"
+            p "You don’t have to be so butthurt about it."
+            "Maybe I shouldn’t have thought out loud."
+            
+        "Try to convince her":
+            $ girl2.add_affection(1)
+            m "What?! Why not? I think it would be fine, Cathy! If you ever want an accompanist, I’ll be around."
+            "> She avoids eye contact and slightly blushes"
+            p "...Thanks, I’ll think about it. BUT I TOLD YOU NOT TO CALL ME THAT."
+            
+    "> Catherine huffs"
+    p "Anyways, I should get going."
+    "> She starts to pack up quickly and begins to rush out"
+    m "I’ll see you tomorrow then."
+    p "…Yeah"
+    "Hmm she seems a little off. Was it something I said?"
+    $ day = stats.get_days()
+    if day == 3:
+        jump music_day_3
+    elif day == 4:
+        jump music_day_4
+    
+label music_event_2:
+    # triggered from closeness
+    "> You receive a text from Catherine"
+    p "'Come to the music room for a minute'"
+    
+    scene bg music_room
+    with fade
+    "> You walk into the music room, no music is being played which is strange"
+    "> You see Catherine leaning against the window sill. She’s looking out the window smiling. She’s looking at the trees swaying in the breeze"
+    "I guess it’s a good day out."
+    "> The warm lighting gives her a glow, where she seems so peaceful. For some reason everything seems so vibrant"
+    "> Catherine sees your reflection in the window and turns around to address you with a smile on her face"
+    p "Can I ask you for a favour?"
+    
+    menu:
+        "Yeah, of course":
+            $girl2.add_affection(1)
+        "Sure, if you act a litter nicer to me":
+            $girl2.add_affection(-1)
+    
+    "She looks pretty concerned, I wonder what this about"
+    p "So... the concert..."
+    m "Yeah?"
+    p "Apparently I’m required to have an accompanist."
+    m "Oh? and?"
+    "> You try not to crack a smile knowing whats coming"
+    p "So... I... may need you to play as my accompanist."
+    m "I don’t know... I thought I wasn’t good enough?"
+    "I’m not sure if I should be teasing her at a situation like this, but I need to milk this opportunity."
+    "> She seems surprised at your response like she was expecting you to agree right away. Her face turns mad red and squeezes her eyes shut"
+    p "Please! This is my only opportunity! I know I’ve been mean to you this whole time."
+    "> Her eyes begin to water"
+    p "But I just get so frustrated when I can’t do anything myself because people won’t see me as strong, but now I need someone and I find myself with no one else to lean on. Please..."
+    "Oh crap. She’s super serious right now."
+    menu:
+        "Yeah don’t worry, I said I was going to be around if you needed me, right? Let’s start practicing for it!":
+            jump music_event_2_part_2
+
+label music_event_2_part_2:
+    
+    scene bg music_room
+    with fade
+    "> You arrive outside of the music room. The suit you’re wearing makes you feel stiff and limited in mobility"
+    "I think I look okay, I can’t tell with only the moonlight"
+    "> You receive a text from Catherine"
+    
+    scene bg balcony
+    with fade
+    p "'Hey, I’m on the balcony'"
+    "> You get to the top of the building, and through a wide set of glass double doors you see her in a white dress. As you pass the doors, the scenery opens wide overlooking the city dotted with streetlights and cars"
+    "> You lean on the wide railing, next to her. On the side of your vision her dress and skin glow in the moonlight. both of you don’t look at each other, but enjoy the expanded scenery"
+    menu:
+        "You look good in this lighting":
+            $girl2.add_affection(-1)
+            p "What about other lightings?"
+            "Oops, I guess that came out wrong."
+        "It's a beautiful night":
+            $girl2.add_affection(1)
+            p "Yeah, it is."
+            
+    m "It’s the big day huh? How are you feeling?"
+    p "My palms are a little sweaty and my head is all jumbled with worries."
+    m "It will be fine, don’t worry about it. Let’s just try our best!"
+    p "I need this to be perfect..."
+    menu:
+        "Downplay it to make her feel more at ease":
+            $girl2.add_affection(-1)
+            m "Calm down a little, it’s not a big deal."
+            p "Haven’t you been listening at all?"
+            "Oh crap that wasn’t smart of me."
+            menu:
+                "Reassure her":
+                    m "Well it’s an important day to you right? You want to get into the school?"
+                    p "..."
+                    m "What’s with the silence?"
+                    
+        "Reassure her":
+            $girl2.add_affection(1)
+            m "Well it’s an important day to you right? You want to get into the school?"
+            p "..."
+            m "What’s with the silence?"
+            
+    p "To be completely honest, I couldn’t care less if I went to the music academy or not. Not anymore anyways..."
+    m "I thought that was your goal? To become the greatest violinist of our time?"
+    p "I mean, excelling at playing the violin is a goal and passion, but I want this to say I was able to do it too."
+    m "Sounds like a lot of work for some recognition."
+    p "I know... But you don’t know what it’s like, always having people holding your hand while you do anything, not letting you take your own steps, not letting you take any credit... or maybe you do... or you could at least try understanding."
+    "> At this moment she turns and looks up at you, with both eyes. The moonlight reflects off of them, for a moment captivating you. At this angle you’re able to see her red lips and rosy cheeks. You feel like a pin went through your chest"
+    m "I think I can understand. What if I said that even though I’m here, as your accompanist, I see everything you’ve worked towards, and I think you have definitely proved that you are more than capable of handling yourself?"
+    "> She smiles and her eyes look away"
+    p "I’d be happy…"
+    "> She sees your watch"
+    p "Oh! it’s almost time to go! Quick smell my perfume, make sure it smells good!"
+    "> She pulls back her hair, and leans forward, exposing her neck to you"
+    "> You don’t have time to react smoothly, you quickly lean in to smell"
+    "> When you breathe in the scent, it’s like fireworks begin going off your head. This feeling travels down through the rest of your body, but you feel something briefly press against your cheek"
+    p "That was for good luck...and for listening to me."
+    "> She covers her mouth, and avoids eye contact, blushing"
+    m "Thanks..."
+    p "D-don’t look at me like that, you’re wasting time."
+    "> She grabs your hand and leads you through the doors into the building"
+    
+    scene bg auditorium
+    with fade
+    "> You feel like a ragdoll as she makes sharp corners towards back-stage. She stops abruptly and turns around quickly to face you. Her eyes are shining with excitement and nervousness"
+    p "Ready?"
+    m "Your palms are sweaty"
+    "Oh God, I literally could have said anything else."
+    "> She pulls her hand quickly away and picks up her violin"
+    p "Don’t get full of yourself. Let’s do this."
+    "> You walk out onto stage, as you look out you don’t see a single face, but you feel everyone stare. The silence permeates"
+    "> You take a seat at the piano and wait for her signal"
+    "> You hear her draw her bow across her strings. Her playing is colourful and vibrant, full of expression. As the song progresses, you feel her stage presence is powerful, and you do what you can to support her. You notice your head nodding, and feeling the momentum of the keys. You feel each other’s playing styles as you progress to the end"
+    # cue music here
+    
+    "> You reach the end of the song, and you get up to stand next to her. When you approach her, she holds out her hand in front of you, you grab it then both of you bow. The audience gives you a large applause"
+    "> Both of you walk off stage"
+    p "We did it!"
+    menu:
+        "Hug her":
+            $ girl2.add_affection(1)
+            m "Yeah, good job!"
+            "> You hug her. you intended to have a quick hug, but it lingers for a while longer"
+            p "I’m really thankful for you helping me out."
+        "Talk about the Academy":
+            $ girl2.add_affection(-1)
+            m "You did it, you’re sure to get in now! I’m glad it went well."
+            p "Oh... yeah right. thanks..."
+            
+    m "We should celebrate!"
+    p "Celebrate? what do you have in mind?"
+    m "How about Karaoke?"
+    p "Karaoke?"
+    m "Yeah, that thing where you sing in a room..."
+    p "I know what it is, but why Karaoke?"
+    m "Why not? you’ve been so stressed out on music lately, this is a good way to destress with music."
+    "> She sighs"
+    p "Okay..."
+    m "GREAT! LET’S GO"
+    jump music_event_3
+            
+label music_event_3:
+    # karaoke event here, success or failure
+    scene bg karaoke
+    with fade
+    m "Here we are."
+    p "Y-yeah..."
+    m "What’s wrong, Cathy?"
+    p "I’ve never sung in front of anyone..."
+    m "So wait, you’re telling me that you can get on a stage in front of hundreds of people, but you can’t sing in front of me?"
+    p "IT’S DIFFERENT, The violin has a good voice."
+    menu:
+        "Reassure her":
+            $ girl2.add_affection(1)
+            m " It can’t be that bad, don’t worry, I’m not here to judge you."
+            p "Liar..."
+            m "PROMISE."
+            "> She rolls her eyes"
+            p " Don’t say I didn’t warn you."
+            
+        "Joke":
+            $ girl2.add_affection(-1)
+            m "Well that’s a shame, I guess that’s the problem with hiding behind an instrument your whole life."
+            p "Aren’t you a tad bit conceited?"
+            m "That came out wrong..."
+            p "Yeah it did."
+    
+    p "Well... let’s get this over with."
+    "> You place your hands on her shoulders and guide her into the karaoke room"
+    m "Come on, don’t worry it’s going to be fun!"
+    "> When you sit down, you place songs in the playlist. As one of them is about to begin, you notice out of the corner of your eye, Catherine clutching the mic with both hands. she holds it with her arms retracted close to her chest"
+    m "C’mon lighten up! It’s just us. Okay deep breaths."
+    "> You take 2 short consecutive breaths out, followed by one drawn out exhale"
+    "> She bursts out laughing"
+    p "That’s what you do when you’re giving birth!"
+    m "THEN YOU HAVE NOTHING TO WORRY ABOUT!"
+    "> She laughs"
+    p "Alright, alright I’m ready."
+    "> Her shoulders relax, and she takes a deep breath"
+    "> The music starts playing, You start the song slow. following the lyrics her voice takes you by surprise. You are taken back for moment to the point where you stop singing out of disbelief. Her voice actually is powerful and smooth"
+    "SHE LIED TO ME"
+    "> You decide to just go with it. You have an almost a deja vu moment, as if you were her accompanist again. Naturally, you begin to harmonize with her. It must be from practising with her. At one point of the song, you both feel each other pushing your diaphragms to their limit. You look at each other trying not to laugh"
+    "> You see her under the fluorescent rose lighting of the room, she looks like she’s really having enjoying herself. She looks at you and smiles as the song ends"
+    p "That was great!"
+    "> She begins laughing uncontrollably while leaning forward"
+    "> She beings to lose balance as she falls forward, and falls in your direction. You react by trying to catch her with both arms, but her momentum catches you off guard and pushes you back. You fall directly on your butt"
+    p "OH! I’M SO SORRY ARE YOU OKAY?"
+    "> She immediately panics and clumsily tries helping you up"
+    m "Probably just fractured my tailbone, but I’m fine."
+    p "SERIOUSLY?"
+    m "Don’t worry... I’m just kidding"
+    p "Don’t scare me like that..."
+    m "Since when did you start worrying about me so much?"
+    "> Her cheeks instantly turn red"
+    p "I-I don’t know what you’re talking about... Idiot."
+    menu:
+        "Hey, if you want to talk about something, I’m listening":
+            $ girl2.add_affection(1)
+            p "..."
+            
+        "Oh alright":
+            $ girl2.add_affection(-1)
+            p "... Why do you have to be so dense all the time?"
+            
+    "> She sighs"
+    p "Look... It’s been really hard for me to be comfortable around you."
+    m "What do you mean?"
+    p "In the short time I’ve known you, I don’t think I’ve ever felt so close to anyone. At first I couldn’t stand you being around, but you just kept persisting to help me out and to help you out. Then well I guess you just grew on me."
+    m "Is that a bad thing?"
+    p "No… I’m just a little confused, that’s all… I’ve grown up in a well off family, and I always was given opportunities, as if they were served to me on a silver platter. I never felt like I earned anything. I eventually just hated it when people helped me accomplish tasks, people always checking up on me saying 'Do you need help with that?' As if I couldn’t handle myself, as if I was completely incapable of doing anything. I started to be secluded from people, and refuse people that tried to get close to me."
+    m "What about now?"
+    p "I don’t know anymore. I guess you could say that you’re now an exception to the rule."
+    "> She smiles, leans back into the couch, and stares blankly towards the karaoke lyrics rolling"
+    p "You know, it’s funny. I try to push people away, but then one person is just able to push through all the walls I set up. I didn’t want to trust that person, but I end up leaning on them the most, when I’m in need."
+    "> She shifts her weight, so that her rests upon your shoulder"
+    "> You feel a tension while your beats per minute skyrocket. It’s like your head is going to explode from built up pressure"
+    m "H-hey Ca--"
+    p "Just be quiet for a moment..."
+    "> Neither of you move while the karaoke lyrics roll and the rose lights pulsate in the room. From this atmosphere, you just enjoy each other’s presence"
+    menu:
+        "Hey Cathy, do you want to go out with me?":
+            # check affection level
+            $ affection = girl2.get_affection("Catherine")
+            # if success:
+            if affection > 6: # NUMBER CAN VARY
+                p "Does it look like I don’t want to?"
+                m "Well maybe you just wanted to be friends."
+                p "Sometimes I can’t believe how clueless you can be... So I’ll say it plainly: I want to go out with you."
+                "> She wraps her arms around your torso, smiling. You both continue to bask in the emotions until it’s time to go"
+                p "Thank you for everything, I’m really glad to have met you in my life..."
+                jump music_event_3_part_2
+            # if failure:
+            else:
+                p "Does it look like I don’t want to?"
+                m "Well maybe you just wanted to be friends."
+                p "Sometimes I can’t believe how clueless you can be... But, I can’t..."
+                m "..."
+                p "I got into the academy..."
+                m "Oh... Congrats..."
+                "> She wraps her arms around your torso, and begins to have tears streaming down her face"
+                p "I’m so sorry... as much as I want to be with you... this is a really important opportunity."
+                m "No of course... I couldn’t expect you to drop everything for me..."
+                "> You both sit and try to savour the moment. She latches onto you tight, not wanting to let go. You sit trying to hold on to each other’s presence inevitably comes to an end"
+                p "Thank you for everything, I’m really glad to have met you in my life..."
+                jump girl2_fail_end
+    
+label music_event_3_part_2:
+    # NEED HOME PICTURE
+    #scene bg music_room
+    #with fade
+    "> A few days have passed since that day"
+    "> Your phone rings"
+    m "Hello?"
+    p "Hi %(player_name)s."
+    m "Hey, Cathy!"
+    p "I got the results from the evaluation."
+    menu:
+        "Great! this will be a great opportunity for you!":
+            p "It is good..."
+            m "I'll see you at the music room then."
+            
+        "Oh I see, how do you feel about it?":
+            p "Hmm... I don’t know if I really want to go anymore."
+            m "What about being the greatest violinist ever?"
+            p "Well I just wanted to talk to you about it too, wanna meet in the music room?"
+            m "Sure."
+            
+    scene bg music_room
+    with fade
+    "> You arrive to the music room"
+    "> You see her again against the window sill"
+    m "Hey, Cathy."
+    p "Hey..."
+    m "Did you want to talk about it?"
+    p "I’ll just get to the point: Do you want me to go or not?"
+    m "Wait what? For the Academy? why does my opinion matter?"
+    p "Because it matters to me... because you’re important to me."
+    m "Oh..."
+    p "So tell me, do you want me to stay or not?"
+    menu:
+        "I want you to stay":
+            jump girl2_good_end
+            
+        "I think you should take the opportunity":
+            m "I completely support your decision." 
+            p "Ohh... haha... Yeah, thanks for supporting me"
+            m "Yeah, of course."
+            "> She sighs"
+            p "Well I guess this is what I asked for."
+            m "Don’t worry, I think you’ll go really far with it. You’ll be able to experience a lot of great things, especially living in the UK independently."
+            p "Yeah you’re right..."
+            "> She seems frustrated about something"
+            p "I don’t get it! I haven’t even known you for that long, but all the sudden you’ll be out of my life. I tried so hard to be independent and do things on my own, and when I finally get the chance, I don’t want it. I end up depending on you anyways. I even said 'yes', when you asked me out!"
+            menu:
+                "We can still keep in touch":
+                    m "Hmm... You didn’t necessarily depend on me, you could always do it by yourself, I was just an accompanist. Besides we can still keep in touch."
+                    p "Yeah... that’s a fair argument."
+                    "> She shoves her face into your chest and latches around your torso"
+                    p "...Will you remember me?"
+                    m "What if told you I will?"
+                    p "That would make me happy... Well... Goodbye then..."
+                    m "This isn’t 'goodbye', it’s just a 'see you later'..."
+                    jump girl2_bad_end
+                    
+                "Change your mind":
+                    m "I'm just trying to not be selfish but believe me when I say I really do want you to stay. You're important to me and it would hurt to watch you leave."
+                    jump girl2_good_end
+                    
+        "You should make the decision yourself":
+            "> Catherine seems frustrated"
+            p "I don't get it! I haven't even known you for that long, but all the sudden you'll be out of my life. I tried so hard to be independent and do things on my own, and when I finally get the chance, I don’t want it. I end up depending on you anyways. I even said 'yes', when you asked me out!"
+            m "This is finally your chance to be independent."
+            m "This is what you wanted. What you worked for. You made it and you shouldn't let me hold you back."
+            p "...Is it so wrong to have someone to lean on at least sometimes...I thought I could depend on you. We’ve been through a lot together...I really had feelings for you."
+            m " I didn’t mean it like that..."
+            p "Forget it. You’re right. I don’t know what I was thinking. I’ll go ahead with the academy. Thank you for everything. Let’s both work hard on our separate paths."
+            "> Catherine starts walking towards the door but stops at your side. She glances up towards you quickly but then looks away and continues out the door, leaving you behind. You’re left alone standing in the silent music room and you have a feeling you won’t be playing the piano for a long time"
+            jump girl2_bad_end
+
+label girl2_failure:
+    "GAME OVER"
+    return
+    
+label girl2_bad_end:
+    "GAME OVER"
+    return
+
+label girl2_good_end:
+    "> She smiles"
+    p "hahaha! You’re funny."
+    "> She continues to laugh at you, but you stand there confused at what just happened"
+    m "I think I'm lost."
+    p "I already declined the offer, so whether you like it or not, looks like you’re going to be stuck with me."
+    m "Oh hahaha… I thought you were asking seriously."
+    p "Well I was asking, then I could figure out how much you like me hehe..."
+    m "charming haha..."
+    p "So? what say you? Do I need to make you smell my perfume again?"
+    m "Yeah... yeah, I do."
+    "> She leans over, then you feel something press against your cheek"
+    p "Besides, I already said yes to you. You’re my new dream. You’re mine."
+    
+    "YOU WIN"
+    return
+    
+label girl2_fail_end:
+    "GAME OVER"
+    return
+    
+#-----------------------------END OF MUSIC GIRL---------------------------------------------#
 
 label home_ec_room:
     # show image of room
@@ -339,7 +1284,7 @@ label home_ec_room:
     $ cha_check = stats.get_stats("cha")
     
     menu: 
-        "Chocolate chip cookies (Strength 1, Charm 1)":
+        "Chocolate chip cookies (Need: Strength 1 & Charm 1)":
             if str_check >= 1 and cha_check >= 1:
                 "> Miraculously, you remember a recipe for chocolate cookies, and manage to put them together."
                 $ girl1.add_closeness(1)
@@ -351,13 +1296,13 @@ label home_ec_room:
                 $ stats.set_food_choice(1)
                 jump girl_1_convo_1
         
-        "Instant Ramen (No reqs)":
+        "Instant Ramen (No requirements)":
             "> You decide that it’s would be more efficient to make what you know the best. Conveniently, you remember that you brought along a spare package of instant noodles to school with you. You pull it out of your backpack and proceed to open the plastic wrapping."
             $ girl1.add_closeness(-1)
             $ stats.set_food_choice(2)
             jump girl_1_convo_1
         
-        "Beef Carpaccio (Strength 2)":
+        "Beef Carpaccio (Need: Strength 2)":
             "> You decide that it would be best to go big or go home. If you managed to pull this off, she would be incredibly impressed. Unfortunately, you do not have the knowledge of the ingredients or techniques need to put this dish together. You improvise as you go."
                 
             if str_check >= 2:
@@ -461,7 +1406,7 @@ label girl1_check_1:
     $ day = stats.get_days()
     $ event_num = girl1.get_event("Mary")
     
-    if day =< 5 and closeness > -3 and closeness < 5:
+    if day <= 5 and closeness > -3 and closeness < 5:
         # continue on with cooking
         return
     elif day > 5:
@@ -550,7 +1495,7 @@ label home_ec_day_2:
             $ girl1.add_closeness(1)
             
         "Creme brule (Intelligence 2, Charm 2)":
-            if int_check > 2 and cha_check > 2:
+            if int_check >= 2 and cha_check >= 2:
                 # sucess
                 "> The Creme brule looks great! nice golden caramelize on it! Looks delicious!"
                 p "Looks great. I'm impressed."
@@ -561,8 +1506,8 @@ label home_ec_day_2:
                 p "Uhh... is this even edible?"
                 $ girl1.add_closeness(-3)
                 
-        "Lasagna (Strength 2, Charm 2)":
-            if str_check > 2 and cha_check > 1:
+        "Lasagna (Strength 2, Charm 1)":
+            if str_check >= 2 and cha_check >= 1:
                 "> The lasagna turned out great! The cheese is perfectly melted."
                 p "The Lasagna looks awesome! The layers look so even!"
                 $ girl1.add_closeness(2)
@@ -599,6 +1544,7 @@ label home_ec_day_3:
             p "Looks so good! Can't wait to try it."
             $ girl1.add_closeness(1)
             
+
         "Assorted Sashimi (Intelligence 3, Strength 3)":
             if int_check >= 3 and str_check >= 3:
                 "> The sashimi is perfectly sliced."
@@ -649,7 +1595,7 @@ label home_ec_day_4:
             $ girl1.add_closeness(1)
             
         "Beef Stroganoff (Strength 4, Charm 4)":
-            if str_check > 4 and cha_check > 4:
+            if str_check >= 4 and cha_check >= 4:
                 "> The pasta turned out perfectly cooked! The aroma of the sauce fills the air."
                 p "That smells so good!"
                 $ girl1.add_closeness(2)
@@ -660,7 +1606,7 @@ label home_ec_day_4:
                 $ girl1.add_closeness(-2)
                 
         "Lemon Meringue Pie (Intelligence 3, Charm 3)":
-            if int_check > 3 and cha_check > 3:
+            if int_check >= 3 and cha_check >= 3:
                 "> The pie is firm and the meringue keeps it's form."
                 p "Congratulations! The browning of the meringue is beautiful!"
                 $ girl1.add_closeness(2)
@@ -1083,6 +2029,7 @@ label mary_backstory2:
     
 #Mary - Home Date~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 label girl1_home_date:
+
     if reassure:
         m "Hey Mary. I remember before you mentioned that I never tasted your cooking. If it’s okay with you, I’d really like to try some today."
 
@@ -1101,6 +2048,18 @@ label girl1_home_date:
         m "Of course."
         
         "> Mary smiles shyly."
+
+    m "I remember you mentioned before that I never tasted your cooking. If it’s okay with you, I’d really like to try some today."
+
+    p "Oh, so you did remember!" 
+
+    "{i}she seems shy but happy{/i}"
+
+    p "Then, why don’t we go back to my house? I have all the ingredients there."
+
+    "> You and Mary head back to her place. You feel tenser than usual, despite the fact you’ve recently spent a lot of time with her. In the corner of your eye you catch her peeking slightly in your directly, but she immediately redirects her vision forward after being noticed."
+
+    p "Today is really beautiful, although I don’t know what we’d do if there wasn’t a breeze."
 
     p "Then.. Instead of cooking it here, Why don’t we go to my house? There's plenty of ingredients there."
     
@@ -1141,7 +2100,7 @@ label girl1_home_date:
     menu:
         "Sit in the living room and play video games.":
            "> Your impatience gets the better of you and you decide to head back into the kitchen."
-            jump girl1_home_date_kitchen
+           jump girl1_home_date_kitchen
         "Go into the kitchen and offer your assistance.":
             jump girl1_home_date_kitchen
         "Look around for any photo albums that she may have.":
@@ -1184,10 +2143,9 @@ label girl1_home_date:
                             "> The two of you stand silent for a while before finally letting go of each other."
                             p "U-uumm... Thank you. Sorry if I made you feel uncomfortable."
                             m "We should probably head back to the kitchen."
-                            P "Y-yeah! Of course!"
+                            p "Y-yeah! Of course!"
                     "> Mary grabs on to your arm and brings you back into the kitchen."
                     jump girl1_home_date_kitchen
-            
             
 label girl1_home_date_kitchen:
     "> You watch Mary wander back and forth between different areas of the kitchen. Her smile is an obvious sign she's enjoying herself."
@@ -1280,7 +2238,7 @@ label girl1_home_date_kitchen:
                 "> Mary leads you to the exit. You can’t think of much to say without making it more awkward, so you just keep walking." 
                 "> You look back. The door is closed."
                 m "{i} I guess that's it, huh...? {/i}"
-                jump bad ending
+                jump mary_bad_end
                 #return
                 
 label girl1_home_date_choice:
@@ -1299,12 +2257,13 @@ label girl1_home_date_choice:
                     "> Mary seems motivateds all of a sudden."
                     #positive/neutral 
         "Instant noodles":
-            p " C'mon.. are you even taking me seriously here?"
+            p "Common..are you taking my offer seriously here?"
             #negative
             call girl1_home_date_choice
             return
         "Triple Layer Chocolate Cake":
             "{i}She seems surprised by your request{/i}"
+
             p "I thought you’d choose something more difficut. Why did you choose a cake?"
             menu:
                 "I didn’t want you to work too hard.":
@@ -1321,6 +2280,7 @@ label girl1_home_date_choice:
                     p "Were you always this corny?"
                     "> Mary seems pleased by your thought."
                     p " Alright, I’ll get started then." 
+
                     #positive
     "> Mary begins cooking the dish and you’re left sitting in her living room alone."
     return 
@@ -1475,3 +2435,25 @@ label mary_bad_end:
     "> Who knows? Maybe it'll be better after highshool...?"
     "> Better luck next time, %(player_name)s."
     return #to end game
+
+#routine for raising stats
+label raisestat:
+    call randomquiz
+    menu:
+        "What Stat to raise"
+
+        "Strength":
+            $ stats.add_stats("str",1)
+            $ temp = stats.get_stats("str")
+            "strength is now [temp]."
+        "Intelligence" if stats.get_stats("str") > 1: 
+            $ stats.add_stats("int",1)
+            $ temp = stats.get_stats("int")
+            "intelligence is now [temp]."
+        "Charm" if stats.get_stats("str") + stats.get_stats("int") > 3:
+            $ stats.add_stats("cha",1)
+            $ temp = stats.get_stats("cha")
+            "charm is now [temp]."
+    return 
+
+
