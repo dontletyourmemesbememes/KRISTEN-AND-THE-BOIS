@@ -168,6 +168,85 @@ init python:
     gym_qman = QuestionManager()
     drama_qman = QuestionManager()
 
+    bio_qman.add_question("Blood vessels that carry (usually oxygenated) blood away from the heart is called?",["Artery","Vein","Ventricle","Atrium"],0)
+    bio_qman.add_question("What is the largest organ in the human body?",["Liver","Lung","Skin","Brain"],2)
+    bio_qman.add_question("An example of a waste product of aerobic celluar respiration is:",["carbon monoxide","carbon dioxide","oxygen","methanol"],1)
+    bio_qman.add_question("What is the basic unit of all living organisms found on Earth?",["The cell","The atom","brick","DNA","Tissue","Fecal matter"],0)
+    bio_qman.add_question("What describes the movement of molecules from a higher concentration to a lower concentration",["Diffusion","Osmosis","Diffration","Refraction"],0)
+    bio_qman.add_question("Plants are typically green because they:",["reflect green light","absorb green light"],0)
+    bio_qman.add_question("What is a difference between plant cells and animal cells?",["Presence of a cell wall","Presence of a membrane","Presence of Vacuoles","Presence of feet","There are no differences"],0)
+    bio_qman.add_question("What is the study of plants called",["Botany","Mycology","Pathology","Zoology"],0)
+    bio_qman.add_question("Which is NOT one of the four nucleobases used in DNA",["Uracil","Thymine","Guanine","Adenine","Cytosine"],0)
+    bio_qman.add_question("What is found in the mitochondria?",["The golgi","The cristae","Endoplasmic Reticulum","The Nucleus"],1)
+    bio_qman.add_question("When two bacteria exchange genetic information with each other through direct contact, cell to cell, what is the process called?",["Conjunction","Transformation","Euglena","Fuuuuusion Ha!"],0)
+    bio_qman.add_question("What is the function of ALL enzymes?",["Partay","Growing","Facilitate reaction","Hair growth"],2)
+    bio_qman.add_question("What id the family name of a cat?",["Lupus","Elephantitis","Patherus","Felidae"],3)
+    bio_qman.add_question("What is the process in which plants use to make food?",["Cooking","Filtering","Photosynthesis","Photolysis"],2)
+    bio_qman.add_question("What is the scientific name of a dog?",["Much Doge","Tetrapedius mammalian","Canis Familiaris","Equiarus"],2)
+    bio_qman.add_question("Animals which eat both plants and animals are known as what?",["Omnitarian","Vegan","Sarcophyte","Omnivore"],3)
+    bio_qman.add_question("Can frogs live in salt water?",["Yes","No","Maybe","Only if they're salt water frogs"],1)
+    bio_qman.add_question("Lamarck's Theory of evolution is characterised by what concept?",["Survival of the fittest","Natural Selection","Dinosaurs","Heritability of acquired characteristics"],3)
+    bio_qman.add_question("Darwin's theory of natural selection developed by observing what animal?",["Finches","Doges","Fish","Bananas"],0)
+    bio_qman.add_question("How many feet does a snail have?",["1","2","4","Infinite"],0)
+    bio_qman.add_question("What part of the retina allows for coloured vision",["Rods","Cones","Lens","Mirror"],1)
+    bio_qman.add_question("What part of the brain controls balance.",["Frontal Cortex","The wrinkly half","Temporal Lobe","Cerebellum"],3)
+
+    drama_qman.add_question("How does Hamlet Sr. die in the play {i}Hamlet{/i}",["Poison","Assassination","Witches","A duel with Ferdinard Sr."],1)
+
+    drama_qman.add_question("What is the name of the role of a person who writes the play?",["Playwright","Actor","Director","Player"],0)
+
+    drama_qman.add_question("When you are on stage, to make sure your audience can understand, you must project your:",["Vision","Breath","Ideas","Voice"],3)
+
+    drama_qman.add_question("In which Shakespeare play does this line appear {i}\"All the world's a stage and all the men and women merely players\"{/i}",["Othello","Macbeth","Hamlet","Romeo and Juliet"],2)
+
+    drama_qman.add_question("What are instructions for actors, directors and the stage crew?",["Stage Directions","Dialogue","Soliloquy","Metaphor"],0)
+    drama_qman.add_question("What is conversation between characters?",["Small talk","Dialogue","Oxymoron","Monologue"],1)
+
+    drama_qman.add_question("What are people watching a play called",["Fan girls/boys","Plebs","Audience","4th wallers"],2)
+
+    drama_qman.add_question("Ordinary spoken or written language is called",["Imagery","Jargon","Poetry","Prose"],3)
+
+    drama_qman.add_question("In Ancient Greek plays, There were NO women actors",["True","False","Unknown","Only when there were female roles"],0)
+
+    drama_qman.add_question("Which is talking to the audience",["Dialogue","Aside","Monologue","Solo"],1)
+
+    drama_qman.add_question("What does a character foil refer to?",["Antagonist","Protagonist","The opposite of the protagonist","The doppelganger of the protagonist"],2)
+
+    drama_qman.add_question("Who is the king of the fairies in {i}\"A Midsummer Night's Dream\"{/i}",["King Lear","Othello","Claudius","Oberon"],3)
+
+    drama_qman.add_question("The imaginary wall between the audience and the actor is?",["The forth wall","The third wall","The second wall","The first wall"],0)
+
+    drama_qman.add_question("Who tells Macbeth he can kill Duncan to become king?",["Lady Macbeth","The Ghost of Macbeth Sr.","Banquo","The 3 witches"],3)
+
+
+
+    gym_qman.add_question("How much distance do you run in a 100m race?",["10m","50m","100m","100Km"],2)
+    gym_qman.add_question("In a badminton game, how many points are required for a win?",[5,10,11,21,25],3)
+    gym_qman.add_question("What is Canada's national sport",["Hockey","Lacrosse","Curling","Ice Skating"],1)
+    gym_qman.add_question("What body part do you receive a penalty for using in soccer?",["Hands","Head","Feet","Ears"],0)
+    gym_qman.add_question("In American football, how many points are rewarded for a touchdown",["1","6","8","10"],1)
+    gym_qman.add_question("Which is a form of exercise",["Sitting","Laying","Walking","Whining"],2)
+    gym_qman.add_question("Olympic event that consists of throwing a metal ball, from shoulder height.",["Basketball","Javelin","16th Centry War","Shot Put"],3)
+    gym_qman.add_question("What is the average walking speed?",["5 Km/h","20 Km/h","1 Km/h","35 Km/h"],0)
+    gym_qman.add_question("How many events are in a triathalon",["3","4","7","6"],0)
+    gym_qman.add_question("What is a Hat trick?",["3 goals by one player","A score made from the other side of the field","An accidental score","A fan running around the field with a hat, doing magic tricks"],0)
+    gym_qman.add_question("What is the term when you are tied in tennis",["Tied","Duck","Goose","Deuce"],3)
+    gym_qman.add_question("What is the term when you have zero points in tennis?",["Loser","Zero","Pleb","Love"],3)
+    gym_qman.add_question("One stroke less than par in golf is:",["Not good enough","Eagle","Birdie","Bogey","Hole in one"],2)
+    gym_qman.add_question("What sport is the FIFA World cup for",["Football (soccer)","Tennis","Hockey","Quidditch"],0)
+    gym_qman.add_question("Famous player involved in MBA and MLB, and is associated with a shoe brand?",["Michael Jackson","Jeremy Lin","Micheal Jordan","Shaquille O'Neil"],2)
+    gym_qman.add_question("What is the most points you can get in a bowling game",["300","1","2","500"],0)
+    gym_qman.add_question("How do you end Quidditch?",["Knock over all of the opposing team","Say the name that cannot be said","Remove your nose","Catch the golden snitch"],3)
+
+
+
+
+
+
+
+
+
+
     def stats_overlay():
         ui.text(("Days Elapsed: "+str(stats.get_days())),size=24)
         closeness = 0
@@ -213,11 +292,6 @@ define girl2_music_choice = 0
 label start:
     scene bg office
     with fade
-
-    $ bio_qman.add_question("description",["wrong1","wrong2","wrong3","correct"],3)
-    $ gym_qman.add_question("description",["wrong1","wrong2","wrong3","correct"],3)
-    $ drama_qman.add_question("description",["wrong1","wrong2","wrong3","correct"],3)
-
 
     $ player_name = renpy.input("Most of the documents seem to be in order. Can I get you to sign your name below please?")
     
