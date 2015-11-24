@@ -349,7 +349,7 @@ label end_day_0:
     m "Time to go to class."
     
     "> You somehow manage to stay awake through the intense morning lessons."
-    m "Finally done the morning lessons, I was ready to pass out at any moment. So which classes should I take this afternoon?"
+    m "Finally done the morning lessons; I was ready to pass out at any moment. So which classes should I take this afternoon?"
 
     $ stats.reset_classes()
     jump make_schedule
@@ -475,7 +475,7 @@ label music_room:
     "This girl’s scary."
     "> She moves to her music stand again raising her bow into position. This time she continues to play, but still not as welcoming and warm as the first time."
     "> You start to get into the music, leaning back while tapping your feet."
-    "> Noticing the dust on your elbows after sitting back, you notice the piano."
+    "> As you notice the dust on your elbows, you realize you have been sitting beside a piano."
     "Oh man, this piano’s pretty dusty. I also haven’t touched one of these in a couple years. Now let’s see what we have here..."
     "> You lift the key covering."
     
@@ -545,7 +545,7 @@ label play_with_her:
         p "What!? what do you mean?"
         m "I’ll be around the music room more often, I like listening to you play and the way you played the violin has inspired me to get back into playing the piano."
         p "Who said you could be in here?"
-        m "Would you be opposed? I need to practice a little more, and you could tell me how I’m doing."
+        m "Would you be opposed? I need to practice a little more and you could tell me how I’m doing."
         p "I don’t have time to deal with an amateur like you. Ugh....but I guess it’s sort of useful having an accompanist. JUST FOR PRACTICE. Come by tomorrow, don’t be late or else I’ll kick you out."  
         
         # end day
@@ -846,7 +846,7 @@ label music_event_1:
             p "I’m trying to make posters for this concert; I need to promote it. No need for help, I’m perfectly capable of doing this myself."
             m "Of course, of course! If I help you now though we’ll have time to play some music. I’ve been looking forward to it all day."
             p "Hmmm...Fine! Do whatever you want."
-            "> She still seems embarrassed for accepting your help but at the same time, satisfied."
+            "> She still seems embarrassed for accepting your help, but at the same time, satisfied."
             "> You end up kneeling beside her. As you sit she retracts a couple inches away from where you’re sitting."
             "She doesn’t seem that comfortable with me maybe I should try to make some conversation."
             menu:
@@ -854,7 +854,7 @@ label music_event_1:
                     $ girl2.add_affection(1)
                     p "This is my opportunity to be the greatest violinist of our time."
                     m "What...?"
-                    p "A representative from the most prestigious music schools in the UK was invited to view my performance. Basically I’m being evaluated before actually going there to do my audition for the school."
+                    p "A representative from the most prestigious music schools in the UK was invited to view my performance. Basically, I’m being evaluated before actually going there to do my audition for the school."
                     m "Uh huh... congrats, Cathy!"
                     p "Idiot. Don't call me that."
                     m "hahahahaha!"
@@ -872,7 +872,7 @@ label music_event_1_part_2:
     p "No. I can’t have any clumsy mistakes."
     "> You look at the posters in front of her."
     m "But you didn’t even colour in the lines."
-    "> Caterine is flustered."
+    "> Catherine is flustered."
     p "N-no! That’s for visual effect! I guess it’s hard to appreciate for an uncultured eye."
     m "That is debatable."
     p "Just get to work!"
@@ -946,7 +946,7 @@ label music_event_1_part_3:
     p "Uh. Sure. What do you want to play?"
     stop music fadeout 1.0
     menu: 
-        "Beethoven violin Sonata o. 9 Op.47":
+        "Beethoven violin Sonata No.9 Op.47 \"Kreutzer\"":
             m "Let's play Beethoven." #ADD MUSIC
             $ girl2_music_choice = 1
             play music "Beethoven.mp3" fadein 1.0
@@ -1378,7 +1378,7 @@ label home_ec_room:
     # you have chosen Mary as the girl 
     $ stats.set_chosen_girl(1)
     "> In front of the Home-Ec Room."
-    "> As you enter the room, you hear a sizzling noise. The fragrances tickle your nose as you enter the room. Your sight is drawn to the centre of the room, to a girl. She looks up to acknowledge you, and she gives a friendly but shy smile."
+    "> As you enter the room, you hear a sizzling noise. The fragrances tickle your nose as you enter the room. Your sight is drawn to the centre of the room, to a girl. She looks up to acknowledge you and she gives a friendly, but shy smile."
     
     p "Hello, I haven’t seen your face around, are you new?"
     
@@ -1493,6 +1493,7 @@ label made_good_food_1:
     
     "> Mary gives a warm smile"
     
+    # change it to something without sous chef. No relevancy. Just be like Okay you’ve proven yourself. You are free to come by tomorrow after classes or something 
     p "I’ll let you into the club! I need a sous chef to help me with a project. If you’re free come by tomorrow after class"
     
     jump end_day_1
@@ -1726,7 +1727,7 @@ label home_ec_day_4:
                 $ girl1.add_closeness(2)
             else:
                 "> The filling is too liquidy; it will not hold its shape."
-                p "I think that you over baked the pie."
+                p "I think that you overbaked the pie."
                 $ girl1.add_closeness(-2)
                 
     $stats.increment_days()
@@ -2209,7 +2210,7 @@ label girl1_home_date:
     p "Alright! Everything is set! What do you want to eat?"
     call girl1_home_date_choice
 
-    "> You look around the room, it's pretty nice. What should you do?"
+    "> You look around the room; it's pretty nice. What should you do?"
     menu:
         "Sit in the living room and play video games.":
             "> ...You look around the room. Not a video game in sight"
@@ -2299,7 +2300,8 @@ label girl1_home_date_kitchen:
 
     m "You got some… Umm.. flour all over you."
 
-    "> You brush the flouer off her shoulders, trying to avoid making awkward physical contact."
+    #says both of you have flour all over your faces , but u only wipe off hers . Maybe put a text saying u wipe your face first
+    "> You brush the flour off her shoulders, trying to avoid making awkward physical contact."
 
     p "Well… I could only assume. My lenses are completely covered. I can’t see a thing."
                 
@@ -2312,7 +2314,7 @@ label girl1_home_date_kitchen:
         "{b}JUST DO IT!!{/b}":
             "> You decide to take the relationship further."
             "> You wipe the flour off her cheeks and find your hands resting on the back of her neck."
-            "> Before you know it, your hand pulls her towards you. Anticipation buiilding, you close your eyes."
+            "> Before you know it, your hand pulls her towards you. As anticipation is building, you close your eyes."
             "> ..."
             "> ... You feel something press against your lips..."
             "> ..."
