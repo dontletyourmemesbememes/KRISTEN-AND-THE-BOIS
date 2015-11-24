@@ -1584,7 +1584,7 @@ label girl1_check_3:
     $ event_num = girl1.get_event("Mary")
     if closeness >= 10 and event_num == 2:
         "> You notice Mary doesn't look as cheerful as she normally does when she cooks."
-        m "{i}Is she still concerned about what we talked about at the restaurant?{/i}"
+        m "Is she still concerned about what we talked about at the restaurant?"
         "> You decide to confront her."
         
         jump girl1_home_date
@@ -1813,9 +1813,9 @@ label cafe_date1 :
             
             p "Thank you!"
         
-            "{i}She seems distracted. Maybe I should be more engaging. What should I ask her?{/i}"
+            "She seems distracted. Maybe I should be more engaging. What should I ask her?"
         else:
-            "{i}What should I ask her?{/i}"
+            "What should I ask her?"
         menu:
             "Do you have a boyfriend?" if not cafe_boyfriend:
                 $ cafe_asked_count += 1
@@ -1824,7 +1824,7 @@ label cafe_date1 :
                 
                 "> Mary looks displeased."
                     
-                "{i} Maybe I should I should drop the topic...{/i}"
+                " Maybe I should I should drop the topic..."
                 $ cafe_boyfriend = True
                 jump cafe_date1
             
@@ -2091,7 +2091,7 @@ label mary_backstory2:
 
     p "My mom and I were devastated. Cooking for me lets me keep a memory of him living. I think for my mom, seeing me cook, just reminds her of a passion that took dad away."
     
-    m "{i}What should I say to her?{/i}"
+    m "What should I say to her?"
    
     menu: # choices should not decrease stats at this point of date
         "Keep cooking a secret." :
@@ -2135,7 +2135,7 @@ label mary_backstory2:
     
     "> Mary gives you a warm smile before turning around. The two of you part ways in front of the restaurant."
     
-    m "{i}Was she really okay..?{/i}"
+    m "Was she really okay..?"
     
     jump return_to_which_day
             
@@ -2168,7 +2168,7 @@ label girl1_home_date:
 
     p "Oh, so you did remember!" 
 
-    "{i}she seems shy but happy{/i}"
+    "she seems shy but happy"
 
     p "Then, why don't we go back to my house? I have all the ingredients there."
 
@@ -2353,7 +2353,7 @@ label girl1_home_date_kitchen:
                 p " ...Yeah."
                 "> Mary leads you to the exit. You can't think of much to say without making it more awkward, so you just keep walking." 
                 "> You look back. The door is closed."
-                m "{i} I guess that's it, huh...? {/i}"
+                m " I guess that's it, huh...? "
                 #jump bad ending
                 return
                 
@@ -2368,7 +2368,7 @@ label girl1_home_date_choice:
                     "> Mary seems motivateds all of a sudden."
                     #negative
                 " I really want to eat this.":
-                    "{i}Mary seems intimidated by the challenge but finds her resolve.{/i}"
+                    "Mary seems intimidated by the challenge but finds her resolve."
                     p "I'll do my best!"
                     "> Mary seems motivateds all of a sudden."
                     #positive/neutral 
@@ -2378,7 +2378,7 @@ label girl1_home_date_choice:
             call girl1_home_date_choice
             return
         "Triple Layer Chocolate Cake":
-            "{i}She seems surprised by your request{/i}"
+            "She seems surprised by your request"
 
             p "I thought you'd choose something more difficut. Why did you choose a cake?"
             menu:
@@ -2465,7 +2465,7 @@ label mom_drama:
                     mom "What are you saying? You think you know my daughter more than I know her? I've raised her and I know what's best for her." 
                     m "I'm not saying that I know her more..I just mean.."
                     mom "Who do you think you are?"
-                    m "{i}This isn't going so well...{/i}"
+                    m "This isn't going so well..."
                     menu:
                         "Talk about Mary's Dad":
                              m "I'm sure you remember your husband's passion for cooking! It made him happy and it made Mary happy too!"
