@@ -14,7 +14,7 @@ image bg music_room = "Music_room.png"
 image bg office = "Office.png"
 image bg outside_house = "Outside_house.png"
 image bg restaurant = "Restaurant.png"
-image bg home = "Player_home.png"
+#image bg home = "Player_home.png" // Crashes game b/c doesn't exist
 
 init python:
     import random
@@ -133,19 +133,25 @@ init python:
         def add_closeness(self,amount):
             self.closeness += amount
             
-        def get_closeness(self,name):
+        # Why is the name being passed here as the parameter...? 
+        # It literally does nothing.
+        # Added default parameters so you can still call them without the name param.
+        # Since it's probably too late at this point to change it back.
+        def get_closeness(self,name=""):
             return self.closeness
             
         def add_affection(self,amount):
             self.affection += amount
 
-        def get_affection(self,name):
+        # same issue here
+        def get_affection(self,name=""):
             return self.affection
 
         def set_name(self,name):
             self.name = name
-            
-        def get_event(self,name):
+        
+        # and here
+        def get_event(self,name=""):
             return self.event
             
         def add_event(self):
@@ -153,6 +159,27 @@ init python:
             
     def rng_roll(chance): #chance should be between [0,1]
         return chance > renpy.random.random()
+
+    stats = Stats()
+    girl1 = Girl("Mary")
+    girl2 = Girl("Catherine")
+
+    bio_qman = QuestionManager()
+    gym_qman = QuestionManager()
+    drama_qman = QuestionManager()
+
+    def stats_overlay():
+        ui.text(("Days Elapsed: "+str(stats.get_days())),size=24)
+        closeness = 0
+        if stats.chosen_girl == 1:
+            closeness = girl1.get_closeness()
+        elif stats.chosen_girl == 2:
+            closeness = girl2.get_closeness()
+        else:
+            closeness = 0
+
+        ui.text(("Closeness: "+str(closeness)),size=24,ypos=24)
+    config.overlay_functions.append(stats_overlay) #add overlay
 
 
 # Declare characters used by this game.
@@ -181,15 +208,11 @@ define girl2_music_choice = 0
 
 # The game starts here.
 # Initialize stuff here and shove all the tutorial intro stuff here as well.
+
+
 label start:
-    
-    play music "Background Music.mp3"
-    
     scene bg office
     with fade
-    $ bio_qman = QuestionManager()
-    $ gym_qman = QuestionManager()
-    $ drama_qman = QuestionManager()
 
     $ bio_qman.add_question("description",["wrong1","wrong2","wrong3","correct"],3)
     $ gym_qman.add_question("description",["wrong1","wrong2","wrong3","correct"],3)
@@ -197,9 +220,7 @@ label start:
 
 
     $ player_name = renpy.input("Most of the documents seem to be in order. Can I get you to sign your name below please?")
-    $ stats = Stats()
-    $ girl1 = Girl("Mary")
-    $ girl2 = Girl("Catherine")
+    
     $ unknown_name = "???"
     principal "Alright %(player_name)s, I believe we're good to go now!"
     
@@ -1100,7 +1121,7 @@ label music_event_2_part_2:
     stop music fadeout 1.0
     if girl2_music_choice == 1:
         play music "Beethoven.mp3" fadein 1.0
-    else if girl2_music_choice == 2:
+    elif girl2_music_choice == 2:
         play music "Chopin.mp3" fadein 1.0
     else:
         play music "Rondo.mp3" fadein 1.0
@@ -1740,7 +1761,7 @@ label girl1_failure:
     return
                 
 
-#the main daytime routine.
+#the main daytime routine. //UNUSED
 label daytime:
     $ stats.days += 1
     $ temp = stats.days
@@ -1754,7 +1775,7 @@ label daytime:
 
     return #end game
 
-#routine for raising stats
+#routine for raising stats //UNUSED
 label raisestat:
     menu:
         "What Stat to raise"
