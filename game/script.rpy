@@ -14,7 +14,7 @@ image bg music_room = "Music_room.png"
 image bg office = "Office.png"
 image bg outside_house = "Outside_house.png"
 image bg restaurant = "Restaurant.png"
-#image bg home = "Player_home.png" // Crashes game b/c doesn't exist
+image bg home = "Player_room.png" 
 
 init python:
     import random
@@ -367,6 +367,8 @@ label school_tour:
   
     principal "Moving on to the next club..."
     #fade out
+    scene bg hallway
+    with fade
     "> The other club rooms didn't seem to interest you at all..."
 
     #go to general image, office or something
@@ -704,7 +706,9 @@ label music_day_2:
     stop music fadeout 1.0
     menu:
         "Classical (no reqs)":
+            play music "Classical.mp3" fadein 1.0
             "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
+            stop music fadeout 1.0
             play music "Background Music.mp3" fadein 1.0
             p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again... It was kind of fun."
             $ girl2.add_closeness(1)
@@ -712,13 +716,17 @@ label music_day_2:
         "Rock (Strength 2, Charm 2)":
             p "Rock today? okay I'll give it a try."
             if str_check >= 2 and cha_check >=2:
+                play music "rock.mp3" fadein 1.0
                 "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
+                stop music fadeout 1.0
                 play music "Background Music.mp3" fadein 1.0
                 p "That went better than I thought." # she coughs
                 p "I meant for you obviously, I knew that I would be great. That was interesting though. Maybe we should experiment like this more."
                 $ girl2.add_closeness(2)
             else:
+                play music "Piano Fail.mp3" fadein 1.0
                 "> As you begin to play for the first few bars, you are able to stay on beat with Catherine, However, as the song intensifies, you stress out and begin to play fast and louder. The sounds created by piano overpowers the violin and there is dissonance in the music being played. Despite this, Catherine and  you imagine to finish the piece."
+                stop music fadeout 1.0
                 play music "Background Music.mp3" fadein 1.0
                 p "That was terrible. The piano is suppose to accompany the violin not the other way around... But I guess this is a huge improvement from yesterday. I guess I will let you continue coming to the music room because you are dedicated to improve and you kind of have potential.."
                 $ girl2.add_closeness(-2)
@@ -726,12 +734,16 @@ label music_day_2:
         "Jazz (Charm 2, Intelligence 2)":
             p "OH! I LOVE JAZZ!"
             if cha_check >= 2 and int_check >= 2:
+                play music "Jazz.mp3" fadein 1.0
                 "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
+                stop music fadeout 1.0
                 play music "Background Music.mp3" fadein 1.0
                 p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again... It was kind of fun."
                 $ girl2.add_closeness(2)
             else:
+                play music "Piano Fail.mp3" fadein 1.0
                 "> As you begin to play for the first few bars, you are able to stay on beat with Catherine, However, as the song intensifies, you stress out and begin to play fast and louder. The sounds created by piano overpowers the violin and there is dissonance in the music being played. Despite this, Catherine and  you imagine to finish the piece."
+                stop music fadeout 1.0
                 play music "Background Music.mp3" fadein 1.0
                 p "That was terrible. The piano is suppose to accompany the violin not the other way around... But I guess this is a huge improvement from yesterday. I guess I will let you continue coming to the music room because you are dedicated to improve and you kind of have potential.."
                 $ girl2.add_closeness(-2)
@@ -765,7 +777,9 @@ label music_day_3:
     
     menu:
         "Classical (no reqs)":
+            play music "Classical.mp3" fadein 1.0
             "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
+            stop music fadeout 1.0
             play music "Background Music.mp3" fadein 1.0
             p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again... It was kind of fun."
             $ girl2.add_closeness(1)
@@ -774,11 +788,14 @@ label music_day_3:
             p "Really? Okay, I'm not very used to folk, but if you want."
             if str_check >= 2 and cha_check >=3:
                 "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
+                stop music fadeout 1.0
                 play music "Background Music.mp3" fadein 1.0
                 p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again... It was kind of fun."
                 $ girl2.add_closeness(2)
             else:
+                play music "Piano Fail.mp3" fadein 1.0
                 "> As you begin to play for the first few bars, you are able to stay on beat with Catherine, However, as the song intensifies, you stress out and begin to play fast and louder. The sounds created by piano overpowers the violin and there is dissonance in the music being played. Despite this, Catherine and  you imagine to finish the piece."
+                stop music fadeout 1.0
                 play music "Background Music.mp3" fadein 1.0
                 p "That was terrible. The piano is suppose to accompany the violin not the other way around... But I guess this is a huge improvement from yesterday. I guess I will let you continue coming to the music room because you are dedicated to improve and you kind of have potential.."
                 $ girl2.add_closeness(-2)
@@ -786,12 +803,16 @@ label music_day_3:
         "Blues (Charm 2, Intelligence 3)":
             p "Alright, if you want."
             if cha_check >= 2 and int_check >= 3:
+                play music "Blues.mp3" fadein 1.0
                 "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
+                stop music fadeout 1.0
                 play music "Background Music.mp3" fadein 1.0
                 p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again... It was kind of fun."
                 $ girl2.add_closeness(2)
             else:
+                play music "Piano Fail.mp3" fadein 1.0
                 "> As you begin to play for the first few bars, you are able to stay on beat with Catherine, However, as the song intensifies, you stress out and begin to play fast and louder. The sounds created by piano overpowers the violin and there is dissonance in the music being played. Despite this, Catherine and  you imagine to finish the piece."
+                stop music fadeout 1.0
                 play music "Background Music.mp3" fadein 1.0
                 p "That was terrible. The piano is suppose to accompany the violin not the other way around... But I guess this is a huge improvement from yesterday. I guess I will let you continue coming to the music room because you are dedicated to improve and you kind of have potential.."
                 $ girl2.add_closeness(-2)
@@ -826,7 +847,9 @@ label music_day_4:
     stop music fadeout 1.0
     menu:
         "Classical (no reqs)":
+            play music "Classical.mp3" fadein 1.0
             "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
+            stop music fadeout 1.0
             play music "Background Music.mp3" fadein 1.0
             p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again... It was kind of fun."
             $ girl2.add_closeness(1)
@@ -834,12 +857,16 @@ label music_day_4:
         "Latin (Strength 3, Charm 4)":
             p "Very very interesting. I don't know how to start... ummm... here goes nothing."
             if str_check >= 3 and cha_check >=4:
+                play music "Latin.mp3" fadein 1.0
                 "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
+                stop music fadeout 1.0
                 play music "Background Music.mp3" fadein 1.0
                 p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again... It was kind of fun."
                 $ girl2.add_closeness(2)
             else:
+                play music "Piano Fail.mp3" fadein 1.0
                 "> As you begin to play for the first few bars, you are able to stay on beat with Catherine, However, as the song intensifies, you stress out and begin to play fast and louder. The sounds created by piano overpowers the violin and there is dissonance in the music being played. Despite this, Catherine and  you imagine to finish the piece."
+                stop music fadeout 1.0
                 play music "Background Music.mp3" fadein 1.0
                 p "That was terrible. The piano is suppose to accompany the violin not the other way around... But I guess this is a huge improvement from yesterday. I guess I will let you continue coming to the music room because you are dedicated to improve and you kind of have potential.."
                 $ girl2.add_closeness(-2)
@@ -847,12 +874,16 @@ label music_day_4:
         "J-pop (Charm 3, Intelligence 4)":
             p "Oh great! I have this song from a dating sim game I wanted to play!"
             if cha_check >= 3 and int_check >= 4:
+                play music "Jpop.mp3" fadein 1.0
                 "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
+                stop music fadeout 1.0
                 play music "Background Music.mp3" fadein 1.0
                 p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again... It was kind of fun."
                 $ girl2.add_closeness(2)
             else:
+                play music "Piano Fail.mp3" fadein 1.0
                 "> As you begin to play for the first few bars, you are able to stay on beat with Catherine, However, as the song intensifies, you stress out and begin to play fast and louder. The sounds created by piano overpowers the violin and there is dissonance in the music being played. Despite this, Catherine and  you imagine to finish the piece."
+                stop music fadeout 1.0
                 play music "Background Music.mp3" fadein 1.0
                 p "That was terrible. The piano is suppose to accompany the violin not the other way around... But I guess this is a huge improvement from yesterday. I guess I will let you continue coming to the music room because you are dedicated to improve and you kind of have potential.."
                 $ girl2.add_closeness(-2)
@@ -902,6 +933,7 @@ label music_event_1:
             
         "Don't say anything yet":
             "> You decide to watch her and see what she's doing. You notice her tugging on her hair occasionally and letting out fits of frustration."
+            play sound "Cell Phone Ring.mp3"
             "> ring ring ring"
             p "sigh..."
             p "Hi Mom."
@@ -1275,9 +1307,13 @@ label music_event_3:
     p "Alright, alright I'm ready."
     "> Her shoulders relax, and she takes a deep breath."
     "> The music starts playing, You start the song slow. following the lyrics her voice takes you by surprise. You are taken back for moment to the point where you stop singing out of disbelief. Her voice actually is powerful and smooth."
+    stop music fadeout 1.0
+    play music ["Adele Karaoke.mp3", "John Legend Karaoke.mp3"] fadeout 1.0 fadein 1.0
     "SHE LIED TO ME"
     "> You decide to just go with it. You have an almost a deja vu moment, as if you were her accompanist again. Naturally, you begin to harmonize with her. It must be from practising with her. At one point of the song, you both feel each other pushing your diaphragms to their limit. You look at each other trying not to laugh."
     "> You see her under the fluorescent rose lighting of the room, she looks like she's really having enjoying herself. She looks at you and smiles as the song ends."
+    stop music fadeout 1.0
+    play music "Background Music.mp3" fadein 1.0
     p "That was great!"
     "> She begins laughing uncontrollably while leaning forward."
     "> She beings to lose balance as she falls forward and falls in your direction. You react by trying to catch her with both arms, but her momentum catches you off guard and pushes you back. You fall directly on your butt."
