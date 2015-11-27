@@ -261,7 +261,7 @@ init python:
     bio_qman.add_question("What is found in the mitochondria?",["The golgi","The cristae","Endoplasmic Reticulum","The Nucleus"],1)
     bio_qman.add_question("When two bacteria exchange genetic information with each other through direct contact, cell to cell, what is the process called?",["Conjunction","Transformation","Euglena","Fuuuuusion Ha!"],0)
     bio_qman.add_question("What is the function of ALL enzymes?",["Partay","Growing","Facilitate reaction","Hair growth"],2)
-    bio_qman.add_question("What id the family name of a cat?",["Lupus","Elephantitis","Patherus","Felidae"],3)
+    bio_qman.add_question("What is the family name of a cat?",["Lupus","Elephantitis","Patherus","Felidae"],3)
     bio_qman.add_question("What is the process in which plants use to make food?",["Cooking","Filtering","Photosynthesis","Photolysis"],2)
     bio_qman.add_question("What is the scientific name of a dog?",["Much Doge","Tetrapedius mammalian","Canis Familiaris","Equiarus"],2)
     bio_qman.add_question("Animals which eat both plants and animals are known as what?",["Omnitarian","Vegan","Sarcophyte","Omnivore"],3)
@@ -290,7 +290,7 @@ init python:
 
 
     gym_qman.add_question("How much distance do you run in a 100m race?",["10m","50m","100m","100Km"],2)
-    gym_qman.add_question("In a badminton game, how many points are required for a win?",[5,10,11,21,25],3)
+    gym_qman.add_question("In a badminton game, how many points are required for a win?",["5","10","11","21","25"],3)
     gym_qman.add_question("What is Canada's national sport",["Hockey","Lacrosse","Curling","Ice Skating"],1)
     gym_qman.add_question("What body part do you receive a penalty for using in soccer?",["Hands","Head","Feet","Ears"],0)
     gym_qman.add_question("In American football, how many points are rewarded for a touchdown",["1","6","8","10"],1)
@@ -319,7 +319,7 @@ init python:
         else:
             closeness = 0
 
-        #ui.text(("Closeness: "+str(closeness)),size=24,ypos=24)
+        ui.text(("Closeness: "+str(closeness)),size=24,ypos=96)
         ui.text(("Strength:"+str(stats.get_stats("str"))),size=24,ypos=24)
         ui.text(("Intelligence:"+str(stats.get_stats("int"))),size=24,ypos=48)
         ui.text(("Charm:"+str(stats.get_stats("cha"))),size=24,ypos=72)
@@ -336,6 +336,10 @@ define principal = Character("Principal", color="#c8ffc8")
 
 define mom = Character("Mom", color="#c8ffc8")
 define cookies_baked = False
+#Mary variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+define girl1check1 = False
+define girl1check2 = False
+define girl1check3 = False
 #Cafe date variables~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 define cafe_trigger = 0
 define cafe_asked_count = 0
@@ -529,7 +533,7 @@ label end_day_0:
 
     $ stats.reset_classes()
     jump make_schedule
-    
+ #Classes ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   
 label gym:
     $ stats.pick_classes("Gym (+1 Strength)")
     if len(stats.get_picked_classes()) < stats.max_classes:
@@ -593,22 +597,24 @@ label biology:
         "> No stats were raised."
 
     return
-
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 label extracurricular:
     scene bg hallway with fade
     m "So this is what an elite school is like? Classes seem ridiculously hard. Maybe I should check out those extracurriculars that the principal mentioned."
+    "> You recall that you can only join {b}one{/b} club. Which one do you choose?"
+    
     $ chosen_girl = stats.get_chosen_girl()
     
     if chosen_girl == 0:
         
         menu:
             "Home Economics Room":
+                m "I guess I'll go check out the home-ec room."
                 jump home_ec_room
             "Music Room":
-                "I heard there was a music room. I should go check it out."
+                m "I heard there was a music room. I should go check it out."
                 jump music_room 
 
-    
     elif chosen_girl == 1: # Mary is chosen
         
         jump home_ec_day_2
@@ -1554,9 +1560,10 @@ label girl2_good_end:
 label girl2_fail_end:
     "GAME OVER"
     return
-    
 #-----------------------------END OF MUSIC GIRL---------------------------------------------#
 
+#----------------------------START OF MARY--------------------------------------------------#
+#Mary first encounter ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 label home_ec_room:
     # show image of room
     # play sound of sizzling noise
@@ -1580,10 +1587,11 @@ label home_ec_room:
     m "Where do I sign up?"
     show mary cook wonder
     p "Well... you kind of need to cook in this club. Show me what you can do first, and then we can talk about your membership."
+    show mary cook straight
     show thought with dissolve
     "> You realize that you've only been here for a day, and the only culinary experience you have comes from instant ramen. But how hard could it be?"
     hide thought with dissolve
-    p "...Hello? You blanked out for a second, haha. What do you plan on making for me?"
+    p "...Hello? You blanked out for a second. What do you plan on making for me?"
     $ str_check = stats.get_stats("str")
     $ int_check = stats.get_stats("int")
     $ cha_check = stats.get_stats("cha")
@@ -1628,7 +1636,7 @@ label girl_1_convo_1:
     menu: 
         "Ask her for her name":
             show mary cook straight with fade
-            m "Soooo... I actually never caught your name, my names %(player_name)s."
+            m "Soooo... I actually never caught your name, my name's %(player_name)s."
             show mary cook shock
             p "Oh, sorry about that!" 
             show mary cook smile
@@ -1685,7 +1693,7 @@ label made_bad_food_1:
     show mary cook shy
     "> She forces a smile and pushes your food a few inches away"
     
-    m "Sorry about that, maybe you can teach me some basics?"
+    m "Sorry about that. Maybe you can teach me some basics?"
     show mary cook straight
     p "Hmmm... That sounds okay I suppose..."
     show mary cook smile
@@ -1703,15 +1711,17 @@ label made_good_food_1:
     p "With your cooking skills, I'd be happy to let you into the club! Come by again tomorrow after class if you're free."
     "> You decide to head home for the day."
     jump end_day_1
+    #jump standard_end_day #LINE TO JUMP TO STANDARD CYCLE CODE in day_cycle.rpy
     
 label end_day_1:
     scene bg player room with fade
-    # show image of bedroom at night?
+    #show image of bedroom at night
     m "That was a long day; it's time to hit the sack."
     $ stats.increment_days()
-    
-    jump start_day_2
-    
+    jump standard_day_cycle
+#    jump start_day_2
+# end of mary introduction ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 label start_day_2:
     scene bg hallway with fade
     "> Next morning."
@@ -1731,97 +1741,111 @@ label start_day_2:
     jump home_ec_day_2
     
 label girl1_check_1:
-    
     $ closeness = girl1.get_closeness("Mary")
     $ day = stats.get_days()
     $ event_num = girl1.get_event("Mary")
-    
-    if day <= 5 and closeness > -3 and closeness < 5:
-        # continue on with cooking
+    if not girl1check1: #Check if date has triggered already
+        if day <= 5 and closeness > -3 and closeness < 5:
+            # continue on with cooking
+            return
+        elif day > 5:
+            # too long trigger failure event
+            jump girl1_failure
+        elif closeness <= -3:
+            # lost too much closeness
+            jump girl1_failure
+        elif day < 5 and closeness >= 5 and event_num == 0: #EVENT TRIGGERED
+            # trigger event 1 of cafe as day < 5 and closess > 5
+            # set the event value to 1
+            $ girl1.add_event()
+            $ girl1check1 = True
+            $ standard_dc = 1
+            scene bg hallway with fade
+            show mary casual straight with dissolve:
+                xalign 1.0
+                linear 1.0 xalign 0.5
+            "> Outside home-ec room"
+            "> You see Mary standing outside the door."
+            p "Hey %(player_name)s! Do you have a minute?"
+            m "Sure, what's up?"
+            show mary casual happy
+            p "I was wondering if you would want to grab some coffee after our club today."
+            show mary casual smile
+            m "Of course! Where did you have in mind?"
+            show mary casual happy
+            p "There's this small cafe a couple blocks away from school. It's a nice, quiet place to relax every now and then."
+            show mary casual smile
+            menu: 
+                "Sounds great!":
+                    show mary casual laugh
+                    p "Let's meet up afterwards then!"
+                    "> Mary looks very excited."
+                "A cafe... really?":
+                    show mary casual pout
+                    $ girl1.add_closeness(-1)
+                    p "Is.. that a no?"
+                    "> Mary starts pouting at you."
+                    "> You no longer feel any urge to reject her offer."
+                    m "Alrgiht. I'll join you."
+                    show mary casual laugh
+                    p "Great! Let's meet up afterwards then!"
+            jump cafe_date1
+    else:
         return
-    elif day > 5:
-        # too long trigger failure event
-        jump girl1_failure
-    elif closeness <= -3:
-        # lost too much closeness
-        jump girl1_failure
-    elif day < 5 and closeness >= 5 and event_num == 0:
-        # trigger event 1 of cafe as day < 5 and closess > 5
-        # set the event value to 1
-        $ girl1.add_event()
-        scene bg hallway with fade
-        show mary casual straight with dissolve:
-            xalign 1.0
-            linear 1.0 xalign 0.5
-        "> Outside home-ec room"
-        "> You see Mary standing outside the door."
-        p "Hey %(player_name)s! Do you have a minute?"
-        
-        m "Sure, what's up?"
-        show mary casual happy
-        p "I was wondering if you would want to grab some coffee after our club today."
-        show mary casual smile
-        m "Of course! Where did you have in mind?"
-        show mary casual happy
-        p "There's this small cafe a couple blocks away from school. It's a nice, quiet place to relax every now and then."
-        show mary casual smile
-        menu: 
-            "Sounds great!":
-                show mary casual laugh
-                p "Let's meet up afterwards then!"
-                "> Mary looks very excited."
-                
-            "A cafe... really?":
-                show mary casual pout
-                p "Is.. that a no?"
-                "> Mary starts pouting at you."
-                "> You no longer feel any urge to reject her offer."
-                m "Alrgiht. I'll join you."
-                show mary casual laugh
-                p "Great! Let's meet up afterwards then!"
-        
-        jump cafe_date1
         
 label girl1_check_2:
     
     $ closeness = girl1.get_closeness("Mary")
     $ event_num = girl1.get_event("Mary")
-    if closeness >= 7 and event_num == 1:
-        $ girl1.add_event()
-        scene bg hallway with fade
-        show mary casual straight with dissolve
-        "> Mary is standing outside the club room. It looks like she was waiting for you."
-        show mary casual shock
-        p "Ah!" 
-        show mary casual straight
-        p "There you are %(player_name)s! Are you free right now?"
-        show mary casual wonder
-        p "You see, my mother had made reservations tonight at this restaurant I've been dying to try."
-        show mary casual sad
-        p "But, I got a call from her earlier saying she couldn't make it tonight. She suggested I find a friend to go with instead so we don't waste the reservation."
-        show mary casual happy
-        p "Immediately I thought, 'who better than the newcomer.' I feel like you can appreciate good food as much as I do."
-        show mary casual shy
-        p "You will join me, right?"
-        show thought behind mary
-        "> You have no power here. To the restaurant!"
-        jump restaurant_date1
+    if not girl1check2:
+        if closeness >= 7 and event_num == 1: #EVENT TRIGGERED
+            $ girl1.add_event()
+            $ girl1check2 = True
+            $ standard_dc = 1
+            scene bg hallway with fade
+            show mary casual straight with dissolve
+            "> Mary is standing outside the club room. It looks like she was waiting for you."
+            show mary casual shock
+            p "Ah!" 
+            show mary casual happy
+            p "There you are %(player_name)s! Are you free right now?"
+            show mary casual wonder
+            p "You see, my mother had made reservations tonight at this restaurant I've been dying to try."
+            show mary casual sad
+            p "But, I got a call from her earlier saying she couldn't make it tonight. She suggested I find a friend to go with instead so we don't waste the reservation."
+            show mary casual happy
+            p "Immediately I thought, 'who better than the newcomer.' I feel like you can appreciate good food as much as I do."
+            show mary casual shy
+            p "You will join me, right?"
+            show thought with dissolve
+            "> You have no power here. To the restaurant!"
+            jump restaurant_date1
+        else:
+            return
     else:
         return
         
 label girl1_check_3:
-    
     $ closeness = girl1.get_closeness("Mary")
     $ event_num = girl1.get_event("Mary")
-    if closeness >= 10 and event_num == 2:
-        "> You notice Mary doesn't look as cheerful as she normally does when she cooks."
-        m "Is she still concerned about what we talked about at the restaurant?"
-        "> You decide to confront her."
-        
-        jump girl1_home_date
+    if not girl1check3:
+        if closeness >= 10 and event_num == 2: #EVENT TRIGGERED
+            $ girl1check3 = True
+            $ standard_dc = 1
+            scene bg hallway with fade
+            show mary casual sad with dissolve:
+                xalign 0.7
+                linear 1.0 xalign 0.5
+            show thought with dissolve
+            "> You notice Mary doesn't look as cheerful as she normally does when she cooks."
+            m "Is she still concerned about what we talked about at the restaurant?"
+            "> You decide to confront her."
+            hide thought with dissolve
+            jump girl1_home_date
+        else:
+            return
     else:
         return
-    
 label home_ec_day_2:
     
     # check closeness
@@ -1983,7 +2007,7 @@ label return_to_which_day:
     if day == 1:
         jump end_day_1
     elif day == 2:
-        jump day_2
+        jump start_day_2
     elif day == 3:
         jump day_3
     elif day == 4:
@@ -2004,7 +2028,7 @@ label day_5:
     
 label girl1_failure:
     if stats.get_days == 5:
-        "> You feel that too many days have passed and you still haven't gotten any closer to Mary."
+        "> It seems that too many days have passed and you still haven't gotten any closer to Mary."
     jump mary_bad_end
     #else:
     #    jump mary_bad_end
@@ -2094,26 +2118,26 @@ label cafe_date1 :
                 p "Hmm.. not sure. Medicine? Engineering? Something in those professional fields. What do you think?"
                 
                 menu :
-                    "Sounds great!I'll support you if you ever need help." :
+                    "Sounds great! I'll support you if you ever need help." :
                         $ girl1.add_closeness(-1)
                         p "Yeah... It does, doesn't it?"
                         
                         "> Mary forces a smile. She lets out a small sigh."
                         
-                        "That's how life is supposed to go, right? That was, I can meet my mom's expectations... I guess that's most important after all.."
+                        p "That's how life is supposed to go, right? As long as I can meet my mom's expectations. I guess that's what is most important. Cooking will always be just a hobby."
                         
-                        "> You sense a hint of frustration in her voice. The tension gets to you and things become too awkward for you to say anything else."
+                        "> You sense a hint of frustration in her voice."
                         
-                        "> The rest of your date went on without much dialogue."
+                        m "What do you mean?"
                         
-                        jump cafe_date_badending
+                        jump mary_backstory1
                         
                     "What about being a chef?" :
                         $ girl1.add_closeness(2)
                         jump mary_backstory1
                         
                         
-            "What do you usually come here?" if not cafe_before:
+            "Do you usually come here?" if not cafe_before:
                 $ cafe_asked_count += 1
                 $ cafe_before = True 
                 $ girl1.add_closeness(1)
@@ -2128,7 +2152,7 @@ label cafe_date1 :
                 
                 p "..."
             
-                p "oops.. Haha, sorry. I'm usually more calm."
+                p "Oops.. Haha, sorry. I'm usually more calm."
                 
                 "> Mary takes a therapeutic breath."
                 
@@ -2141,7 +2165,7 @@ label cafe_date1 :
             "How are classes?" if not cafe_asked1: 
                 $ cafe_asked_count += 1
                 $ cafe_asked1 = True
-                p "Ehhh not bad, classes are same old. Nothing that interesting."
+                p "Ehhh... not bad. Classes are the same old. Nothing that interesting."
                 
                 jump cafe_date1
     else: 
@@ -2152,11 +2176,11 @@ label mary_backstory1 :
     
     $ cafe_trigger = 1
     
-    p "Hmm... I don't know. It's not the most stable career out there, ahah."
+    p "Hmm... I don't know. I feel that cooking is not the most stable career out there."
     
     m "So?"
     
-    p "Soooo... that's being pretty unrealistic... It's too selfish for me to just think about what I want to do... I mean, when I get older I have to think about supporting a family, and taking care of kids, so that they can go to university. At least that's what my mom thinks."
+    p "Soooo... That's being pretty unrealistic. It's too selfish for me to just think about what I want to do... I mean, when I get older I have to think about supporting a family, and taking care of kids, so that they can go to university. At least that's what my mom thinks."
     
     "> Mary lets out a heavy sigh as her eyes roll back and she leans back into her chair. Her posture sinks and her eyes fall down to her cup."
     menu: 
@@ -2191,7 +2215,7 @@ label cafe_date_goodending :
     
     p "I really enjoyed this. We should get together more often."
     
-    "> You hold the door open for her and you guys part ways. as you're walking, you look back to catch her peeking over her shoulder, as well. You both wave at each other."
+    "> You hold the door open for her and you guys part ways. As you're walking you look back to catch her peeking over her shoulders as well. You both wave at each other."
     
     "> The date was a success! You managed to get closer to Mary"
     
@@ -2241,7 +2265,7 @@ label restaurant_date1 :
             jump restaurant_date2 
             
         "We look like a real couple!" if not rest1_asked3 : #no effect
-            $ rest1_asked3 = True
+            $ rest1_asked2 = True
             p "Uhm.."
             
             "> Mary looks confused."
@@ -2267,7 +2291,7 @@ label restaurant_date2:
             
         p "But... In the end it's just a hobby..."
     
-    "> Mary becomes silent, her eyes wander down to her glass."
+    "> Time passes as the two of you talk. Mary becomes silent as her eyes wander down to her glass."
             
     menu :
         "> Reassure." if not rest2_asked1: #chance to gain closeness
@@ -2316,7 +2340,8 @@ label restaurant_date2:
 label mary_backstory2:
     "> Mary rolls her eyes, she sits back in her chair, while letting her posture sink and her sight drops to her glass."
     
-    p "I know she means well, and it's not like she's being mean about it. I just feel this pressure not to disappoint her? I don't even know why I'm telling you all of this. I've only known you for a couple days, sorry."
+    p "...It's my mom and her opinions towards me wanting to cook."
+    p "I know she means well, and it's not like she's being mean about it. I just feel this pressure not to disappoint her. I don't even know why I'm telling you all of this. I've only known you for a couple of days. Sorry."
     
     m "Honestly Mary, don't worry I'm completely fine with it. Have you ever told her how you feel about cooking?"
     
@@ -2793,7 +2818,7 @@ label mary_good_end:
     "> Days pass and your relationship with Mary continues to prosper."
     "> You enjoy the rest of your high school life together with your girlfriend."
     "> Congratulations %(player_name)s!"
-    return #to end game
+    #return #to end game
 label mary_bad_end:
     "> The next day you check the home-ec room but there's no sign of Mary."
     "> It seems you weren't too successful in building your relationship..."
@@ -2802,7 +2827,7 @@ label mary_bad_end:
     "> You spend the rest of your normal high school life single, working hard to secure your future career."
     "> Who knows? Maybe it'll be better after highshool...?"
     "> Better luck next time, %(player_name)s."
-    return #to end game
+    #return #to end game
 
 #routine for raising stats
 label raisestat:
