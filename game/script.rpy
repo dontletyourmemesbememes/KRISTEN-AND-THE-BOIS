@@ -50,7 +50,10 @@ image mary cook flustered1 = "mary_cook_12.png"
 image mary cook flustered2 = "mary_cook_13.png"
 image mary cook shock = "mary_cook_14.png"
 image mary cook cry = "mary_cook_15.png"
-
+image leapsahead = "LeapsAhead.png"
+image hands = "HANDS.png"
+image mary_kiss = "MaryKISSSSSS.png"
+image mary_flour = "MaryFlour.png"
 #Catherine images---------------------------------------------------------------------------------
 image cath casual 1 = "Cath1-1.png"
 image cath casual 2 = "Cath1-2.png"
@@ -494,10 +497,6 @@ label school_tour:
     show principal 1
     principal "So... Did you enjoy checking out some of the female students instead of paying attention to what I was saying?"
     principal "Haha, don't worry, you're a young man, so I understand."
-    show principal 8
-    principal "Some words of advice if you're aiming for a relationship. I'm only going to say this once."
-    principal "Don't wait. If too much time passes before you make a significant move, any girl is going to think you have no intention to be in a relationship."
-    principal "Follow this rule and you won't end up lonely and single for the {b}REST OF YOUR HIGH SCHOOL LIFE.{/b}"
     show principal 3
     principal "Remember that we are an elite school where studies are valued, so we restrict students to joining only one club." 
     show principal 7
@@ -1663,12 +1662,10 @@ label home_ec_room:
             hide mary cook wonder
             if str_check >= 1 and cha_check >= 1:
                 "> Miraculously, you remember a recipe for chocolate cookies, and manage to put them together."
-                $ girl1.add_closeness(1)
                 $ stats.set_food_choice(0)
                 jump girl_1_convo_1
             else:
                 "> You don't remember how to make this, time to guess!"
-                $ girl1.add_closeness(-1)
                 $ stats.set_food_choice(1)
                 jump girl_1_convo_1
         
@@ -1676,7 +1673,6 @@ label home_ec_room:
         "Instant Ramen (No requirements)":
             hide mary cook wonder
             "> You decide that it’s would be more efficient to make what you know the best. Conveniently, you remember that you brought along a spare package of instant noodles to school with you. You pull it out of your backpack and proceed to open the plastic wrapping."
-            $ girl1.add_closeness(-1)
             $ stats.set_food_choice(2)
             jump girl_1_convo_1
         
@@ -1753,6 +1749,7 @@ label made_bad_food_1:
     show mary cook pout with fade
     p "It was... uh... not bad... "
     show mary cook shy
+    $ girl1.add_closeness(-1)
     "> She forces a smile and pushes your food a few inches away"
     
     m "Sorry about that. Maybe you can teach me some basics?"
@@ -1766,6 +1763,7 @@ label made_bad_food_1:
 label made_good_food_1:
     show mary cook shock with fade
     p "It was good!"
+    $ girl1.add_closeness(1)
     show mary cook smile
     "> Mary gives a warm smile"
     show mary cook happy
@@ -1812,16 +1810,16 @@ label girl1_check_1:
             return
         elif day > 5:
             # too long trigger failure event
-            jump girl1_failure
+            jump girl1_time_passed
         elif closeness <= -3:
             # lost too much closeness
-            jump girl1_failure
+            jump girl1_time_passed
         elif day < 5 and closeness >= 5 and event_num == 0: #EVENT TRIGGERED
             # trigger event 1 of cafe as day < 5 and closess > 5
             # set the event value to 1
             $ girl1.add_event()
             $ girl1check1 = True
-            $ standard_dc = 1
+            $ standard_dc = 0
             scene bg hallway with fade
             show mary casual straight with dissolve:
                 xalign 1.0
@@ -1860,10 +1858,10 @@ label girl1_check_2:
     $ closeness = girl1.get_closeness("Mary")
     $ event_num = girl1.get_event("Mary")
     if not girl1check2:
-        if closeness >= 7 and event_num == 1: #EVENT TRIGGERED
+        if closeness >= 12  and event_num == 1: #EVENT TRIGGERED
             $ girl1.add_event()
             $ girl1check2 = True
-            $ standard_dc = 1
+            $ standard_dc = 0
             scene bg hallway with fade
             show mary casual straight with dissolve
             "> Mary is standing outside the club room. It looks like she was waiting for you."
@@ -1891,9 +1889,9 @@ label girl1_check_3:
     $ closeness = girl1.get_closeness("Mary")
     $ event_num = girl1.get_event("Mary")
     if not girl1check3:
-        if closeness >= 10 and event_num == 2: #EVENT TRIGGERED
+        if closeness >= 20 and event_num == 2: #EVENT TRIGGERED
             $ girl1check3 = True
-            $ standard_dc = 1
+            $ standard_dc = 0
             scene bg hallway with fade
             show mary casual sad with dissolve:
                 xalign 0.7
@@ -2086,7 +2084,7 @@ label day_5:
     m "What should I take in the afternoon today?"
     $ stats.reset_classes()
     call make_schedule
-    jump girl1_failure
+    jump girl1_time_passed
     
 label girl1_failure:
     if stats.get_days == 5:
@@ -2498,7 +2496,7 @@ label mary_backstory2:
     "> Mary gives you a warm smile before turning around. The two of you part ways in front of the restaurant."
     show thought with dissolve
     m "{i}Was she really okay..?{/i}"
-    jump standard_day_end
+    jump standard_end_day
 #    jump return_to_which_day
             
 #label restaurant_ending:
@@ -2527,93 +2525,112 @@ label girl1_home_date:
     show mary casual shy    
     "> Mary smiles shyly."
 
-    p "Then, why don't we go back to my house? I have all the ingredients there."
-
-    "> You and Mary head back to her place. You feel tenser than usual, despite the fact you've recently spent a lot of time with her. In the corner of your eye you catch her peeking slightly in your directly, but she immediately redirects her vision forward after being noticed."
-
-    p "Today is really beautiful, although I don't know what we'd do if there wasn't a breeze."
-
     p "Then.. Instead of cooking it here, Why don't we go to my house? There's plenty of ingredients there."
-    
+
     m "S-sure."
     
     "> A nervous tension suddenly fills the air."
     #fade out
-
+    hide mary with dissolve
+    scene bg sidewalk with fade
     "> You and Mary head back to her place after club activities. You feel tenser than usual, despite the fact you've recently spent a lot of time with her." 
     "> In the corner of your eye you catch her peeking slightly in your direction, but she immediately redirects her vision forward after being noticed."
-
+    show mary casual happy
     p "It's a really beautiful day today isn't it?"
     
     "> It seems that Mary's trying her hardest to cope with the awkwardness."
-    "> As you approach her house, your eyes follow her as she leaps ahead. She moves forward and her hair swings, pushing its scent towards you."
+    hide mary with dissolve
+    scene bg outside_house with fade
+    "> As you approach her house, your eyes follow her as she leaps ahead." 
+    #Insert Leapsahead.png
+    show image leapsahead with fade
+    "> She moves forward and her hair swings, pushing its scent towards you."
     "> For a second you get hung on the scent as you're both entering. She turns to notice you."
-
+    scene bg house with fade
+    show mary causal wonder with dissolve
     p "You look like you're lost."
 
     m "E-ehh. My bad."
-
     "> You look around her house, a bit flustered that you don't know how to recover smoothly."
-    
+    show mary casual laugh
     p "Hehehe, the kitchen is this way."
-
+    hide mary with dissolve
     "> She leads you into the kitchen and immediately moves along the room in a rehearsed efficiency, preparing her supplies." 
     "> You pick up some newspapers in an attempt to help."
-
+    show mary casual shock with dissolve
     p "No, not there!"
-
     "> She pulls the papers out of your hands and sets them aside. She turns to you."
-
+    show mary casual happy 
     p "Alright! Everything is set! What do you want to eat?"
     call girl1_home_date_choice
 
-
+    show thought with dissolve
     "> You look around the room; it's pretty nice. What should you do?"
-
+    hide thought with dissolve
     menu:
         "Sit in the living room and play video games.":
-           "> Your impatience gets the better of you and you decide to head back into the kitchen."
-           jump girl1_home_date_kitchen
+            $ girl1.add_affection(-1)
+            show thought with dissolve
+            "> You decide to head to the living room to play video games. Unfortunately there is not a game console in sight."
+            "> Your impatience gets the better of you and you decide to head back into the kitchen."
+            jump girl1_home_date_kitchen
         "Go into the kitchen and offer your assistance.":
             jump girl1_home_date_kitchen
         "Look around for any photo albums that she may have.":
+            show thought with dissolve
             "> You stray into the hall and walk along a line of portraits along the wall, many of them focused around Mary as a child."
             "> Many of the photos appear almost bleak, with little expression on her face." 
             "> Soccer photos, class photos, academic achievement photos, she hardly ever smiles."
             "> You pick one with her flour all over her face as a kid, her glasses caked in powder. Her smile was the only distinguishable feature."
+            hide thought with dissolve
+            show mary cook wonder with dissolve:
+                xalign 0.2
+                linear 1.0 xalign 0.5
             p "..What are you up to?"
             "> Mary peeks in from the kitchen."
+            show mary cook shock
             p "Ah! Nooo! That's such an embarrassing picture of me! Don't look!"
             m "Hahaha! I think it's cute."
+            show mary cook flustered1
             "> Her cheeks grow red."
+            show mary cook flustered2
             p "D-don't say things like that!" 
             "> Despite saying that, it was obvious she was forcing herself to hold back her smile." 
+            show mary cook grumpy
             p "I-I think you should stay put in the kitchen from now on!"
             menu:
                 "If you say so.":
                     jump girl1_home_date_kitchen
+                    hide thought with dissolve
                 "Why is this the only happy photo?":
+                    show mary cook wonder
                     p "I don't really know. That was the first time my mom let me bake all by myself. I ended up dropping the flour bag and making a huge mess all over the place." 
                     p "As for the other photos, I was just never excited about those things."
+                    show mary cook sad
                     p "My mom really wanted me to get good grades, so I was told avoid any extra-curricular activity because she felt they would get in the way." 
                     p "'Mary you have to do well so I can get into a good university and find a stable job.'"
                     p "'Marry a good husband, raise a family.' I've heard it all.. "
+                    show mary cook pout
                     "> Mary seems displeased."
                     menu:
                         "Console.":
                             #Affection up
                             $ girl1.add_affection(1)
                             m "I can tell that your parents really love and care about you. I almost feel like your mom would be more understanding of your current situation if you seriously expressed how passionate you are about cooking."
+                            show mary cook shy
                             p "Haha, you really do know what to say.. most of the time."
                             p "C'mon. lets get back to the kitchen."
                         "Hug her.": #IDK WHAT TO DO HERE. EXTRA AFFECTION PTS??
                             #Affection up bonus
                             $ girl1.add_affection(2)
                             "> You wrap your arms around her shoulders."
+                            show mary cook confused
                             p "Wha-?!"
+                            show mary cook flustered1
                             "> You pat her head in an attempt to calm her."
                             "> Mary settles down. Her arms slowly wrap around your back."
                             "> The two of you stand silent for a while before finally letting go of each other."
+                            show mary cook flustered2
                             p "U-uumm... Thank you. Sorry if I made you feel uncomfortable."
                             m "We should probably head back to the kitchen."
                             p "Y-yeah! Of course!"
@@ -2621,50 +2638,74 @@ label girl1_home_date:
                     jump girl1_home_date_kitchen
             
 label girl1_home_date_kitchen:
+    scene bg house with fade
+    show mary cook happy with dissolve:
+        xalign 0.8
+        linear 1.0 xalign 0.2
+        pause 1.0
+        linear 1.0 xalign 1.0
+        pause 1.0
+        repeat
     "> You watch Mary wander back and forth between different areas of the kitchen. Her smile is an obvious sign she's enjoying herself."
+    hide mary with dissolve
     m "I can't stand just watching! Let me help you, Mary."
+    show mary cook happy with dissolve
     p "Haha. Then.. can you preheat the oven for me?"
     #positive
+    show thought with dissolve
     "> You accept and decide to help her where you can."
     "> Mary starts measuring dry ingredients from a flour bag."
+    hide thought with dissolve
+    show mary cook wonder
     p "Ah! Can you handle the wet ingredients while I do this?"
     "> The two of you watch as the parts slowly come together. You feel her elbow brushes against yours every now and then."
+    show mary cook shock
     p "Sorry!"
+    show mary cook pout
     "> She looks up at you for a brief moment and catches your gaze."
     m "Don't apologize. It's alright." 
+    show mary cook shy
     "> Her eyes widen slightly, but immediately her face turns back to focus on the preparations."
     "> You notice a bead of sweat trail down from her temple to the front of her neck. Her cheeks flooded with red."
     "> A sense of nervousness and excitement fills your mind. Your breathing becomes shallow."
+    show mary cook flustered2
     p "Uhh.. It's getting a little warm in here. How hot did you preheat that oven exactly?"
+    show mary cook flustered1
     "> Mary turns to the oven." 
+    show mary cook flustered2
     p "Oh! 350 degrees. Perfect! Uhhm.. I guess the weather is pretty today." 
-    "> Frantically, she tries to clear her sweat, however she knocks the bowl of flour off the counter top." 
+    "> Frantically, she tries to clear her sweat, however she knocks the bowl of flour off the counter top."
+    show mary cook shock
     p "OH NO!"
+    hide mary with dissolve
     "> You manage save the bowl, however all the flour that was in it is now spread across the floor."
     menu:
         "Somebody's got a lot of cleaning to do...":
             #negative
             $ girl1.add_affection(-1)
+            show mary cook confused with dissolve
             p "Just get me more flour."
             "> After clearing the mess, you head into the pantry and find an extra-large bag of flour up on the top shelf."
         "Don't worry! I'll grab you some more flour.":
             #positive
             $girl1.add_affection(1)
+            show mary cook laugh with dissolve
             p "Haha. So dependable."
             "> After clearing the mess, you head into the pantry and find an extra-large bag of flour up on the top shelf."
-            
+            hide mary with dissolve
+    show thought with dissolve     
     "> The two of you struggle with the heavy bag as you try to get it. The shifting of the bag causes it to tip over."
     "> Unable to realize that the top of the bag was unsealed, a torrent of flour rains down and covers both your faces."
-
     m "You got some... Umm.. flour all over you."
 
     #says both of you have flour all over your faces , but u only wipe off hers . Maybe put a text saying u wipe your face first
     "> You brush the flour off her shoulders, trying to avoid making awkward physical contact."
-
     p "Well... I could only assume. My lenses are completely covered. I can't see a thing."
                 
     m "Here I got it for you."
-
+    hide thought with dissolve
+    #Insert flour image
+    show mary_flour with fade
     "> You lean in closer as you lift the frames off her eyes." 
     "> Her brown eyes fixated on you. Unprepared, you find your faces lingering mere inches apart."
 
@@ -2679,26 +2720,38 @@ label girl1_home_date_kitchen:
             "> Something doesn't feel right..." 
             "> As you open your eyes you find your mouth, cupped by her hand."
             #SPLIT HERE BASED ON AFFECTION
+            #change back to kitchen scene
+            hide mary_flour with fade
             if girl1.affection >= 7:
+                show mary cook smile with dissolve
                 "> Mary's eyes still wide open, smiling."
+                show mary cook happy 
                 p "I may not be able to see that well without glasses, but I'm not blind."
+                show mary cook shy
                 p "Don't get me wrong, I can't deny that I have feelings for you, but let's take it slow."
                 "> She lifts your hands off of her, she holds you palm open and examines it. You both turn slightly towards the counter to face shoulder to shoulder."
                 "> Still examining your hand, she places her hand on top of your's as if comparing hand sizes."
+                #Insert hand image
+                show hands with fade
                 p "You know, you have pretty soft hands. I think I'll hold on to them for a while."
                 "> Both your hands begin to offset a little. You decide not to resist and allow your fingers to interlock."
                 jump mom_drama
                 
             else:
+                show mary cook sad with dissolve
                 "> Mary's eyes are half-opened. A look of regret covers her face."
                 p "..."
                 p "... I can't... I'm sorry..."
+                show mary cook pout
                 m "..Oh.."
                 "> You find yourself lost for words."
                 "> Your silence divides you."
+                show mary cook flustered2
                 p "Hmm... You see.. I'm really sorry. I can't really find enough reason to see you the same way. That's why I can't return your feelings. We're just not at that level."
+                show mary cook flustered1
                 "> You feel your chest compressing, as if the inside of your ribcage is caving in."
                 m "Yeah.. I think I understand."
+                show mary cook sad
                 p "At least we had fun together..."
                 m "..."
                 p "A relationship right now would be too distracting for me.... "
@@ -2709,180 +2762,264 @@ label girl1_home_date_kitchen:
                 "> You feel as if your legs are about to give out. "
                 m "I should probably go..."
                 p " ...Yeah."
+                hide mary with dissolve
+                show thought with dissolve
+                scene bg outside_house with face
                 "> Mary leads you to the exit. You can't think of much to say without making it more awkward, so you just keep walking." 
                 "> You look back. The door is closed."
-
                 m "{i} I guess that's it, huh...? {/i}"
+                
                 jump mary_bad_end
                 #return
                 
 label girl1_home_date_choice:
     menu:
         "Deep-fried sushi" :
+            show mary casual wonder
             p "Wow! Your taste is pretty extravagant, huh?"
             menu:
                 "You don't have to cook it if you don't want to.":
+                    show mary casual grumpy
                     p "You don't think I can do it?"
                     p "I'll prove you wrong."
                     "> Mary seems motivateds all of a sudden."
                     #negative
                 " I really want to eat this.":
-                    "Mary seems intimidated by the challenge but finds her resolve."
+                    show mary casual shy
+                    "> Mary seems intimidated by the challenge but finds her resolve."
                     p "I'll do my best!"
                     "> Mary seems motivateds all of a sudden."
                     #positive/neutral 
         "Instant noodles":
-            p "Common..are you taking my offer seriously here?"
-            #negative
+            show mary casual grumpy
+            p "C'mon..are you taking my offer seriously here?"
+            $ girl1.add_affection(-1)
             call girl1_home_date_choice
             return
         "Triple Layer Chocolate Cake":
-            "She seems surprised by your request"
+            show mary casual wonder
+            "> She seems surprised by your request"
 
             p "I thought you'd choose something more difficut. Why did you choose a cake?"
             menu:
                 "I didn't want you to work too hard.":
+                    show mary casual happy
                     p "What? Don't worry so much...I can handle it. But alright, I'll make the cake if that's what you want."
-                    #negative
                 "So we can share it when you're done.":
+                    show mary casual laugh
                     p "Haha, Are you usually this corny? But alright, if that's what you want."
                     #neutral 
                 "It has a special meaning.":
                     $ girl1.add_affection(1)
                     p "Meaning?"
+                    show mary casual straight
                     m "Yeah. Each layer of the cake represents each place we've spent time together and how far we've come building on our relationship. One layer at a time."
+                    show mary casual laugh
                     "> Mary's face turns red as she tries hard to hold back her laughter."
                     p "Were you always this corny?"
                     "> Mary seems pleased by your thought."
+                    show mary casual happy
                     p " Alright, I'll get started then." 
 
                     #positive
+    hide mary with dissolve
     "> Mary begins cooking the dish and you're left sitting in her living room alone."
     return 
     
 label mom_drama:
     #mom drama stuff
+    scene bg house with fade
+    show thought with dissolve
     "> You hear the door bell ring. An unfamiliar voice calls from the door."
 
     mom "Hey Mary, I'm home from my business trip!"
-
+    hide thought with dissolve
+    show mary cook shock with dissolve
     p "What?! She's home a day early! Why?!"
-
+    
     "> Mary looks around at all the cooking equipment and ingredients splayed out on the counters and looks helpless."
     "> She's visibly panicking and attempts to make a move to put things away but it's futile. "
+    hide mary with dissolve
+    show mom 3 with dissolve
     "> You don't have much time to react before her mom comes into the kitchen."
+    
     "> Her mom spots you."
-
+    show mom 2
     mom "Who is this, Mary? Why are you guys alone together?"
-
+    show mary cook flustered2 at left
+    show mom 3
     p  "Uh, this is my friend, %(player_name)s. We are just hanging out after school mom. That's all.."
-
+    show mom 7
+    show mary cook flustered1 at left
     mom "You shouldn't be inviting people over when I'm away on a business trip. Shouldn't you be studying too? It's a school night!"
-
+    show mom 9
+    show mary cook flustered2 at left
     p "I-I just wanted to relieve some stress, it's just a little bit of cooking."
-
-    "> The tension is getting heavy as you stand there as if you are not even in the room"
-
+    show mary cook flustered1 at left
+    "> The tension is getting heavy as you stand there as if you are not even in the room."
+    show mom 7
     mom "Mary, you should be using your time more wisely. What happen to the money I gave you to buy food with? You should be focusing on getting into university so you can get a career."
     "> Mary's mom's eyes turn to the kitchen counter."
     mom "What is all this doing out here?"
+    show mary cook sad at left
+    show mom 9
     "> Mary's mom gestures to all of the equipment and ingredients out in the open."
     "> Mary's face is flushed of all its color and her voice is small."
-    p " I didn't use the money; it's still in your office. As for all of this...I-  What if I wanted to be a chef?...Like dad?"
-    
-    "> Her mom, is taken back for a moment but then her voice is heightened."
-
+    p " I didn't use the money; it's still in your office. As for all of this...I-  What if I wanted to be a chef? ...Like dad?"
+    show mom 5
+    "> Her mom, is taken aback for a moment but then her voice is heightened."
+    show mom 12
     mom "Don't you remember what happened to your father? Why would you do this? I can't let that happen to you, Mary, I can't lose both of you like that." 
-    
+    show mom 11
     p "But.."
     "> Mary looks down and appears defeated."
+    show mom 7
     mom "No buts! Don't try to argue with me. Escort your friend out and then go to your room."
-    
+    show mary cook cry at left
+    show mom 9
     "> Mary turns to you with some tears escaping her eyes and falling down her cheeks."
     p "I'm sorry %(player_name)s... I'm sorry about all of this.. Can you please leave?"
     menu:
         "Leave the house":
-            "> GG."
-            return
+            show thought with dissolve
+            "> You stand there for a moment and Mary's look of disappointment and sadness is enough to tell you to that you've failed." 
+            "> You move your legs mechanically out of the kitchen and out of the house."
+            "> You tried your best but it wasn't enough. You probably won't be able to spend as much time with Mary anymore..."
+            jump mary_bad_end
             #replace return with jump to game over screen
         "Confront Mary's mom":
+            show thought with dissolve
             "> You gather all the courage you can muster and take a purposeful step forward, looking at Mary's mother in the eye."
+            hide thought with dissolve
             m "I'm sorry. I can't leave like this."
+            show mom 7
             mom "What? How dare you! This is my house."
+            show mary cook shock at left
+            show mom 9
             "> Mary looks shocked."
             p "%(player_name)s?"
+            show mary cook pout at left
             m"Hear me out, please. Mary told me about what happened with her father. It must've been terrible. By the way Mary talks about him, you both must have loved him very much."
             "> Her mom seems agitated by a stranger bringing up family matters and she snaps at you."
+            show mom 8
             mom "What of it?"
+            show mom 9
+            show thought with dissolve
             "> Mary's mom's eyes are full of anger and at the same time hurt. You feel beads of sweat forming on your neck as you feel the pressure. "
             "> Your resolve is cracking under the weight of her glare and aura." 
             "> You glance over to Mary, whose eyes are wide and full of tears. "
             "> Seeing Mary strengthens your resolve and you look back to her mom."
             menu: 
                 "Ease into it":
+                    hide thought with dissolve
                     m "Well..I think there's a misunderstanding between you and Mary right now...You're not really on the same page. "
-                    mom "What are you saying? You think you know my daughter more than I know her? I've raised her and I know what's best for her." 
+                    show mom 8
+                    mom "What are you saying? You think you know my daughter more than I know her? I've raised her and I know what's best for her."
+                    show mom 9
                     m "I'm not saying that I know her more..I just mean.."
+                    show mom 7
                     mom "Who do you think you are?"
-                    m "This isn't going so well..."
+                    show thought with dissolve
+                    m "{i}This isn't going so well...{/i}"
                     menu:
                         "Talk about Mary's Dad":
-                             m "I'm sure you remember your husband's passion for cooking! It made him happy and it made Mary happy too!"
-                             mom "Don't act like you know everything. He's gone now because of that passion. He's gone so I can only look after Mary and her well-being now."
-                             m "..."
-                             mom "You might mean well, but please. You're not helping anyone here. Bringing up past pain will not help Mary now. Just leave." 
-                             "> You stand there for a moment and Mary's look of disappointment and sadness is enough to tell you that you've failed."
-                             "> You move your legs mechanically out of the kitchen and out of the house."
-                             "> You've tried your best but it wasn't enough." 
-                             "> You probably won't be able to spend as much time with Mary anymore.."
-                             return
-                             #jump bad ending
+                            hide thought with dissolve
+                            show mom 9
+                            m "I'm sure you remember your husband's passion for cooking! It made him happy and it made Mary happy too!"
+                            show mom 7
+                            mom "Don't act like you know everything. He's gone now because of that passion. He's gone so I can only look after Mary and her well-being now."
+                            show mom 9
+                            m "..."
+                            show mom 8
+                            mom "You might mean well, but please. You're not helping anyone here. Bringing up past pain will not help Mary now. Just leave." 
+                            show thought with dissolve
+                            "> You stand there for a moment and Mary's look of disappointment and sadness is enough to tell you that you've failed."
+                            "> You move your legs mechanically out of the kitchen and out of the house."
+                            hide thought with dissolve
+                            hide mary with dissolve
+                            scene bg outside_house with fade
+                            "> You've tried your best but it wasn't enough." 
+                            "> You probably won't be able to spend as much time with Mary anymore.."
+                            
+                            jump mary_bad_end
+                            #jump bad ending
                         "Talk about Mary":
+                            hide thought with dissolve
                             jump be_blunt
                 "Be blunt":
+                    hide thought with dissolve
                     jump be_blunt
                 
             
 label be_blunt:
+    
     m " To be straightforward, Mary's the president of the cooking club at school and she's been cooking for a long time behind your back."
     "> Mary's mom sharply turns to Mary in disbelief and Mary cowers even more."
+    show mary cook shock at left
     p "%(player_name)s!! I-It's not what you think, mom..."
+    show mary cook pout at left
     m "It's exactly how it looks."
+    show mom 12
     mom "Mary..Why haven't you been listening to me? You know exactly why I forbid you to cook." 
+    show mom 11
     m "She does it because it's her passion." 
     m "A passion that was fostered by your husband. She does it to honor him and ultimately, because it makes her happy. Is that really so bad?"
+    show mom 9
     "> Mary's mom stares at you for a moment."
+    show mom 8
     mom "Do you think I don't know what's best for my own daughter?"
+    show mom 9
     m "Please, I'm not trying to undermine you or your ideals." 
     m "But I think it'd be great for both you and Mary if you would even just consider the idea of letting her cook as a hobby and potentially even going further as a career." 
+    show mom 11
     mom "She..she can't. Or else she'll end up just like her father." 
+    show mom 12
     "> Her eyes seem less hard now, and more sad."
     m "In some ways. She'll definitely be happier. More passionate. I can see why you worry about her...I do too." 
     "> You look over at Mary again and your eyes lock. She smiles a little bit."
     m" But you should trust her to know her limits - I know I've come to." 
     m "She's smart, she's reasonable. she knows her abilities and her talents. Honestly, she's great. Limiting her is putting on more stress than not. "
     "> Mary's mom is silent. She then looks over to Mary."
+    show mom 11
     mom "Is..all of this true?"
+    show mom 12
+    show mary cook sad at left
     p "Yes, mom...I've always loved cooking and I haven't stopped even if dad has died." 
     p "I'm sorry..I never wanted you to find out like this.."
     mom "..."
     p "Please mom..This is what I really want to do. I know you loved dad because he was very passionate as well.."
     "> Mary's mom looks away from the both you and Mary."
+    show mary cook pout at left
+    show mom 6
     mom "I didn't mean to drive a wall between us. You really kept all of this a secret from me?" 
+    show mom 5
+    show mary cook cry at left
     p "I was too scared..I didn't want to hurt you too. But this is who I am.."
     "> Mary's mom turns around and embraces Mary."
+    show thought with dissolve
     mom "I'm sorry." 
     "> It seems like she's unable to say anything else as her voice starts wavering. Mary is crying too." 
     "> You decide that you shouldn't intrude and you leave the room."
     "> ..."
+    hide thought with dissolve
+    hide mary with dissolve
+    hide mom with dissolve
+    scene bg outside_house with fade
     "> Time passes as you wait outside. You wonder if you could have said anything else, but it's up to Mary now." 
     "> After a while, the door opens behind you and you turn to see Mary coming out."
+    show mary cook sigh with dissolve:
+        xalign 0.8
+        linear 1.0 xalign 0.5
     m "Hey. You okay?" 
+    show mary cook shy
     "> Mary nods and a huge smile breaks out on her face."
+    show mary cook happy
     p "She's letting me continue to cook! Can you believe it?"
     p "We talked it over and she's letting me have my shot at being a chef like my dad! She said I had to keep my grades up but that's all fine."
+    show mary cook laugh
     p "I'm so glad! It's all thanks to you, %(player_name)s. You stood up for me." 
     m "I wanted to protect you." 
+    show mary cook smile
     "> Mary smiles even more and hugs you."
     p "I'm so thankful for you..thank you so much.."
     "> You give her a hug back and you both relish in each other's happiness."
@@ -2891,22 +3028,40 @@ label be_blunt:
 
 #Endings ================================================================================================================================================================================
 label mary_good_end:
-    ">At school"
+    scene bg home_ec_room with fade
+    ">At school."
     "> The next day you run to the home-ec room, hoping to find your girlfriend."
     "> You open the door to find her making preparations for todays club meeting."
+    show mary casual shock with dissolve
     p "Oh! You scared me. Why are you here so early?"
     m "Haha. I couldn't wait to see you."
+    show mary casual shy
     "> The two of you decide to keep each other company until the morning bell rings."
+    "> Before you both depart to your own separate classes, you give her a hug. "
+    "> As you draw back, she lingers in your arms for a bit and looks up at you."
+    "> You look into her eyes and you can't help but lean in. Surprisingly, her eyes close."
+    hide mary with dissolve
+    show mary_kiss with fade
+    #INSERT KISS-KISS
     "> ..."
+    hide mary_kiss with dissolve
+    scene bg hallway with fade
+    show thought with dissolve
+
     "> Days pass and your relationship with Mary continues to prosper."
     "> You enjoy the rest of your high school life together with your girlfriend."
     "> Congratulations %(player_name)s!"
+    #game end
     #return #to end game
+    
 label mary_bad_end:
-    "> At school."
-    "> The next day you check the home-ec room but there's no sign of Mary."
+    scene bg home_ec_room with fade
+    "> At school the next day."
+    "> You decide to check the home-ec room but there's no sign of Mary."
     "> It seems you weren't too successful in building your relationship..."
     "> ..."
+    scene bg hallway with fade
+    show thought with dissolve
     "> Days pass and you're unable to bring yourself to even see her. Eventually you give up all together."
     "> You spend the rest of your normal high school life single, working hard to secure your future career."
     "> Who knows? Maybe it'll be better after highshool...?"

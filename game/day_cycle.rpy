@@ -35,7 +35,8 @@ label standard_day_cycle:
             show thought with dissolve
             m "{i}Time to go to the club room.{/i}"
             hide thought with dissolve
-        
+        if girl1.closeness < 0:
+            jump girl1_time_passed
         if girl1.closeness < 2:
             m "Mary seems more distant.. I should really get my act together."
         jump standard_home_ec        
@@ -50,7 +51,7 @@ label standard_day_cycle:
         m "What should I take in the afternoon today?"
         $ stats.reset_classes()
         call make_schedule
-        jump girl1_failure
+        jump girl1_time_passed
     
 label standard_home_ec:
     call girl1_check_1
@@ -307,3 +308,17 @@ label standard_end_day:
     $stats.increment_days()
     $standard_dc += 1
     jump standard_day_cycle
+    
+label girl1_time_passed: #Ending that triggers when the player waits too long
+    "> You head over to the home ec room and expect to see Mary working where she usually is. You don’t see her." 
+    "> You wait for almost half an hour, but she still doesn’t show up. You leave the room to go home, a little worried." 
+    "> Next day."
+    "You arrive at school, but just before your first class starts, you are called to the principal’s office." 
+    principal "Hello again, %(player_name)s. How are you doing this morning?...Well I’ll just get straight to the point." 
+    principal "I understand that you joined the cooking club? I’m afraid to tell you that the club will be cancelled until further notice."
+    m "What happened?"
+    principal "Unfortunately, Mary, the president of the club, won’t be able to run the club anymore due to illness." 
+    principal "Apparently, she was under a lot of stress. I’m sorry about this, %(player_name)s. "
+    principal "Hopefully you can still enjoy the rest of your year here." 
+    "> You leave the office feeling a little numb. You wonder if you could’ve done anything to help Mary." 
+    "> Regretfully, you go with the rest of your day with less energy than usual."
