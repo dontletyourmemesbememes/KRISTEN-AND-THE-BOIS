@@ -2542,7 +2542,7 @@ label girl1_home_date:
     scene bg outside_house with fade
     "> As you approach her house, your eyes follow her as she leaps ahead." 
     #Insert Leapsahead.png
-    show image leapsahead with fade
+    show leapsahead with fade
     "> She moves forward and her hair swings, pushing its scent towards you."
     "> For a second you get hung on the scent as you're both entering. She turns to notice you."
     scene bg house with fade
