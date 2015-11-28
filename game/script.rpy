@@ -447,7 +447,6 @@ label school_tour:
         linear 1.0 xalign 1.0
         pause 1.0
         repeat
-    
     "> You look through the door and see a girl piling ingredients on one of the counters."
     m "{i}It looks like she's preparing to cook something.{/i}"
     principal "Ahem!"
@@ -536,7 +535,7 @@ label end_day_0:
     
     scene bg player room with fade
     #fade to show end of day 
-    "I'm so tired... I think I'll go to bed early today."
+    "{i}I'm so tired... I think I'll go to bed early today.{/i}"
     scene bg hallway with fade
     "> Next morning."
     
@@ -733,7 +732,7 @@ label play_with_her:
     if int_check >= 1:
         $ girl2.add_closeness(1)
         "> You pick up where there's an opening, and accompany her. The first few moments feel sluggish and your hands feel clumsy, but after a few bars you're able to familiarize yourself. You peek over your shoulder to notice that Catherine's posture is rigid; she doesn't seem like she's used to someone playing with her. Her playing begins to become harsher and her facial expression suddenly becomes unimpressed."
-        "Hmm... She hasn't stopped playing yet... I'll just keep going to see where this takes me."
+        "{i}Hmm... She hasn't stopped playing yet... I'll just keep going to see where this takes me.{/i}"
         "> You listen to her carefully and do your best to follow her, trying to avoid taking over or not supporting her enough. You remember the feeling from before: the chill in your spine, hair upright, and heightened senses."
         "> You can't see her now, but you'd like to imagine she also is feeling the same way you do."
         "> You listen carefully, and end the song."
@@ -1086,7 +1085,7 @@ label music_event_1:
             p "... Don't worry about it-- I said I'll be fine!"
             p "... I'm sorry for lashing out, I am just frustrated right now."
             p "... You too, bye..."
-            "I wonder why she sounded so angry at the end of her conversation."
+            "{i}I wonder why she sounded so angry at the end of her conversation.{/i}"
             "> You walk nearer to her without her noticing and upon closer inspection, notice that she's making posters for some sort of concert."
             m "Hey Catherine, what are all these for? Do you need help with something?"
             p "Oh! Hi %(player_name)s."
@@ -1096,7 +1095,7 @@ label music_event_1:
             p "Hmmm...Fine! Do whatever you want."
             "> She still seems embarrassed for accepting your help, but at the same time, satisfied."
             "> You end up kneeling beside her. As you sit she retracts a couple inches away from where you're sitting."
-            "She doesn't seem that comfortable with me maybe I should try to make some conversation."
+            "{i}She doesn't seem that comfortable with me maybe I should try to make some conversation.{/i}"
             menu:
                 "What is the concert for?":
                     $ girl2.add_affection(1)
@@ -1137,14 +1136,14 @@ label music_event_1_part_2:
         "Is it hot in here?":
             $ girl2.add_affection(-1)
             p "No not really, why are you sweating? That's kinda gross."
-            "WHY AM I SWEATING???"
+            "{b}{i}WHY AM I SWEATING???{/i}{/b}"
             m "uh gah... don't worry about it. It's just hot."
             p "... o--okay..."
             menu:
                 "Sorry you just looked really good today":
                     $ girl2.add_affection(-1) 
                     p "Creep."
-                    "Uhhh maybe I shouldn't have said that, she probably thinks I'm weird."
+                    "{i}Uhhh maybe I shouldn't have said that, she probably thinks I'm weird.{/i}"
                     "> You don't really know how to follow up on that response, so you decide to let the awkward space settle for a moment."
                     menu:
                         "Wow, the posters look amazing! We did a good job":
@@ -1155,13 +1154,13 @@ label music_event_1_part_2:
         "Sorry you just looked really good today":
             $ girl2.add_affection(-1)
             p "Creep."
-            "Uhhh maybe I shouldn't have said that, she probably thinks I'm weird."
+            "{i}Uhhh maybe I shouldn't have said that, she probably thinks I'm weird.{/i}"
             "> You don't really know how to follow up on that response, so you decide to let the awkward space settle for a moment."
             menu:
                 "Is it hot in here?":
                     $ girl2.add_affection(-1) 
                     p "No not really, why are you sweating? That's kinda gross."
-                    "WHY AM I SWEATING???"
+                    "{b}{i}WHY AM I SWEATING???{/i}{/b}"
                     m "Uh gah... don't worry about it. It's just hot."
                     p "... O--okay..."
                     menu:
@@ -1232,7 +1231,7 @@ label outta_girl2_while_loop:
             m "Whatever, It's not like I cared enough to help anyways."
             "> She looks pretty mad at that last comment."
             p "You don't have to be so butthurt about it."
-            "Maybe I shouldn't have thought out loud."
+            "{i}Maybe I shouldn't have thought out loud.{/i}"
             
         "Try to convince her":
             $ girl2.add_affection(1)
@@ -1245,7 +1244,7 @@ label outta_girl2_while_loop:
     "> She packs up quickly and begins to rush out."
     m "I'll see you tomorrow then."
     p "...Yeah"
-    "Hmm she seems a little off. Was it something I said?"
+    "{i}Hmm she seems a little off. Was it something I said?{/i}"
     $ day = stats.get_days()
     if day == 3:
         jump music_day_3
@@ -1272,7 +1271,7 @@ label music_event_2:
         "Sure, if you act a litter nicer to me":
             $girl2.add_affection(-1)
     
-    "She looks pretty concerned. I wonder what it is about?"
+    "{i}She looks pretty concerned. I wonder what it is about?{/i}"
     p "So... the concert..."
     m "Yeah?"
     p "Apparently I'm required to have an accompanist."
@@ -1285,7 +1284,7 @@ label music_event_2:
     p "I know I've been mean to you this whole time, but please! This is my only opportunity!"
     "> Her eyes begin to water."
     p "I just get so frustrated when I can't do anything myself. I don't want people to see me as weak, but it is a requirement and I need someone to lean on. Please..."
-    "Oh crap. She's super serious right now."
+    "{i}Oh crap. She's super serious right now.{/i}"
     menu:
         "Yeah, don't worry. I said I was going to be around if you needed me, right? Let's start practicing for it!":
             jump music_event_2_part_2
@@ -1307,7 +1306,7 @@ label music_event_2_part_2:
         "You look good in this lighting":
             $girl2.add_affection(-1)
             p "What about other lightings?"
-            "Oops, I guess that came out wrong."
+            "{i}Oops, I guess that came out wrong.{/i}"
         "It's a beautiful night":
             $girl2.add_affection(1)
             p "Yeah, it is."
@@ -1321,7 +1320,7 @@ label music_event_2_part_2:
             $girl2.add_affection(-1)
             m "Calm down a little, it's not a big deal."
             p "Haven't you been listening at all?"
-            "Oh crap that wasn't smart of me."
+            "{i}Oh crap that wasn't smart of me.{/i}"
             menu:
                 "Reassure her":
                     m "Well it's an important day to you right? You want to get into the school? You want to make it into the school, right?"
@@ -2608,8 +2607,8 @@ label girl1_home_date:
                     p "As for the other photos, I was just never excited about those things."
                     show mary cook sad
                     p "My mom really wanted me to get good grades, so I was told avoid any extra-curricular activity because she felt they would get in the way." 
-                    p "'Mary you have to do well so I can get into a good university and find a stable job.'"
-                    p "'Marry a good husband, raise a family.' I've heard it all.. "
+                    p "{i}'Mary you have to do well so I can get into a good university and find a stable job.'{/i}"
+                    p "{i}'Marry a good husband, raise a family.'{/i} I've heard it all.. "
                     show mary cook pout
                     "> Mary seems displeased."
                     menu:
