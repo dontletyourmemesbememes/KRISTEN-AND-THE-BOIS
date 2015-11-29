@@ -303,10 +303,10 @@ init python:
     bio_qman.add_question("What part of the brain controls balance?",["Frontal Cortex","The wrinkly half","Temporal Lobe","Cerebellum"],3)
  
  
-    drama_qman.add_question("How does Hamlet Sr. die in the play {i}Hamlet{/i}?",["Poison","Obesity","Witches","A duel with Ferdinard Sr."],0)
+    drama_qman.add_question("How does Hamlet Sr. die in the play, 'Hamlet'?",["Poison","Obesity","Witches","A duel with Ferdinard Sr."],0)
     drama_qman.add_question("What is the name of the role of a person who writes the play?",["Playwright","Actor","Director","Player"],0)
     drama_qman.add_question("When you are on stage, to make sure your audience can understand, you must project your:",["Vision","Breath","Ideas","Voice"],3)
-    drama_qman.add_question("In which Shakespeare play does this line appear: {i}'All the world's a stage and all the men and women merely players'{/i}?",["Othello","Macbeth","Hamlet","Romeo and Juliet"],2)
+    drama_qman.add_question("In which Shakespeare play does this line appear: 'All the world's a stage and all the men and women merely players'",["Othello","Macbeth","Hamlet","Romeo and Juliet"],2)
     drama_qman.add_question("What are instructions for actors, directors and the stage crew?",["Stage Directions","Dialogue","Soliloquy","Metaphor"],0)
     drama_qman.add_question("What is conversation between characters?",["Small talk","Dialogue","Oxymoron","Monologue"],1)
     drama_qman.add_question("What are people watching a play called?",["Fan girls/boys","Plebs","Audience","4th wallers"],2)
@@ -314,7 +314,7 @@ init python:
     drama_qman.add_question("True or False: In Ancient Greek plays, there were NO women actresses.",["True","False","Unknown","Only when there were female roles"],0)
     drama_qman.add_question("Which of the following refers to talking to the audience?",["Dialogue","Aside","Monologue","Solo"],1)
     drama_qman.add_question("What does a character foil refer to?",["Antagonist","Protagonist","The opposite of the protagonist","The doppelganger of the protagonist"],2)
-    drama_qman.add_question("Who is the king of the fairies in {i}A Midsummer Night's Dream{/i}",["King Lear","Othello","Claudius","Oberon"],3)
+    drama_qman.add_question("Who is the king of the fairies in A Midsummer Night's Dream",["King Lear","Othello","Claudius","Oberon"],3)
     drama_qman.add_question("The imaginary wall between the audience and the actor is called:",["The fourth wall","The third wall","The second wall","The first wall"],0)
     drama_qman.add_question("Who tells Macbeth he can kill Duncan to become king?",["Lady Macbeth","The Ghost of Macbeth Sr.","Banquo","The 3 witches"],3)
  
@@ -403,7 +403,7 @@ label start:
     #show placeholder normal at left
     #with moveinbottom
     show principal 1
-    principal "Allow me to officially welcome to Gouglas Private Academy. This school consists of the brightest students from all over the city so congratulations for making it!"
+    principal "Allow me to officially welcome you to Gouglas Private Academy. This school consists of the brightest students from all over the city so congratulations for making it!"
     jump intro
  
     return
@@ -689,6 +689,7 @@ label music_room:
             "> Her playing approaches the end. You feel anxiety rising up as you stand to attempt talking to her."
             hide cath violin with fade
             stop music fadeout 1.0
+            show cath back with dissolve
             m "{i}Now's my chance to talk to her!{/i}"
             m "Hey, I just heard you playing and you were pretty awesome!"
             "> She looks back to be slightly surprised, not knowing you were there. Her expression instantly reads 'who the hell are you?'"
@@ -1518,6 +1519,18 @@ label outta_girl2_while_loop:
     show thought with dissolve
     m "{i}Hmm she seems a little off. Was it something I said?{/i}"
     hide thought with dissolve
+    scene bg home
+    with fade
+    "> Your room."
+    m "That was a long day, time to hit the sack."
+    $ stats.increment_days()
+    scene bg hallway with fade  
+    "> Next morning."
+    m "Another day at school..."
+    scene bg classroom with fade
+    m "Time for classes. What should I take today?"
+    $ stats.reset_classes()
+    call make_schedule
     $ day = stats.get_days()
     if day == 3:
         jump music_day_3
@@ -1588,6 +1601,7 @@ label music_event_2_part_2:
    
     scene bg music_room
     with fade
+    "> Several days later."
     "> You arrive outside of the music room. The suit you're wearing makes you feel stiff and limited in mobility."
     "I think I look okay, I can't tell with only the moonlight"
     "> You receive a text from Catherine."
@@ -2045,7 +2059,21 @@ label music_event_3_part_2:
             jump girl2_bad_end
  
 label girl2_failure:
-    "GAME OVER"
+    "> You head over to the music room and expect to see Catherine playing where she usually is. "
+    "> As you’re walking towards the room, there is an absence of music in the air. It is silent." 
+    "> You reach the room and Catherine is nowhere in sight. You wait for almost half an hour, but she still doesn’t show up. Suddenly, your phone starts to ring." 
+    p " Hey %(player_name)s, I totally forgot to tell you, but I hope that you aren’t at the music room waiting for me.. I’m in London."
+    m "London?"
+    p "I got a last minute invite to a music competition. Sorry that I didn’t call you earlier; the performances just finished."
+    m "Oh.. How did you do?"
+    p "I thought that I played poorly, but I got approached afterwards by a scout." 
+    p "He said that I had great performance and invited me to a prestigious music academy." 
+    m "Thats great! Congratulations."
+    p "Thanks! I’m glad. This means I won’t be coming back to Gouglas Private Academy though. I hope that you’ll continue to practice the piano even without me there to teach you." 
+    m "Right…"
+    p "Good luck." 
+    "> She hangs up on you. You leave the music room feeling a little disappointed. Regretfully, you go on with the rest of your high school days." 
+    "> You end up quitting the piano for the second time in your life."
     return
    
 label girl2_bad_end:
@@ -2123,7 +2151,7 @@ label home_ec_room:
         "Chocolate chip cookies (Need: Strength 1 & Charm 1)":
             hide mary cook wonder
             if str_check >= 1 and cha_check >= 1:
-                "> Miraculously, you remember a recipe for chocolate cookies, and manage to put them together."
+                "> Miraculously, you remember a recipe for chocolate cookies and manage to put them together."
                 $ stats.set_food_choice(0)
                 jump girl_1_convo_1
             else:
@@ -2286,7 +2314,7 @@ label girl1_check_1:
             show mary casual straight with dissolve:
                 xalign 1.0
                 linear 1.0 xalign 0.5
-            "> Outside home-ec room"
+            "> Outside Home-Ec room"
             "> You see Mary standing outside the door."
             p "Hey %(player_name)s! Do you have a minute?"
             m "Sure, what's up?"
@@ -2394,16 +2422,16 @@ label home_ec_day_2:
             p "Wow! They're so fluffy, but the top is so crisp. Good job!"
             $ girl1.add_closeness(1)
            
-        "Creme brule (Need: 2 Intelligence  & 2 Charm)":
+        "Crème brûlée (Need: 2 Intelligence  & 2 Charm)":
             scene bg home_ec_room with fade
             if int_check >= 2 and cha_check >= 2:
                 # sucess
-                "> The Creme brule looks great! nice golden caramelize on it! Looks delicious!"
+                "> The crème brûlée  looks great! nice golden caramelize on it! Looks delicious!"
                 p "Looks great. I'm impressed."
                 $ girl1.add_closeness(3)
             else:
                 # failure
-                "> The Creme brule turned out completely black... You think that you burnt it..."
+                "> The crème brûlée turned out completely black... You think that you burnt it..."
                 p "Uhh... is this even edible?"
                 $ girl1.add_closeness(-3)
                
@@ -2606,7 +2634,7 @@ label cafe_date1 :
             "> You make your way to the cafe with Mary. "
             "> The two of you spend some time casually talking at your table. A warm glow shines through the windows."
             show mary casual straight
-            "> Mary is looking off to the distance, her face showing little expression."
+            "> Mary is looking off to the distance, showing little expression."
            
             "> Your orders arrive at the table."
             show mary casual wonder
@@ -2655,7 +2683,7 @@ label cafe_date1 :
                     "Sounds great! I'll support you if you ever need help." :
                         $ girl1.add_closeness(-1)
                         show mary casual shy
-                        p "Yeah... It does, doesn't it?"
+                        p "Yeah... It does sound great, doesn't it?"
                        
                         "> Mary forces a smile. She lets out a small sigh."
                         show mary casual sigh
@@ -2718,7 +2746,7 @@ label mary_backstory1 :
     m "So?"
     show mary casual pout
     p "Soooo... That's being pretty unrealistic. It's too selfish for me to just think about what I want to do."
-    p "I mean, when I get older I have to think about supporting a family, and taking care of kids, so that they can go to university. At least that's what my mom thinks."
+    p "I mean, when I get older I have to think about supporting a family and taking care of kids so that they can go to university. At least that's what my mom thinks."
     show mary casual sigh
     "> Mary lets out a heavy sigh as her eyes roll back and she leans back into her chair. Her posture sinks and her eyes fall down to her cup."
     menu:
@@ -2742,9 +2770,7 @@ label mary_backstory1 :
             m "Yeah, anytime!"
     show mary casual shock
     p "Ahh.. It's getting pretty late, I should head home."
-   
-    m "Yeah, same. It was fun hanging out with you today!"
-   
+
     jump cafe_date_goodending
  
 label cafe_date_goodending :
@@ -2880,21 +2906,20 @@ label restaurant_date2:
             jump mary_backstory2
            
 label mary_backstory2:
-    "> Mary rolls her eyes, she sits back in her chair, while letting her posture sink and her sight drops to her glass."
+    "> Mary rolls her eyes as she sits back in her chair while letting her posture sink and her sight drops to her glass."
     show mary casual pout
     p "...It's my mom and her opinions towards me wanting to cook."
     show mary casual sigh
-    p "I know she means well, and it's not like she's being mean about it. I just feel this pressure not to disappoint her. I don't even know why I'm telling you all of this. I've only known you for a couple of days. Sorry."
+    p "I know she means well and it's not like she's being mean about it. I just feel this pressure not to disappoint her. I don't even know why I'm telling you all of this. I've only known you for a couple of days. Sorry."
     m "Honestly Mary, don't worry I'm completely fine with it. Have you ever told her how you feel about cooking?"
     show mary casual wonder
-    p "I've sort of suggested being a chef, but she avoids really talking about it much. she redirects the conversation, or tells me that
+    p "I've sort of suggested being a chef, but she avoids really talking about it much. She redirects the conversation or tells me that
        “It would be better to keep it as a hobby.”"
     show mary casual sigh
     "> Mary pauses briefly."
     show mary casual sad
-    p "... My dad was a chef, and my mom loved him. She would sometimes get worried that he was a little too invested in his passion for cooking."
-    p " During holidays he would bring me into the kitchen and teach me different things about cooking. I really love those moments. It's why I fell in love with cooking."
-    m "What about your dad? what does he think?"
+    p "... My dad was a chef and bring me into the kitchen and teach me different things about cooking. I really love those moments. It's why I fell in love with cooking."
+    m "What about your dad? What does he think?"
     show mary casual sigh
     "> Mary stops for a moment. She takes a prolonged deep breath."
     show mary casual sad
@@ -2903,7 +2928,7 @@ label mary_backstory2:
    
     m "I'm really sorry to hear that..."
     show mary casual shy
-    p "Thanks. I was about 14 at the time, so I've already come to accept it..."
+    p "Thanks. I was about 14 at the time so I've already come to accept it..."
     show mary casual sad
     p "Dad really loved his work. Sometimes he would spend 16 hours a day at his restaurant. "
     p "The doctors said that he needed to take more breaks or he may suffer from stress, but my dad was the kind of guy who wouldn't accept that."
@@ -2920,7 +2945,7 @@ label mary_backstory2:
             show mary casual shy
             "> Mary smiles a little, but doesn't seem satisfied."
            
-            p "Haha, maybe you're right. But having to keep this a secret forever doesn't seem possible."
+            p "Haha, maybe you're right, but having to keep this a secret forever doesn't seem possible."
             show mary casual sad
             "> Mary goes silent for a moment. She doesn't seem to be feeling well."
            
@@ -3013,7 +3038,7 @@ label girl1_home_date:
     p "You look like you're lost."
  
     m "E-ehh. My bad."
-    "> You look around her house, a bit flustered that you don't know how to recover smoothly."
+    "> You look around her house, but you are a bit flustered because you don't know how to recover smoothly."
     show mary casual laugh
     p "Hehehe, the kitchen is this way."
     hide mary with dissolve
@@ -3069,9 +3094,9 @@ label girl1_home_date:
                     p "I don't really know. That was the first time my mom let me bake all by myself. I ended up dropping the flour bag and making a huge mess all over the place."
                     p "As for the other photos, I was just never excited about those things."
                     show mary cook sad
-                    p "My mom really wanted me to get good grades, so I was told avoid any extra-curricular activity because she felt they would get in the way."
-                    p "{i}'Mary you have to do well so I can get into a good university and find a stable job.'{/i}"
-                    p "{i}'Marry a good husband, raise a family.'{/i} I've heard it all.. "
+                    p "My mom really wanted me to get good grades so I was told avoid any extra-curricular activity because she felt they would get in the way."
+                    p "{i}'Mary, you have to do well so I can get into a good university and find a stable job.'{/i}"
+                    p "{i}'Marry a good husband and raise a family.'{/i} I've heard it all.. "
                     show mary cook pout
                     "> Mary seems displeased."
                     menu:
@@ -3300,7 +3325,7 @@ label mom_drama:
     p "What?! She's home a day early! Why?!"
    
     "> Mary looks around at all the cooking equipment and ingredients splayed out on the counters and looks helpless."
-    "> She's visibly panicking and attempts to make a move to put things away but it's futile. "
+    "> She's visibly panicking and attempts to make a move to put things away, but it's futile. "
     hide mary with dissolve
     show mom 3 with dissolve
     "> You don't have much time to react before her mom comes into the kitchen."
@@ -3316,7 +3341,7 @@ label mom_drama:
     mom "You shouldn't be inviting people over when I'm away on a business trip. Shouldn't you be studying too? It's a school night!"
     show mom 9
     show mary cook flustered2 at left
-    p "I-I just wanted to relieve some stress, it's just a little bit of cooking."
+    p "I-I just wanted to relieve some stress. It's just a little bit of cooking."
     show mary cook flustered1 at left
     "> The tension is getting heavy as you stand there as if you are not even in the room."
     show mom 7
@@ -3329,7 +3354,7 @@ label mom_drama:
     "> Mary's face is flushed of all its color and her voice is small."
     p " I didn't use the money; it's still in your office. As for all of this...I-  What if I wanted to be a chef? ...Like dad?"
     show mom 5
-    "> Her mom, is taken aback for a moment but then her voice is heightened."
+    "> Her mom is taken aback for a moment but then her voice is heightened."
     show mom 12
     mom "Don't you remember what happened to your father? Why would you do this? I can't let that happen to you, Mary, I can't lose both of you like that."
     show mom 11
@@ -3351,7 +3376,7 @@ label mom_drama:
             #replace return with jump to game over screen
         "Confront Mary's mom":
             show thought with dissolve
-            "> You gather all the courage you can muster and take a purposeful step forward, looking at Mary's mother in the eye."
+            "> You gather all the courage you can muster and take a purposeful step forward as you look at Mary's mother in the eye."
             hide thought with dissolve
             m "I'm sorry. I can't leave like this."
             show mom 7
@@ -3361,7 +3386,7 @@ label mom_drama:
             "> Mary looks shocked."
             p "%(player_name)s?"
             show mary cook pout at left
-            m"Hear me out, please. Mary told me about what happened with her father. It must've been terrible. By the way Mary talks about him, you both must have loved him very much."
+            m"Hear me out, please. Mary told me about what happened with her father. It must've been terrible. Judging by the way Mary talked about him, it sounded like both of you must have loved him very much."
             "> Her mom seems agitated by a stranger bringing up family matters and she snaps at you."
             show mom 8
             mom "What of it?"
@@ -3519,7 +3544,7 @@ label mary_good_end:
 label mary_bad_end:
     scene bg home_ec_room with fade
     "> At school the next day."
-    "> You decide to check the home-ec room but there's no sign of Mary."
+    "> You decide to check the home-ec room, but there's no sign of Mary."
     "> It seems you weren't too successful in building your relationship..."
     "> ..."
     scene bg hallway with fade
