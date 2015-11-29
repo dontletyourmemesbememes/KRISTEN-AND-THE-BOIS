@@ -187,7 +187,7 @@ screen main_menu():
     frame:
         style_group "mm"
         xalign .98
-        yalign .98
+        yalign .02
 
         has vbox
 
@@ -220,8 +220,8 @@ screen navigation():
     # The various buttons.
     frame:
         style_group "gm_nav"
-        xalign .98
-        yalign .98
+        xalign 0.98
+        yalign 0.98
 
         has vbox
 

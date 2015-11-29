@@ -6,6 +6,7 @@
  
 # Declare images below this line, using the image statement.
 # eg. image eileen happy = "eileen_happy.png"
+
 image bg auditorium = "Auditorium.png"
 image bg balcony = "Balcony.png"
 image bg cafe = "Cafe.png"
@@ -1780,7 +1781,7 @@ label outta_girl2_while_loop2:
 label music_event_3:
     # karaoke event here, success or failure
     #TODO ADD IMAGE OUTSIDE KARAOKE
-    scene bg karaoke
+    scene bg karaoke_lobby
     with fade
     show cath casual 14 with dissolve
     m "Here we are."
@@ -1818,7 +1819,6 @@ label music_event_3:
             show cath casual 16
             p "Yeah it did."
             show cath casual 14
-   
     show cath casual 16
     p "Well... let's get this over with."
     show cath casual 14
@@ -2080,7 +2080,7 @@ label girl2_failure:
     return
    
 label girl2_bad_end:
-   scene bg music_room with fade
+    scene bg music_room with fade
     "> You head over to the music room and expect to see Catherine playing where she usually is. "
     "> As you’re walking towards the room, there is an absence of music in the air. It is silent." 
     "> You reach the room and Catherine is nowhere in sight. You wait for almost half an hour, but she still doesn’t show up. Suddenly, your phone starts to ring." 
