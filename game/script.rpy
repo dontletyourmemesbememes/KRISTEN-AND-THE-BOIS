@@ -403,7 +403,7 @@ label start:
     #show placeholder normal at left
     #with moveinbottom
     show principal 1
-    principal "Allow me to officially welcome to Gouglas Private Academy. This school consists of the brightest students from all over the city, so congratulations for making it!"
+    principal "Allow me to officially welcome to Gouglas Private Academy. This school consists of the brightest students from all over the city so congratulations for making it!"
     jump intro
  
     return
@@ -417,7 +417,7 @@ label intro:
     show principal 8
     principal "Keep in mind that each class will affect {i}how you grow as a person{/i}."
     show principal 2
-    principal "Whoever you choose to be can impact any choices you make in the future, so choose your classes wisely."
+    principal "Whoever you choose to be can impact any choices you make in the future so choose your classes wisely."
     # "But be choose wisely. Once you set your classes today, it'll be permanent for the rest of the year.
     show principal 4
     principal "Now, If you're ready, I can take you on a tour of the school and some of the club rooms. Do you want me to repeat anything?"
@@ -470,7 +470,7 @@ label school_tour:
     #fade out
     show principal 5
     #show image of music room
-    principal "This is the music room. If you ever want to develop your musical capabilities, then this is the perfect spot to practice!"
+    principal "This is the music room. If you ever want to develop your musical capabilities then this is the perfect spot to practice!"
     "> You hear someone playing inside. Let's take a peek!"
     #show Catherine playing violin
     scene bg music_room with fade
@@ -480,7 +480,7 @@ label school_tour:
     principal "Continuing on..."
     hide cath with dissolve
     show principal 7 with dissolve
-    principal "Keep in mind that music is an expression of your personality, but also requires a lot of thought process."
+    principal "Keep in mind that music is an expression of your personality, but requires a lot of thought process as well."
     show principal 4
     principal "Shall we continue with the tour?"
    
@@ -508,13 +508,13 @@ label school_tour:
     principal "Well those are just examples of the many facilities this school provides."# Make use of your time and be sure to work hard on your academics."
     show principal 1
     principal "So... Did you enjoy checking out some of the female students instead of paying attention to what I was saying?"
-    principal "Haha, don't worry, you're a young man, so I understand."
+    principal "Haha, don't worry! You're a young man, so I understand."
     show principal 3
-    principal "Remember that we are an elite school where studies are valued, so we restrict students to joining only one club."
+    principal "Remember that we are an elite school where studies are valued so we restrict students to joining only one club."
     show principal 7
-    principal "But keep in mind that your social life and extra curriculars are crucial for a healthy high school experience too."
+    principal "Keep in mind that your social life and extra curriculars are crucial for a healthy high school experience too."
     show principal 2
-    principal "Now then. I think I've said enough."
+    principal "Now then, I think I've said enough."
     show principal 1
     principal "Best wishes to you, %(player_name)s."
    
@@ -557,7 +557,7 @@ label end_day_0:
     scene bg classroom with fade
     "> You somehow manage to stay awake through the intense morning lessons."
     scene bg hallway with fade
-    m "Finally done the morning lessons; I was ready to pass out at any moment. So which classes should I take this afternoon?"
+    m "I'm finally done the morning lessons; I was ready to pass out at any moment. So which classes should I take this afternoon?"
  
     $ stats.reset_classes()
     jump make_schedule
@@ -628,7 +628,7 @@ label biology:
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 label extracurricular:
     scene bg hallway with fade
-    m "So this is what an elite school is like? Classes seem ridiculously hard. Maybe I should check out those extracurriculars that the principal mentioned."
+    m "So this is what an elite school is like? Classes seem ridiculously hard. Maybe I should check out those extracurricular activities that the principal mentioned."
     "> You recall that you can only join {b}one{/b} club. Which one do you choose?"
    
     $ chosen_girl = stats.get_chosen_girl()
@@ -924,7 +924,7 @@ label music_day_2:
     "> You enter the music room to see Catherine already practicing on her violin."
     show cath casual 5:
         xalign 0.8
-        linear 1.0 xalign o.5
+        linear 1.0 xalign 0.5
     p "Hey, you actually came. I hope you are prepared."
     show cath casual 4
     m "I think so! I practiced all of last night!"
@@ -1018,7 +1018,7 @@ label music_day_3:
     "> You enter the music room to see Catherine already practicing on her violin."
     show cath casual 5:
         xalign 0.8
-        linear 1.0 xalign o.5
+        linear 1.0 xalign 0.5
     p "Hey, you actually came. I hope you are prepared."
     show cath casual 4
     m "I think so! I practiced all of last night!"
@@ -1117,7 +1117,7 @@ label music_day_4:
     "> You enter the music room to see Catherine already practicing on her violin."
     show cath casual 5:
         xalign 0.8
-        linear 1.0 xalign o.5
+        linear 1.0 xalign 0.5
     p "Hey, you actually came. I hope you are prepared."
     show cath casual 4
     m "I think so! I practiced all of last night!"
@@ -2105,14 +2105,14 @@ label home_ec_room:
     m "Yeah, I just transferred here recently. Is this the cooking club?"
    
     show mary cook happy
-    p "Yes! you've come to the right place."
+    p "Yes! You've come to the right place."
    
     m "Where do I sign up?"
     show mary cook wonder
-    p "Well... you kind of need to cook in this club. Show me what you can do first, and then we can talk about your membership."
+    p "Well... You kind of need to cook in this club. Show me what you can do first and then we can talk about your membership."
     show mary cook straight
     show thought with dissolve
-    "> You realize that you've only been here for a day, and the only culinary experience you have comes from instant ramen. But how hard could it be?"
+    "> You realize that you've only been here for a day and the only culinary experience you have comes from instant ramen, but how hard could it be?"
     hide thought with dissolve
     p "...Hello? You blanked out for a second. What do you plan on making for me?"
     $ str_check = stats.get_stats("str")
