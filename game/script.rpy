@@ -2059,9 +2059,11 @@ label music_event_3_part_2:
             jump girl2_bad_end
  
 label girl2_failure:
+    scene bg music_room with fade
     "> You head over to the music room and expect to see Catherine playing where she usually is. "
     "> As you’re walking towards the room, there is an absence of music in the air. It is silent." 
     "> You reach the room and Catherine is nowhere in sight. You wait for almost half an hour, but she still doesn’t show up. Suddenly, your phone starts to ring." 
+    show thought with dissolve
     p " Hey %(player_name)s, I totally forgot to tell you, but I hope that you aren’t at the music room waiting for me.. I’m in London."
     m "London?"
     p "I got a last minute invite to a music competition. Sorry that I didn’t call you earlier; the performances just finished."
@@ -2072,12 +2074,30 @@ label girl2_failure:
     p "Thanks! I’m glad. This means I won’t be coming back to Gouglas Private Academy though. I hope that you’ll continue to practice the piano even without me there to teach you." 
     m "Right…"
     p "Good luck." 
+    hide thought with fade
     "> She hangs up on you. You leave the music room feeling a little disappointed. Regretfully, you go on with the rest of your high school days." 
     "> You end up quitting the piano for the second time in your life."
     return
    
 label girl2_bad_end:
-    "GAME OVER"
+   scene bg music_room with fade
+    "> You head over to the music room and expect to see Catherine playing where she usually is. "
+    "> As you’re walking towards the room, there is an absence of music in the air. It is silent." 
+    "> You reach the room and Catherine is nowhere in sight. You wait for almost half an hour, but she still doesn’t show up. Suddenly, your phone starts to ring." 
+    show thought with dissolve
+    p " Hey %(player_name)s, I totally forgot to tell you, but I hope that you aren’t at the music room waiting for me.. I’m in London."
+    m "London?"
+    p "I got a last minute invite to a music competition. Sorry that I didn’t call you earlier; the performances just finished."
+    m "Oh.. How did you do?"
+    p "I thought that I played poorly, but I got approached afterwards by a scout." 
+    p "He said that I had great performance and invited me to a prestigious music academy." 
+    m "Thats great! Congratulations."
+    p "Thanks! I’m glad. This means I won’t be coming back to Gouglas Private Academy though. I hope that you’ll continue to practice the piano even without me there to teach you." 
+    m "Right…"
+    p "Good luck." 
+    hide thought with fade
+    "> She hangs up on you. You leave the music room feeling a little disappointed. Regretfully, you go on with the rest of your high school days." 
+    "> You end up quitting the piano for the second time in your life."
     return
  
 label girl2_good_end:
