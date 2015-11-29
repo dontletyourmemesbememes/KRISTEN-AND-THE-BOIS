@@ -1,9 +1,9 @@
 #Problems:
 #Waiting during question lets you do a question again andf get additional stats
-
-
+ 
+ 
 # You can place the script of your game in this file.
-
+ 
 # Declare images below this line, using the image statement.
 # eg. image eileen happy = "eileen_happy.png"
 image bg auditorium = "Auditorium.png"
@@ -13,6 +13,7 @@ image bg classroom = "Classroom.png"
 image bg hallway = "Hallway.png"
 image bg home_ec_room = "Home_ec_room.png"
 image bg house = "House.png"
+image by karaoke_lobby = "Karaoke_lobby.png"
 image bg karaoke = "Karaoke.png"
 image bg music_room = "Music_room.png"
 image bg office = "Office.png"
@@ -20,8 +21,9 @@ image bg outside_house = "Outside_house.png"
 image bg restaurant = "Restaurant.png"
 image bg player room = "Player_room.png"
 image bg sidewalk = "Sidewalk.png"
-image bg home = "Player_room.png" 
+image bg home = "Player_room.png"
 #Mary images--------------------------------------------------------------------------------------
+image mary intro = "MaryIntro.png"
 image mary casual smile = "mary_casual_1.png"
 image mary casual happy = "mary_casual_2.png"
 image mary casual wonder = "mary_casual_3.png"
@@ -92,6 +94,13 @@ image cath back = "cathback.png"
 image cath violin = "CathIntro.png"
 image cath concert = "Concert.png"
 image cath drawing = "Drawing.png"
+image cath talk1:
+    "Cath3-1.png"
+    pause(1.0)
+    "Cath3-2.png"
+    pause(1.0)
+    repeat
+ 
 #Extra images-------------------------------------------------------------------------------------
 image principal 1 = "principal1.png"
 image principal 2 = "principal2.png"
@@ -115,25 +124,25 @@ image mom 9 = "Mom2-3.png"
 image mom 10 = "Mom2-4.png"
 image mom 11 = "Mom2-5.png"
 image mom 12 = "Mom2-6.png"
-
-
-
+ 
+ 
+ 
 init python:
     import random
-
+ 
     class Question:
         def __init__(self,desc,choices,answer):
             self.description = desc
             self.choices = choices
             self.answer = choices[answer]
-
+ 
         def get_description(self):
             return self.description
-
+ 
         def get_choices(self):
             random.shuffle(self.choices)
             return self.choices
-
+ 
         def get_menu_choices(self):
             menu_list = []
             choice_list = self.get_choices()
@@ -143,12 +152,12 @@ init python:
                 else:
                     t = (choices,False)
                 menu_list.append(t)
-
+ 
             return menu_list
-
+ 
         def check_answer(answer):
             return answer == self.answer
-
+ 
     class QuestionManager:
         def __init__(self):
             self.question_list = []
@@ -157,8 +166,8 @@ init python:
         def add_question(self,desc,choices,answer):
             question = Question(desc,choices,answer)
             self.question_list.append(question)
-
-
+ 
+ 
     class Stats:
         def __init__(self):
             self.stats = {
@@ -167,60 +176,60 @@ init python:
                 "cha":0
             }
             self.days = 0
-
+ 
             self.classes = {"Biology (+1 Intelligence)":"biology",
                             "Drama (+1 Charm)":"drama",
                             "Gym (+1 Strength)":"gym"}
-
+ 
             self.picked_classes = []
             self.max_classes = 2
             self.food_choice = 0
             self.chosen_girl = 0
-            
+           
         def add_stats(self,stat,amount):
             self.stats[stat]
             if stat in self.stats:
                 self.stats[stat] += amount
             else:
                 self.stats[stat] = 0
-
+ 
         def get_stats(self,stat):
             if stat in self.stats:
                 return self.stats[stat]
             else:
                 return None
-    
+   
         def get_days(self):
             return self.days
-            
+           
         def increment_days(self):
             self.days += 1
-
+ 
         def pick_classes(self,class_type):
             self.picked_classes.append(class_type)
-
+ 
         def reset_classes(self):
             self.picked_classes = []
-
+ 
         def get_available_classes(self):
             choices = []
             for class_type,class_desc in self.classes.items():
                 if not(class_type in self.picked_classes):
                     choices.append((class_type,class_desc))
             return choices
-
+ 
         def get_picked_classes(self):
             return self.picked_classes
-            
+           
         def get_food_choice(self):
             return self.food_choice
-        
+       
         def set_food_choice(self, value):
             self.food_choice = value
-        
+       
         def get_chosen_girl(self):
             return self.chosen_girl
-            
+           
         def set_chosen_girl(self, girl):
             self.chosen_girl = girl
                
@@ -231,45 +240,45 @@ init python:
             self.closeness = 3
             self.affection = 0
             self.event = 0
-
+ 
         def add_closeness(self,amount):
             self.closeness += amount
-            
-        # Why is the name being passed here as the parameter...? 
+           
+        # Why is the name being passed here as the parameter...?
         # It literally does nothing.
         # Added default parameters so you can still call them without the name param.
         # Since it's probably too late at this point to change it back.
         def get_closeness(self,name=""):
             return self.closeness
-            
+           
         def add_affection(self,amount):
             self.affection += amount
-
+ 
         # same issue here
         def get_affection(self,name=""):
             return self.affection
-
+ 
         def set_name(self,name):
             self.name = name
-        
+       
         # and here
         def get_event(self,name=""):
             return self.event
-            
+           
         def add_event(self):
             self.event += 1
-            
+           
     def rng_roll(chance): #chance should be between [0,1]
         return chance > renpy.random.random()
-
+ 
     stats = Stats()
     girl1 = Girl("Mary")
     girl2 = Girl("Catherine")
-
+ 
     bio_qman = QuestionManager()
     gym_qman = QuestionManager()
     drama_qman = QuestionManager()
-
+ 
     bio_qman.add_question("The blood vessels that carry (usually oxygenated) blood away from the heart are called?",["Artery","Vein","Ventricle","Atrium"],0)
     bio_qman.add_question("What is the largest organ in the human body?",["Liver","Lung","Skin","Brain"],2)
     bio_qman.add_question("An example of a waste product of aerobic celluar respiration is:",["carbon monoxide","carbon dioxide","oxygen","methanol"],1)
@@ -292,8 +301,8 @@ init python:
     bio_qman.add_question("How many feet does a snail have?",["1","2","4","Infinite"],0)
     bio_qman.add_question("What part of the retina allows for coloured vision?",["Rods","Cones","Lens","Mirror"],1)
     bio_qman.add_question("What part of the brain controls balance?",["Frontal Cortex","The wrinkly half","Temporal Lobe","Cerebellum"],3)
-
-
+ 
+ 
     drama_qman.add_question("How does Hamlet Sr. die in the play {i}Hamlet{/i}?",["Poison","Obesity","Witches","A duel with Ferdinard Sr."],0)
     drama_qman.add_question("What is the name of the role of a person who writes the play?",["Playwright","Actor","Director","Player"],0)
     drama_qman.add_question("When you are on stage, to make sure your audience can understand, you must project your:",["Vision","Breath","Ideas","Voice"],3)
@@ -308,9 +317,8 @@ init python:
     drama_qman.add_question("Who is the king of the fairies in {i}A Midsummer Night's Dream{/i}",["King Lear","Othello","Claudius","Oberon"],3)
     drama_qman.add_question("The imaginary wall between the audience and the actor is called:",["The fourth wall","The third wall","The second wall","The first wall"],0)
     drama_qman.add_question("Who tells Macbeth he can kill Duncan to become king?",["Lady Macbeth","The Ghost of Macbeth Sr.","Banquo","The 3 witches"],3)
-
-
-    gym_qman.add_question("How much distance do you run in a 100m race?",["10m","50m","100m","100Km"],2)
+ 
+ 
     gym_qman.add_question("In a badminton game, how many points are required for a win?",["5","10","11","21","25"],3)
     gym_qman.add_question("What is Canada's national sport?",["Hockey","Lacrosse","Curling","Ice Skating"],1)
     gym_qman.add_question("What body part do you receive a penalty for using in soccer?",["Hands","Head","Feet","Ears"],0)
@@ -327,11 +335,11 @@ init python:
     gym_qman.add_question("Famous player involved in MBA and MLB, and is associated with a shoe brand?",["Michael Jackson","Jeremy Lin","Micheal Jordan","Shaquille O'Neil"],2)
     gym_qman.add_question("What is the most points you can get in a bowling game?",["300","1","2","500"],0)
     gym_qman.add_question("How do you end Quidditch?",["Knock over all of the opposing team","Say the name that cannot be said","Remove your nose","Catch the golden snitch"],3)
-
-
-
+ 
+ 
+ 
     def stats_overlay():
-        ui.text(("Days Elapsed:"+str(stats.get_days())),size=24)
+        #ui.text(("Days Elapsed:"+str(stats.get_days())),size=24)
         closeness = 0
         if stats.chosen_girl == 1:
             closeness = girl1.get_closeness()
@@ -339,22 +347,22 @@ init python:
             closeness = girl2.get_closeness()
         else:
             closeness = 0
-
-        ui.text(("Closeness:"+str(closeness)),size=24,ypos=96)
-        ui.text(("Strength:"+str(stats.get_stats("str"))),size=24,ypos=24)
-        ui.text(("Intelligence:"+str(stats.get_stats("int"))),size=24,ypos=48)
-        ui.text(("Charm:"+str(stats.get_stats("cha"))),size=24,ypos=72)
-        
-        
+ 
+        #ui.text(("Closeness:"+str(closeness)),size=24,ypos=96)
+        ui.text(("Strength:"+str(stats.get_stats("str"))),size=24)
+        ui.text(("Intelligence:"+str(stats.get_stats("int"))),size=24,ypos=24)
+        ui.text(("Charm:"+str(stats.get_stats("cha"))),size=24,ypos=48)
+       
+       
     config.overlay_functions.append(stats_overlay) #add overlay
-
-
+ 
+ 
 # Declare characters used by this game.
-
+ 
 define p = DynamicCharacter("unknown_name", color="#c8ffc8")
 define m = DynamicCharacter("player_name")
 define principal = Character("Principal", color="#c8ffc8")
-
+ 
 define mom = Character("Mom", color="#c8ffc8")
 define cookies_baked = False
 #Mary variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -372,123 +380,113 @@ define rest1_asked2 = False
 define rest1_asked3 = False
 define rest2_asked1 = False
 define reassure = False
-
+ 
 #Music girl variables~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 define girl2_event1_asked1 = False
 define girl2_music_choice = 0
-
+ 
 # The game starts here.
 # Initialize stuff here and shove all the tutorial intro stuff here as well.
-
-
+ 
+ 
 label start:
     play music "Background Music.mp3" fadein 1.0
     scene bg office
     with fade
-
+ 
     $ player_name = renpy.input("Most of the documents seem to be in order. Can I get you to sign your name below please?")
-    
+   
     $ unknown_name = "???"
     show principal 3 with fade
     principal "Alright %(player_name)s, I believe we're good to go now!"
-    
+   
     #show placeholder normal at left
     #with moveinbottom
     show principal 1
-    principal "Allow me to officially welcome to Gouglas Private Academy. This school consists of the brightest students from all over the city, so congratulations for making it!" 
+    principal "Allow me to officially welcome to Gouglas Private Academy. This school consists of the brightest students from all over the city, so congratulations for making it!"
     jump intro
-
+ 
     return
-
+ 
 label intro:
-    
+   
     show principal 2
     principal "As this is an elite school, our curriculum is a tad different than other schools in the country."
-    principal "Required classes will all be covered during your morning lessons, while {i}optional classes{/i} are held throughout the afternoon. Our most popular ones that we offer are {i}Drama, Biology, and Phys Ed{/i}." 
-    principal "In order to foster independence and individual growth in each of our students, we're extremely flexible in what classes you decide to attend each day." 
+    principal "Required classes will all be covered during your morning lessons, while {i}optional classes{/i} are held throughout the afternoon. Our most popular ones that we offer are {i}Drama, Biology, and Phys Ed{/i}."
+    principal "In order to foster independence and individual growth in each of our students, we're extremely flexible in what classes you decide to attend each day."
     show principal 8
     principal "Keep in mind that each class will affect {i}how you grow as a person{/i}."
-    show principal 2 
+    show principal 2
     principal "Whoever you choose to be can impact any choices you make in the future, so choose your classes wisely."
-    # "But be choose wisely. Once you set your classes today, it'll be permanent for the rest of the year. 
+    # "But be choose wisely. Once you set your classes today, it'll be permanent for the rest of the year.
     show principal 4
     principal "Now, If you're ready, I can take you on a tour of the school and some of the club rooms. Do you want me to repeat anything?"
-    menu: 
-    
+    menu:
+   
         "I think I'm good.":
             principal "Please follow me, %(player_name)s."
             jump school_tour
         "Can you go over how this works again?":
             principal "Certainly."
             jump intro
-    
+   
 label school_tour:
-    
+   
     scene bg hallway with fade
     show principal 5 with dissolve
     show thought with dissolve
-    "> The principal shows you through most of the building and classrooms. Nothing about this school seems particularily unusual." 
+    "> The principal shows you through most of the building and classrooms. Nothing about this school seems particularily unusual."
     show principal 4
     "> Nothing the principal is saying seems particularily important..."
-    
+   
     principal "...and here we have the {b}club room building{/b}..."
-    
+   
     "> Oh. Time to pay attention."
     hide thought with dissolve
    # scene bg home_ec_room with fade
-    show principal 5 
+    show principal 5
     #show image of economics room
-    
-    principal "This is the home economics room. Students come here to learn essential life skills like cooking." 
+   
+    principal "This is the home economics room. Students come here to learn essential life skills like cooking."
     "> You notice someone in the room. Let's take a look!"
     #ide principal with dissolve
     scene bg home_ec_room with fade
     #show image of Mary cooking
-
+ 
     #replace with special scene of mary
-    show mary cook happy:
-        xalign 1.0
-        linear 1.0 xalign 0.8
-        pause 1.0
-        linear 1.0 xalign 1.0
-        pause 1.0
-        repeat
+    show mary intro with fade
     "> You look through the door and see a girl piling ingredients on one of the counters."
     m "{i}It looks like she's preparing to cook something.{/i}"
     principal "Ahem!"
     # show principal
     hide mary with dissolve
     scene bg hallway with fade
-    show principal 7 
+    show principal 7
     principal "Keep in mind that the most sophisticated dishes require a certain amount of stamina as well as some creative style."
     show principal 9
     principal "Moving on..."
-    
-  
+    scene bg hallway with fade
+ 
     #fade out
-    show principal 5 
+    show principal 5
     #show image of music room
     principal "This is the music room. If you ever want to develop your musical capabilities, then this is the perfect spot to practice!"
     "> You hear someone playing inside. Let's take a peek!"
     #show Catherine playing violin
     scene bg music_room with fade
-    show cath violin:
-        xalign 1.0
-        linear 1.0 xalign 0.8
-        pause 1.0
-        linear 1.0 xalign 1.0
-        pause 1.0
-        repeat
+    show cath violin with fade
+    "> Through the door you see a girl standing in the middle of the room playing a violin."
+    m"{i}She looks as if she's performing for a royal audience.{/i}"
     principal "Continuing on..."
     hide cath with dissolve
     show principal 7 with dissolve
     principal "Keep in mind that music is an expression of your personality, but also requires a lot of thought process."
     show principal 4
     principal "Shall we continue with the tour?"
-    
+   
     #fade out
-
-    
+ 
+   
     #show image of the gym
     #JUST THE TWO CLUBS FOR NOW
     #principal "This is our fitness centre. We have the newest equipment for any kind of workout. "
@@ -498,7 +496,7 @@ label school_tour:
     show principal 5 with dissolve
     principal "Moving on to the next club..."
     #fade out
-
+ 
     show thought with dissolve
     scene bg hallway
     with fade
@@ -512,27 +510,27 @@ label school_tour:
     principal "So... Did you enjoy checking out some of the female students instead of paying attention to what I was saying?"
     principal "Haha, don't worry, you're a young man, so I understand."
     show principal 3
-    principal "Remember that we are an elite school where studies are valued, so we restrict students to joining only one club." 
+    principal "Remember that we are an elite school where studies are valued, so we restrict students to joining only one club."
     show principal 7
-    principal "But keep in mind that your social life and extra curriculars are crucial for a healthy high school experience too." 
+    principal "But keep in mind that your social life and extra curriculars are crucial for a healthy high school experience too."
     show principal 2
     principal "Now then. I think I've said enough."
     show principal 1
     principal "Best wishes to you, %(player_name)s."
-    
+   
     $ stats.reset_classes()
     scene bg hallway with fade
     jump make_schedule
-
+ 
 label make_schedule:
-    
+   
     if len(stats.get_picked_classes()) == 0:
         m "It looks like I have to choose 2 classes to attend this afternoon."
     $choices = stats.get_available_classes()
     $result = renpy.display_menu(choices)
-
+ 
     call expression result
-
+ 
     if len(stats.picked_classes) < stats.max_classes:
         jump make_schedule
     else:
@@ -541,28 +539,29 @@ label make_schedule:
             jump end_day_0
         elif day == 1:
             jump extracurricular
-        else: 
+        else:
             return
-                    
+                   
 label end_day_0:
     m "Phew... That was a long day, I'll head home for today..."
     $ stats.increment_days()
-    
+   
     scene bg player room with fade
-    #fade to show end of day 
+    "> Your room."
+    #fade to show end of day
     "{i}I'm so tired... I think I'll go to bed early today.{/i}"
     scene bg hallway with fade
     "> Next morning."
-    
+   
     m "Time to go to class."
     scene bg classroom with fade
     "> You somehow manage to stay awake through the intense morning lessons."
     scene bg hallway with fade
     m "Finally done the morning lessons; I was ready to pass out at any moment. So which classes should I take this afternoon?"
-
+ 
     $ stats.reset_classes()
     jump make_schedule
- #Classes ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   
+ #Classes ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
 label gym:
     $ stats.pick_classes("Gym (+1 Strength)")
     if len(stats.get_picked_classes()) < stats.max_classes:
@@ -581,9 +580,9 @@ label gym:
     else:
         "> Incorrect."
         "> No stats were raised."
-
+ 
     return
-    
+   
 label drama:
     $ stats.pick_classes("Drama (+1 Charm)")
     if len(stats.get_picked_classes()) < stats.max_classes:
@@ -602,11 +601,11 @@ label drama:
     else:
         "> Incorrect."
         "> No stats were raised."
-
-    return 
-    
+ 
+    return
+   
 label biology:
-    
+   
     $ stats.pick_classes("Biology (+1 Intelligence)")
     if len(stats.get_picked_classes()) < stats.max_classes:
         m "Guess I'll choose Biology for one choice, I still need to pick another."
@@ -624,230 +623,271 @@ label biology:
     else:
         "> Incorrect."
         "> No stats were raised."
-
+ 
     return
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 label extracurricular:
     scene bg hallway with fade
     m "So this is what an elite school is like? Classes seem ridiculously hard. Maybe I should check out those extracurriculars that the principal mentioned."
     "> You recall that you can only join {b}one{/b} club. Which one do you choose?"
-    
+   
     $ chosen_girl = stats.get_chosen_girl()
-    
+   
     if chosen_girl == 0:
-        
+       
         menu:
             "Home Economics Room":
                 m "I guess I'll go check out the home-ec room."
                 jump home_ec_room
             "Music Room":
                 m "I heard there was a music room. I should go check it out."
-                jump music_room 
-
+                jump music_room
+ 
     elif chosen_girl == 1: # Mary is chosen
-        
+       
         jump home_ec_day_2
-        
+       
     elif chosen_girl == 2: # music girl chosen
-        
+       
         jump music_day_2
-
+ 
 #-----------------------------START OF MUSIC GIRL---------------------------------------------#
-
+ 
 label music_room:
     stop music fadeout 1.0
-    
+   
     # TODO play violin music
     play music "violin.mp3" fadein 1.0
     scene bg hallway
     with fade
-    
+   
     "> As you get closer to the music room, you notice the door cracked open an inch. As you approach, you hear sustained instrument that cuts through the opening."
     # fade to show entering room
     scene bg music_room
     with fade
     # TODO SHOW VIOLIN
-    show cath violin with dissolve
-    
-    "> Upon entering, you find a girl drawing her bow flawlessly across the strings. She faces the opposite direction, displaying her hair that follows the dynamics of her playing." 
+    show cath violin with fade
+   
+    "> Upon entering, you find a girl drawing her bow flawlessly across the strings. She faces the opposite direction, displaying her hair that follows the dynamics of her playing."
     "> You're compelled to sit down at the piano bench, as your eyes and ears perked up to witness her welcoming and mellow style."
     "> She doesn't notice you as you sit down behind her."
     menu:
         "> Get her attention.":
+            hide cath violin with fade
             $ girl2.add_closeness(-1)
             m "Hi!"
-            "> Her enrapturing music screeches to a halt. Before you can say anything else, she spins around quickly with a look of anger on her face."
+            show cath casual 1 with dissolve
             stop music fadeout 1.0
+            "> Her enrapturing music screeches to a halt. Before you can say anything else, she spins around quickly with a look of anger on her face."
             show cath casual 2
             p "How. Dare. You."
         "> Wait.":    
             "> She seems so enveloped in her music that you don’t want to interrupt her."
-            "> The song grows in depth, as the notes create an atmosphere, sustained in emotion. Her upper body sways intimately with the music, while the hairs on the back of your neck rise gradually." 
+            "> The song grows in depth, as the notes create an atmosphere, sustained in emotion. Her upper body sways intimately with the music, while the hairs on the back of your neck rise gradually."
             "> You find yourself enveloped by her music."
             m "{i}Wow... she's pretty amazing. I need to know this girl's name.{/i}"
             "> Her playing approaches the end. You feel anxiety rising up as you stand to attempt talking to her."
+            hide cath violin with fade
             stop music fadeout 1.0
             m "{i}Now's my chance to talk to her!{/i}"
             m "Hey, I just heard you playing and you were pretty awesome!"
             "> She looks back to be slightly surprised, not knowing you were there. Her expression instantly reads 'who the hell are you?'"
-            show cath casual 1
+            show cath casual 1 with dissolve
    
-    show cath casual 10
+    show cath casual 12
     p "I thought I closed the door, how did you get in?"
+    show cath casual 10
     m "Oh no, it was opened. Sorry I didn't know know you wanted to be alone."
+    show cath casual 2
     p "I'm practicing, so if you don't mind, I have a concert to prepare for. If you could leave that would be really great."
+    show cath casual 1
     "> You can tell she sounds really sarcastic. "
+    hide cath with dissolve
     "> Immediately she gets back to playing, but this time. Her playing loses its warmth, and immediately has an air of superiority."
     play music "violin.mp3" fadein 1.0
-    
+   
     # TODO SHOW VIOLIN
-    show cath violin
-    
+    show cath violin with fade
+   
     m "I never caught your name, by the way."
     "> The violin lets out a shriek, and she turns to you in frustration."
+    hide cath violin with fade
     stop music fadeout 1.0
-    show cath casual 2
+    show cath casual 12 with dissolve
     p "Did you not hear me earlier?"
+    show cath casual 10
     m "I did, but I don't want to leave."
+    show cath casual 3
     "> Looking frustrated and agitated, she clenches the neck of the violin and stick."
+    show cath casual 12
     p "Ugh! Who do you think you are anyways!?"
+    show cath casual 10
     m "I'm %(player_name)s. Your playing was pretty inspiring to listen to. What's your name?"
     show cath casual 1
     "> She holds a frown."
+    show cath casual 2
     p "Catherine... I suppose it's not a HUGE inconvenience if you listen, just try to keep quiet, and don't do anything to distract me or I am going to kick you out."
     $ unknown_name = "Catherine"
+    show thought with dissolve
     m "{i}This girl's scary.{/i}"
-    
+   
     # TODO SHOW VIOLIN
-    show cath violin
-    
+    hide thougt with dissolve
+    show cath violin with fade
+   
     play music "violin.mp3" fadein 1.0
     "> She moves to her music stand again raising her bow into position. This time she continues to play, but still not as welcoming and warm as the first time."
     "> You start to get into the music, leaning back while tapping your feet."
+    hide cath with fade
+    show thought with dissolve
     "> As you notice the dust on your elbows, you realize you have been sitting beside a piano."
-    "{i}Oh man, this piano's pretty dusty. I also haven't touched one of these in a couple years. Now let's see what we have here...{/i}"
+    m "{i}Oh man, this piano's pretty dusty. I also haven't touched one of these in a couple years. Now let's see what we have here...{/i}"
     "> You lift the key covering."
-    hide cath with dissolve
     $ int_check = stats.get_stats("int")
     menu:
         "Play along with her":
+            hide thought with dissolve
             jump play_with_her
-        
+       
         "Just sit and listen to her play the violin":
             "> You stay seated and simply listen to her playing."
             menu:
                 "Play with her":
+                    hide thought with dissolve
                     jump play_with_her
-                
+               
                 "Attempt to talk to Catherine as shes playing":
+                    hide thought with dissolve
                     m "How did you get into playing violin?"
                     "> She plays louder and more aggressively."
                     $ girl2.add_closeness(-1)
                     menu:
                         "Play with her":
                             jump play_with_her
-                            
+                           
         "Attempt to talk to Catherine as shes playing":
+            hide thought with dissolve
             m "How did you get into playing violin?"
             "> She plays louder and more aggressively."
             $ girl2.add_closeness(-1)
-            
-            menu: 
+           
+            menu:
                 "Play with her":
                     jump play_with_her
-                
+               
                 "Just sit and listen to her play the violin":
                     "> You stay seated and simply listen to her playing."
                     menu:
                         "Play with her":
-                            jump play_with_her         
+                            jump play_with_her        
    
 label play_with_her:
-    
+   
     # play with piano
-    
     if int_check >= 1:
         $ girl2.add_closeness(1)
         "> You pick up where there's an opening, and accompany her. The first few moments feel sluggish and your hands feel clumsy, but after a few bars you're able to familiarize yourself. You peek over your shoulder to notice that Catherine's posture is rigid; she doesn't seem like she's used to someone playing with her. Her playing begins to become harsher and her facial expression suddenly becomes unimpressed."
-        "{i}Hmm... She hasn't stopped playing yet... I'll just keep going to see where this takes me.{/i}"
+        m "{i}Hmm... She hasn't stopped playing yet... I'll just keep going to see where this takes me.{/i}"
         "> You listen to her carefully and do your best to follow her, trying to avoid taking over or not supporting her enough. You remember the feeling from before: the chill in your spine, hair upright, and heightened senses."
         "> You can't see her now, but you'd like to imagine she also is feeling the same way you do."
         "> You listen carefully, and end the song."
-        "I think my finish was coordinated with her pretty well. Granted not perfect, but pretty good I think."
-        
-        show cath back
+        stop music fadeout 1.0
+        show thought with dissolve
+        m "{i}I think my finish was coordinated with her pretty well. Granted not perfect, but pretty good I think.{/i}"
+        hide thought with dissolve
+        show cath casual 2 with dissolve
         p "That was terrible."
+        show cath casual 3
         "> Catherine crosses her arms again and turns her back on you with a puff of air."
+        show cath casual 5
         p "But..not bad for an impromptu."
         "> You can't see the expression on her face but her response makes you smile."
-        
         play music "Background Music.mp3" fadein 1.0
+        show cath casual 4
         menu:
             "Lightly joke":
                 m "You're amazing at the violin. But yeah, thanks, Cathy!"
                 $ girl2.add_closeness(-1)
                 show cath casual 2
                 p "That's not my name, I hate being called Cathy."
+                show cath casual 1
                 m "Oh, I'll keep that in mind, sorry. It's nice to meet you Catherine!"
             "Be humble":
                 $girl2.add_closeness(1)
                 m "Thanks Catherine, but I'm still pretty rusty. I haven't played since junior high. Your playing earlier inspired me!"
-                show cath casual 11
+                show cath casual 14
                 "> Catherine looks flustered but is trying keep an exaggerated, mature composure." # guess image here instead of description
                 p "..."
-                show cath casual 13
+                show cath casual 16
                 p "Of course! I'm training to be the best you know. It's nice to meet you too I guess."
-        
+       
         m "Well, I think i might take another shot at playing the piano."
-        show cath casual 2
+        show cath casual 12
         p "What!? what do you mean?"
+        show cath casual 10
         m "I'll be around the music room more often, I like listening to you play and the way you played the violin has inspired me to get back into playing the piano."
+        show cath casual 12
         p "Who said you could be in here?"
+        show cath casual 10
         m "Would you be opposed? I need to practice a little more and you could tell me how I'm doing."
+        show cath casual 2
         p "I don't have time to deal with an amateur like you. Ugh....but I guess it's sort of useful having an accompanist. JUST FOR PRACTICE. Come by tomorrow, don't be late or else I'll kick you out."  
         hide cath with dissolve
         # end day
-        
+       
     else:
         "> You try to think of what to play, but the keys starts to look more and more like a puzzle. You play the keys but it just makes a loud obstruction to The girl's music."
         "> She stops midway, pointing the violin bow at you."
-        show cath casual 12
-
+        show cath casual 10 with dissolve
         play music "Background Music.mp3" fadein 1.0
+        show cath casual 12
         p "What did I just say? Why are you even touching the piano, if you don’t have the capacity to play it?"
+        show thought with dissolve
+        show cath casual 10
         m "{i}Oh crap.{/i}"
+        hide thought with dissolve
         m "W-well I haven’t played since junior high, so I’m rusty, I mean just a little rusty or maybe a lot depending on who’s judging that is. I’m usually better I just need to brush up. Actually, I think I might take another shot at playing the piano if you’ll give me a chance."
-
+        show cath casual 2
         p "What? what do you mean?"
+        show cath casual 1
         m "I want to be around the music room more often, I like listening to you play and the way you played the violin has inspired me to get back into playing the piano."
+        show cath casual 2
         p "You're terrible. Why should I even give you another chance."
         "> Catherine's eyes look hard and unforgiving."
         m "Please give me another chance! I won't disappoint you. I'll leave you alone if I do not meet your standards next time!"
         "> Catherine's eyes suddenly soften but turns cold again so fast that you're not sure if you were seeing right."
+        show cath casual 1
         p "I..Fine. I'll give you a shot. Be here tomorrow and don't be late, or else."
-        show cath back
         "> She turns her back to you again. You're not sure what else to say and you take this as your cue to leave. You get up and just about as you exit the room, you hear Catherine say something else."
+        show cath casual 2
         p "If you're really serious about this, you don't want to waste your chance or you'll regret it. Believe me."
         "> She immediately lifts her bow again and starts up playing again, ignoring you. You leave."
         hide cath with dissolve
-    
+   
     # show image of bedroom at night?
     scene bg home
     with fade
+    "> Your room."
     m "That was a long day, time to hit the sack."
     $ stats.increment_days()
-        
-    "Another day at school..." 
+    scene bg hallway with fade  
+    "> Next morning."
+    m "Another day at school..."
+    scene bg classroom with fade
+    "> Morning classes seem to be going well."
+    scene bg hallway with fade
+    "> Afternoon."
+    m "Time for afternoon classes. What should I take today?"
     $ stats.reset_classes()
     call make_schedule
     jump music_day_2
-        
+       
 label music_event_check_1:
     # music room option
     $ closeness = girl2.get_closeness("Catherine")
     $ day = stats.get_days()
     $ event_num = girl2.get_event("Catherine")
-    
+   
     if day < 5 and closeness > -3 and closeness < 5:
         # continue on with music
         return
@@ -862,9 +902,9 @@ label music_event_check_1:
         # set the event value to 1
         $ girl2.add_event()
         jump music_event_1
-    
+   
 label music_event_check_2:
-    
+   
     $ closeness = girl2.get_closeness("Catherine")
     $ event_num = girl2.get_event("Catherine")
     if closeness >= 8 and event_num == 1:
@@ -872,36 +912,40 @@ label music_event_check_2:
         jump music_event_2
     else:
         return
-    
+   
 label music_day_2:
     # should not go to events yet for now
     #call music_event_check_1
     #call music_event_check_2
     #call music_event_check_3
-    
+   
     scene bg music_room
     with fade
-    show cath violin with dissolve
     "> You enter the music room to see Catherine already practicing on her violin."
-    show cath casual 2
+    show cath casual 5:
+        xalign 0.8
+        linear 1.0 xalign o.5
     p "Hey, you actually came. I hope you are prepared."
+    show cath casual 4
     m "I think so! I practiced all of last night!"
     $ str_check = stats.get_stats("str")
     $ int_check = stats.get_stats("int")
     $ cha_check = stats.get_stats("cha")
     hide cath with dissolve
-    
+ 
     stop music fadeout 1.0
+    "> What will you play today?"
     menu:
         "Classical (no reqs)":
             play music "Classical.mp3" fadein 1.0
             "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
             stop music fadeout 1.0
             play music "Background Music.mp3" fadein 1.0
-            show cath casual 4
+            show cath casual 4 with dissolve
+            show cath casual 5
             p "You have redeemed yourself a little bit. You can come back to the music room if you want. Just don't get in my way."
             $ girl2.add_closeness(1)
-            
+           
         "Rock (Strength 2, Charm 2)":
             p "Rock today? okay I'll give it a try."
             if str_check >= 2 and cha_check >=2:
@@ -909,8 +953,9 @@ label music_day_2:
                 "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
                 stop music fadeout 1.0
                 play music "Background Music.mp3" fadein 1.0
-                show cath casual 5
+                show cath casual 5 with dissolve
                 p "That went better than I thought." # she coughs
+                show cath casual 2
                 p "I meant for you obviously, I knew that I would be great. That was interesting though. Maybe we should experiment like this more."
                 $ girl2.add_closeness(2)
             else:
@@ -918,75 +963,97 @@ label music_day_2:
                 "> As you begin to play for the first few bars, you are able to stay on beat with Catherine, However, as the song intensifies, you stress out and begin to play fast and louder. The sounds created by piano overpowers the violin and there is dissonance in the music being played. Despite this, Catherine and  you imagine to finish the piece."
                 stop music fadeout 1.0
                 play music "Background Music.mp3" fadein 1.0
-                show cath casual 1
+                show cath casual 12 with dissolve
                 p "That was terrible. The piano is suppose to accompany the violin not the other way around... But I guess this is a huge improvement from yesterday. I guess I will let you continue coming to the music room because you are dedicated to improve and you kind of have potential.."
                 $ girl2.add_closeness(-2)
-        
+       
         "Jazz (Charm 2, Intelligence 2)":
+            show cath casual 5 with dissolve
             p "OH! I LOVE JAZZ!"
+            hide cath with dissolve
             if cha_check >= 2 and int_check >= 2:
                 play music "Jazz.mp3" fadein 1.0
                 "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
                 stop music fadeout 1.0
                 play music "Background Music.mp3" fadein 1.0
-                show cath casual 5
+                show cath casual 5 with dissolve
                 p "You have redeemed yourself a little bit. You can come back to the music room if you want. Just don't get in my way."
             else:
                 play music "Piano Fail.mp3" fadein 1.0
                 "> As you begin to play for the first few bars, you are able to stay on beat with Catherine, However, as the song intensifies, you stress out and begin to play fast and louder. The sounds created by piano overpowers the violin and there is dissonance in the music being played. Despite this, Catherine and  you imagine to finish the piece."
                 stop music fadeout 1.0
                 play music "Background Music.mp3" fadein 1.0
-                show cath casual 1
+                show cath casual 1 with dissolve
                 p "That was terrible. The piano is suppose to accompany the violin not the other way around... You think you've got skill? That's laughable at the state you're at right now. I pity you too much to leave you like this so come back if you want and I'll get you into at least a DECENT level."
                 $ girl2.add_closeness(-2)
-                
+               
     hide cath with dissolve
+    "> After a while of practicing, the two of you decide to call it a day."
     scene bg home
     with fade
+    "> Your room."
     m "That was a long day, time to hit the sack."
     $ stats.increment_days()
-    
-    "Another day at school..." 
+    scene bg hallway with fade  
+    "> Next morning."
+    m "Another day at school..."
+    scene bg classroom with fade
+    "> You feel morning classes are getting easier."
+    scene bg hallway with fade
+    "> Afternoon."
+    m "Time for afternoon classes. What should I take today?"
     $ stats.reset_classes()
     call make_schedule
     jump music_day_3
-
+ 
 label music_day_3:
     # check for events
     if girl2_event1_asked1 == False:
         call music_event_check_1
         call music_event_check_2
     $ girl2_event1_asked1 = False
-    
+   
     scene bg music_room
     with fade
-    show cath violin with dissolve
     "> You enter the music room to see Catherine already practicing on her violin."
-    show cath casual 2
+    show cath casual 5:
+        xalign 0.8
+        linear 1.0 xalign o.5
     p "Hey, you actually came. I hope you are prepared."
+    show cath casual 4
     m "I think so! I practiced all of last night!"
     $ str_check = stats.get_stats("str")
     $ int_check = stats.get_stats("int")
     $ cha_check = stats.get_stats("cha")
+    hide cath with dissolve
+ 
+    "> What will you play today?"
+    $ str_check = stats.get_stats("str")
+    $ int_check = stats.get_stats("int")
+    $ cha_check = stats.get_stats("cha")
     stop music fadeout 1.0
-    
+   
     menu:
         "Classical (no reqs)":
             play music "Classical.mp3" fadein 1.0
             "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
             stop music fadeout 1.0
             play music "Background Music.mp3" fadein 1.0
-            show cath casual 4
+            show cath casual 4 with dissolve
+            show cath casual 5
             p "You have redeemed yourself a little bit. You can come back to the music room if you want. Just don't get in my way."
             $ girl2.add_closeness(1)
-            
+ 
+           
         "Folk (Strength 2, Charm 3)":
+            show cath casual 2 with dissolve
             p "Really? Okay, I'm not very used to folk, but if you want."
+            hide cath with dissolve
             if str_check >= 2 and cha_check >=3:
                 "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
                 stop music fadeout 1.0
                 play music "Background Music.mp3" fadein 1.0
-                show cath casual 5
+                show cath casual 5 with dissolve
                 p "You have redeemed yourself a little bit. You can come back to the music room if you want. Just don't get in my way."
                 $ girl2.add_closeness(2)
             else:
@@ -997,15 +1064,17 @@ label music_day_3:
                 show cath casual 1
                 p "That was terrible. The piano is suppose to accompany the violin not the other way around... But I guess this is a huge improvement from yesterday. I guess I will let you continue coming to the music room because you are dedicated to improve and you kind of have potential.."
                 $ girl2.add_closeness(-2)
-        
+       
         "Blues (Charm 2, Intelligence 3)":
+            show cath casual 3 with dissolve
             p "Alright, if you want."
+            hide cath with dissolve
             if cha_check >= 2 and int_check >= 3:
                 play music "Blues.mp3" fadein 1.0
                 "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
                 stop music fadeout 1.0
                 play music "Background Music.mp3" fadein 1.0
-                show cath casual 5
+                show cath casual 5 with dissolve
                 p "You have redeemed yourself a little bit. You can come back to the music room if you want. Just don't get in my way."
                 $ girl2.add_closeness(2)
             else:
@@ -1013,23 +1082,31 @@ label music_day_3:
                 "> As you begin to play for the first few bars, you are able to stay on beat with Catherine, However, as the song intensifies, you stress out and begin to play fast and louder. The sounds created by piano overpowers the violin and there is dissonance in the music being played. Despite this, Catherine and  you imagine to finish the piece."
                 stop music fadeout 1.0
                 play music "Background Music.mp3" fadein 1.0
-                show cath casual 1
+                show cath casual 1 with dissolve
                 p "That was terrible. The piano is suppose to accompany the violin not the other way around... But I guess this is a huge improvement from yesterday. I guess I will let you continue coming to the music room because you are dedicated to improve and you kind of have potential.."
                 $ girl2.add_closeness(-2)
-    
+   
     hide cath with dissolve
+    "> After a while of practicing, the two of you decide to call it a day."
     scene bg home
     with fade            
+    "> Your room."
     m "That was a long day, time to hit the sack."
     $ stats.increment_days()
-    
-    "Another day at school..." 
+    scene bg hallway with fade  
+    "> Next morning."
+    m "Another day at school..."
+    scene bg classroom with fade
+    "> Morning classes are the same as usual."
+    scene bg hallway with fade
+    "> Afternoon."
+    m "Time for afternoon classes. What should I take today?"
     $ stats.reset_classes()
     call make_schedule
     jump music_day_4
-    
+   
 label music_day_4:    
-    
+   
     # check for events, day is 4 here
     if girl2_event1_asked1 == False:
         call music_event_check_1
@@ -1037,35 +1114,48 @@ label music_day_4:
     $ girl2_event1_asked1 = False # reset it now that checks are done
     scene bg music_room
     with fade
-    
-    show cath violin with dissolve
     "> You enter the music room to see Catherine already practicing on her violin."
-    show cath casual 2
+    show cath casual 5:
+        xalign 0.8
+        linear 1.0 xalign o.5
     p "Hey, you actually came. I hope you are prepared."
+    show cath casual 4
     m "I think so! I practiced all of last night!"
     $ str_check = stats.get_stats("str")
     $ int_check = stats.get_stats("int")
     $ cha_check = stats.get_stats("cha")
-    
+    hide cath with dissolve
+ 
     stop music fadeout 1.0
+    "> What will you play today?"
+    $ str_check = stats.get_stats("str")
+    $ int_check = stats.get_stats("int")
+    $ cha_check = stats.get_stats("cha")
+   
     menu:
         "Classical (no reqs)":
             play music "Classical.mp3" fadein 1.0
             "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
             stop music fadeout 1.0
             play music "Background Music.mp3" fadein 1.0
-            show cath casual 4
-            p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again... It was kind of fun."
+            show cath casual 4 with dissolve
+            show cath casual 5
+            p "You have redeemed yourself a little bit. You can come back to the music room if you want. Just don't get in my way."
             $ girl2.add_closeness(1)
-            
+ 
+           
         "Latin (Strength 3, Charm 4)":
-            p "Very very interesting. I don't know how to start... ummm... here goes nothing."
+            show cath casual 5 with dissolve
+            p "Very, very interesting."
+            show cath casual 3
+            p "..I don't know how to start... ummm... here goes nothing."
+            hide cath with dissolve
             if str_check >= 3 and cha_check >=4:
                 play music "Latin.mp3" fadein 1.0
                 "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
                 stop music fadeout 1.0
                 play music "Background Music.mp3" fadein 1.0
-                show cath casual 5
+                show cath casual 5 with dissolve
                 p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again... It was kind of fun."
                 $ girl2.add_closeness(2)
             else:
@@ -1073,18 +1163,22 @@ label music_day_4:
                 "> As you begin to play for the first few bars, you are able to stay on beat with Catherine, However, as the song intensifies, you stress out and begin to play fast and louder. The sounds created by piano overpowers the violin and there is dissonance in the music being played. Despite this, Catherine and  you imagine to finish the piece."
                 stop music fadeout 1.0
                 play music "Background Music.mp3" fadein 1.0
-                show cath casual 1
+                show cath casual 1 with dissolve
                 p "That was terrible. The piano is suppose to accompany the violin not the other way around... But I guess this is a huge improvement from yesterday. I guess I will let you continue coming to the music room because you are dedicated to improve and you kind of have potential.."
                 $ girl2.add_closeness(-2)
-        
+       
         "J-pop (Charm 3, Intelligence 4)":
-            p "Oh great! I have this song from a dating sim game I wanted to play!"
+            show cath casual 5 with dissolve
+            p "Oh great!"
+            show cath casual 8
+            p "I have this song from a dating sim game I wanted to play!"
+            hide cath with dissolve
             if cha_check >= 3 and int_check >= 4:
                 play music "Jpop.mp3" fadein 1.0
                 "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
                 stop music fadeout 1.0
                 play music "Background Music.mp3" fadein 1.0
-                show cath casual 5
+                show cath casual 5 with dissolve
                 p "Wow. I am impressed. Even though there were some errors, that was a huge improvement from yesterday. You have redeemed yourself. You are free to come back anytime you want and I don't mind playing with you again... It was kind of fun."
                 $ girl2.add_closeness(2)
             else:
@@ -1092,42 +1186,62 @@ label music_day_4:
                 "> As you begin to play for the first few bars, you are able to stay on beat with Catherine, However, as the song intensifies, you stress out and begin to play fast and louder. The sounds created by piano overpowers the violin and there is dissonance in the music being played. Despite this, Catherine and  you imagine to finish the piece."
                 stop music fadeout 1.0
                 play music "Background Music.mp3" fadein 1.0
-                show cath casual 1
+                show cath casual 12 with dissolve
                 p "That was terrible. The piano is suppose to accompany the violin not the other way around... But I guess this is a huge improvement from yesterday. I guess I will let you continue coming to the music room because you are dedicated to improve and you kind of have potential.."
                 $ girl2.add_closeness(-2)
-    
+   
     hide cath with dissolve
+    "> After a while of practicing, the two of you decide to call it a day."
     scene bg home
     with fade
+    "> Your room."
     m "That was a long day, time to hit the sack."
     $ stats.increment_days()
-    
-    "Another day at school..." 
+    scene bg hallway with fade  
+    "> Next morning."
+    m "Another day at school..."
+    scene bg classroom with fade
+    "> You feel that you've gotten used to the school system."
+    "> ..."
+    "> You start to wonder about how Catherine is doing."
+    scene bg hallway with fade
+    "> Afternoon."
+    m "Time for afternoon classes. What should I take today?"
     $ stats.reset_classes()
     call make_schedule
     jump girl2_failure
-    
+   
 label music_event_1:
     # triggered from closeness
     scene bg music_room
     with fade
     $ day = stats.get_days()
-    show cath casual 14
+    "> After school."
+    show cath casual 14 with dissolve
     "> You enter the music room quietly; you see Catherine on the floor curled up in a kneeling position. Sprawled around her are vibrantly coloured posters and unopened markers."
     menu:
         "Hey Catherine... should I come by another time? You look busy right now..":
+            show cath casual 16
             p "I am busy at the moment. Leave me alone."
+            show cath casual 14
             $ girl2.add_affection(-1)
-            "> You decide to leave her alone"
+            "> You decide to leave her alone."
             hide cath with dissolve
-            $ girl2_event1_asked1 = True 
+            $ girl2_event1_asked1 = True
             if day == 3:
                 # show home image
                 scene bg home
                 with fade
+                "> Your room."
                 m "That was a long day, time to hit the sack."
-                
-                "Another day at school..." 
+                scene bg hallway with fade
+                "> Next morning."
+                m "Another day at school..."
+                scene bg classroom with fade
+                "> Morning classes are the same as usual."
+                scene bg hallway with fade
+                "> Afternoon."
+                m "Time for afternoon classes. What should I take today?"
                 $ stats.reset_classes()
                 call make_schedule
                 jump music_day_3
@@ -1135,20 +1249,28 @@ label music_event_1:
                 # show home image
                 scene bg home
                 with fade
+                "> Your room."
                 m "That was a long day, time to hit the sack."
-                
-                "Another day at school..." 
+                scene bg hallway with fade
+                "> Next morning."
+                m "Another day at school..."
+                scene bg classroom with fade
+                "> Morning classes are the same as usual."
+                scene bg hallway with fade
+                "> Afternoon."
+                m "Time for afternoon classes. What should I take today?"
                 $ stats.reset_classes()
                 call make_schedule
                 jump music_day_4
-            
+           
         "Don't say anything yet":
             "> You decide to watch her and see what she's doing. You notice her tugging on her hair occasionally and letting out fits of frustration."
             play sound "Cell Phone Ring.mp3"
             "> ring ring ring"
-            p "sigh..."
-            stop sound 
             show cath casual 16
+            p "sigh..."
+            show cath talk1 with dissolve
+            stop sound
             p "Hi Mom."
             p "... I'm at school still making posters for the concert."
             p "... No, I don't think I'll be home in time for dinner."
@@ -1157,136 +1279,191 @@ label music_event_1:
             p "... Don't worry about it-- I said I'll be fine!"
             p "... I'm sorry for lashing out, I am just frustrated right now."
             p "... You too, bye..."
-            "{i}I wonder why she sounded so angry at the end of her conversation.{/i}"
+            show cath casual 14
+            show thought with dissolve
+            m "{i}I wonder why she sounded so angry at the end of her conversation.{/i}"
+            hide thought with dissolve
             "> You walk nearer to her without her noticing and upon closer inspection, notice that she's making posters for some sort of concert."
             m "Hey Catherine, what are all these for? Do you need help with something?"
+            show cath casual 16
             p "Oh! Hi %(player_name)s."
-            show cath casual 17
+            show cath casual 15
             "> She seems embarrassed that you're seeing her like this."
+            show cath casual 17
             p "I'm trying to make posters for this concert; I need to promote it. No need for help, I'm perfectly capable of doing this myself."
+            show cath casual 15
             m "Of course, of course! If I help you now though we'll have time to play some music. I've been looking forward to it all day."
+            show cath casual 17
             p "Hmmm...Fine! Do whatever you want."
-            show cath drawing 
+            hide cath with fade
+            show cath drawing with fade
             "> She still seems embarrassed for accepting your help, but at the same time, satisfied."
             "> You end up kneeling beside her. As you sit she retracts a couple inches away from where you're sitting."
-            "{i}She doesn't seem that comfortable with me maybe I should try to make some conversation.{/i}"
+            show thought with dissolve
+            m "{i}She doesn't seem that comfortable with me maybe I should try to make some conversation.{/i}"
+            hide thought with dissolve
+            hide cath with dissolve          
             menu:
                 "What is the concert for?":
                     $ girl2.add_affection(1)
+                    show cath casual 8 with dissolve
                     p "This is my opportunity to be the greatest violinist of our time."
+                    show cath casual 7
                     m "What...?"
+                    show cath casual 8
                     p "A representative from the most prestigious music schools in the UK was invited to view my performance. Basically, I'm being evaluated before actually going there to do my audition for the school."
+                    show cath casual 7
                     m "Uh huh... congrats, Cathy!"
+                    show cath casual 13
                     p "Idiot. Don't call me that."
+                    show cath casual 11
                     m "hahahahaha!"
                     "> She furiously starts sketching her posters."
                     menu:
                         "What do you need me to do?":
                             jump music_event_1_part_2
-                    
+                   
                 "What do you need me to do?":
                     jump music_event_1_part_2
-        
+       
 label music_event_1_part_2:
-    
+   
+    show cath casual 2
     p "Can you just sketch details, in pencil?"
+    show cath casual 1
     m "Don't you want me to do more than that?"
+    show cath casual 2
     p "No. I can't have any clumsy mistakes."
+    show cath casual 1
     "> You look at the posters in front of her."
     m "But you didn't even colour in the lines."
-    show cath casual 17
+    show cath casual 15
     "> Catherine is flustered."
+    show cath casual 17
     p "N-no! That's for visual effect! I guess it's hard to appreciate for an uncultured eye."
+    show cath casual 15
     m "That is debatable."
+    show cath casual 13
     p "Just get to work!"
-    
+    show cath casual 11
+    hide cath with fade
+   
     "> You work for some time, not saying anything to each other."
     "> You look at your clock and notice that the sun is starting to set."
     "> You look towards the window and you see the sunlight give a warm colouring to the surroundings. The chalk dust in the air highlights the sun rays giving the room a calm atmosphere."
     "> Your eyes wander to Catherine in the middle room and under the sun rays. She is putting on the finishing touches on the posters."
     "> She looks like she's in a spotlight. She looks so natural in it, like she was born to be in the spotlight. Light passes through her hair giving it an ethereal look as it drapes down on her shoulders. By observing her alone, you begin to feel unsettled and hot"
     "> She tucks her hair behind her hair as she finishes up the final touches, but realizes that you are staring at her."
-    
-    show cath casual 2
+   
+    show cath casual 2 with dissolve
     p "...Why are you staring at me?"
+    show cath casual 1
     menu:
         "Is it hot in here?":
             $ girl2.add_affection(-1)
+            show cath casual 2
             p "No not really, why are you sweating? That's kinda gross."
-            "{b}{i}WHY AM I SWEATING???{/i}{/b}"
+            show cath casual 1
+            m "{b}{i}WHY AM I SWEATING???{/i}{/b}"
             m "uh gah... don't worry about it. It's just hot."
+            show cath casual 2
             p "... o--okay..."
+            show cath casual 1
             menu:
                 "Sorry you just looked really good today":
-                    $ girl2.add_affection(-1) 
+                    $ girl2.add_affection(-1)
+                    show cath casual 2
                     p "Creep."
-                    "{i}Uhhh maybe I shouldn't have said that, she probably thinks I'm weird.{/i}"
+                    show cath casual 1
+                    show thought with dissolve
+                    m "{i}Uhhh maybe I shouldn't have said that, she probably thinks I'm weird.{/i}"
+                    hide thought with dissolve
                     "> You don't really know how to follow up on that response, so you decide to let the awkward space settle for a moment."
                     menu:
                         "Wow, the posters look amazing! We did a good job":
                             jump music_event_1_part_3
                 "Wow, the posters look amazing! We did a good job":
                     jump music_event_1_part_3
-                    
+                   
         "Sorry you just looked really good today":
             $ girl2.add_affection(-1)
+            show cath casual 2
             p "Creep."
-            "{i}Uhhh maybe I shouldn't have said that, she probably thinks I'm weird.{/i}"
+            show cath casual 1
+            show thought with dissolve
+            m "{i}Uhhh maybe I shouldn't have said that, she probably thinks I'm weird.{/i}"
+            hide thought with dissolve
             "> You don't really know how to follow up on that response, so you decide to let the awkward space settle for a moment."
             menu:
                 "Is it hot in here?":
-                    $ girl2.add_affection(-1) 
+                    $ girl2.add_affection(-1)
+                    show cath casual 2
                     p "No not really, why are you sweating? That's kinda gross."
-                    "{b}{i}WHY AM I SWEATING???{/i}{/b}"
+                    show cath casual 1
+                    show thought with dissolve
+                    m "{b}{i}WHY AM I SWEATING???{/i}{/b}"
+                    hide thought with dissolve
                     m "Uh gah... don't worry about it. It's just hot."
+                    show cath casual 2
                     p "... O--okay..."
+                    show cath casual 1
                     menu:
                         "Wow, the posters look amazing! We did a good job":
                             jump music_event_1_part_3
                 "Wow, the posters look amazing! We did a good job":
                     jump music_event_1_part_3
-                            
+                           
         "Wow, the posters look amazing! We did a good job":
             jump music_event_1_part_3
-
+ 
 label music_event_1_part_3:
-    $ girl2.add_affection(1) 
-    show cath casual 5
+    $ girl2.add_affection(1)
+    show cath casual 4
     "> She looks happy at your comment."
+    show cath casual 5
     p "I guess you aren't that useless."
+    show cath casual 4
     m "Thanks?..."
+    show thought with dissolve
     m "{i} At least I'm not ‘super useless'...{/i}"
+    hide thought with dissolve
     m "I was thinking we should probably get to practicing soon."
+    show cath casual 5
     p "Oh! Of course, I didn't forget about that---"
-    "Sureee..."
+    show cath casual 4
+    show thought with dissolve
+    m "{i}Sureee...{/i}"
+    hide thought with dissolve
     hide cath with dissolve
     scene bg hallway
     with fade
     "> Catherine and you are finished making the posters for the concert and put them around the school."
-    
+   
     scene bg music_room
     with fade
     show cath casual 4
     m "Do you want to play now?"
-    p "Uh. Sure. What do you want to play?"
+    show cath casual 5
+    p "Uh... Sure. What do you want to play?"
+    show cath casual 4
     stop music fadeout 1.0
     hide cath with dissolve
-    menu: 
+    menu:
         "Beethoven violin Sonata No.9 Op.47 \"Kreutzer\"":
             m "Let's play Beethoven violin Sonata No.9 Op.47 \"Kreutzer\"." #ADD MUSIC
             $ girl2_music_choice = 1
             play music "Beethoven.mp3" fadein 1.0
-            
+           
         "Chopin Tristesse Etudes in E major":
             m "Let's play Chopin Tristesse Etudes in E major." #ADD MUSIC
             $ girl2_music_choice = 2
             play music "Chopin.mp3" fadein 1.0
-            
+           
         "Rondo Capriccioso- Saint-Saens":
             m "Let's play Rondo Capriccioso- Saint-Saens." #ADD MUSIC
             $ girl2_music_choice = 3
             play music "Rondo.mp3" fadein 1.0
-            
+           
     # "> After music plays for x time or whatever"
     while(1):
         $ renpy.pause(5.0)
@@ -1295,144 +1472,189 @@ label music_event_1_part_3:
                 jump outta_girl2_while_loop
             "Keep playing?":
                 pass
-                
+               
 label outta_girl2_while_loop:                
     stop music fadeout 1.0
     play music "Background Music.mp3" fadein 1.0
-    show cath casual 5
+    show cath casual 4 with dissolve
     m "That was fun!"
+    show cath casual 5
     p "Yeah..."
+    show cath casual 4
     m "Here's an idea... Do you think that I could play with you in your concert?"
+    show cath casual 12
     p "OF COURSE NOT!!! This is actually important."
+    show cath casual 4
     menu:
         "Change your mind":
             $ girl2.add_affection(-1)
             m "Whatever, It's not like I cared enough to help anyways."
             show cath casual 1
             "> She looks pretty mad at that last comment."
+            show cath casual 2
             p "You don't have to be so butthurt about it."
-            "{i}Maybe I shouldn't have thought out loud.{/i}"
-            
+            show cath casual 1
+            show thought with dissolve
+            m "{i}Maybe I shouldn't have thought out loud.{/i}"
+            hide thought with dissolve
         "Try to convince her":
             $ girl2.add_affection(1)
             m "What?! Why not? I think it would be fine, Cathy! If you ever want an accompanist, I'll be around."
             show cath casual 15
             "> She avoids eye contact and slightly blushes."
+            show cath casual 17
             p "...Thanks, I'll think about it. BUT I TOLD YOU NOT TO CALL ME THAT."
-            
+            show cath casual 15
+           
     show cath casual 2
     "> Catherine huffs."
     p "Anyways, I should get going."
+    show cath casual 4
     "> She packs up quickly and begins to rush out."
     m "I'll see you tomorrow then."
+    show cath casual 2
     p "...Yeah"
     hide cath with dissolve
-    "{i}Hmm she seems a little off. Was it something I said?{/i}"
+    show thought with dissolve
+    m "{i}Hmm she seems a little off. Was it something I said?{/i}"
+    hide thought with dissolve
     $ day = stats.get_days()
     if day == 3:
         jump music_day_3
     elif day == 4:
         jump music_day_4
-    
+   
 label music_event_2:
     # triggered from closeness
     "> You receive a text from Catherine."
     p "'Come to the music room for a minute'"
-    
+   
     scene bg music_room
     with fade
     "> You walked into the music room. Strangely, there is no music being played."
-    show cath casual 4 with dissolve
+    show cath casual 1 with dissolve
     "> You see Catherine leaning against the window sill. She's looking out the window contently."
+    show thought with dissolve
     m "{i}I guess it's a good day out.{/i}"
+    hide thought with dissolve
     "> The warm lighting gives her a glow, where she seems so peaceful. For some reason everything seems so vibrant. The lighting gives her a warm, peaceful glow."
-    show cath casual 5
+    show cath casual 4
     "> Catherine sees your reflection in the window and turns around to address you with a smile on her face."
+    show cath casual 5
     p "Can I ask you for a favour?"
-    
+    show cath casual 4
+   
     menu:
         "Yeah, of course":
             $girl2.add_affection(1)
         "Sure, if you act a litter nicer to me":
             $girl2.add_affection(-1)
-    
-    "{i}She looks pretty concerned. I wonder what it is about?{/i}"
-    show cath casual 16
+    show thought with dissolve
+    m "{i}She looks pretty concerned. I wonder what it is about?{/i}"
+    hide thought with dissolve
+    show cath casual 17
     p "So... the concert..."
+    show cath casual 15
     m "Yeah?"
+    show cath casual 17
     p "Apparently I'm required to have an accompanist."
+    show cath casual 15
     m "Oh? And?"
     "> You try not to crack a smile knowing what's coming."
     show cath casual 17
     p "So... I... may need you to play as my accompanist."
+    show cath casual 15
     m "I don't know... I thought I wasn't good enough?"
-    "I'm not sure if I should be teasing her in a situation like this, but I need to make the most of this opportunity!"
+    show thought with dissolve
+    m "{i}I'm not sure if I should be teasing her in a situation like this, but I need to make the most of this opportunity!{/i}"
+    hide thought with dissolve
     "> She seems surprised at your response like she was expecting you to agree right away. Her face turns mad red and squeezes her eyes shut. Her face instantly turns red from frustration."
+    show cath casual 17
     p "I know I've been mean to you this whole time, but please! This is my only opportunity!"
     show cath casual 18
     "> Her eyes begin to water."
+    show cath casual 17
     p "I just get so frustrated when I can't do anything myself. I don't want people to see me as weak, but it is a requirement and I need someone to lean on. Please..."
-    "{i}Oh crap. She's super serious right now.{/i}"
+    show cath casual 19
+    show thought with dissolve
+    m "{i}Oh crap. She's super serious right now.{/i}"
+    hide thought with dissolve
     menu:
         "Yeah, don't worry. I said I was going to be around if you needed me, right? Let's start practicing for it!":
             hide cath with dissolve
             jump music_event_2_part_2
-
+ 
 label music_event_2_part_2:
-    
+   
     scene bg music_room
     with fade
     "> You arrive outside of the music room. The suit you're wearing makes you feel stiff and limited in mobility."
     "I think I look okay, I can't tell with only the moonlight"
     "> You receive a text from Catherine."
-    
+   
     scene bg balcony
     with fade
     p "Hey, I'm on the balcony."
-    show cath dress 1
+    show cath dress 1 with dissolve
     "> You get to the top of the building and through a set of glass doors you see her in a white dress. As you pass the doors, your eyes capture the city twinkling with streetlights and cars."
     "> You lean next to her on the railing. In the corner of your eye, you catch a glimpse of her dress and skin glowing in the moonlight."
     menu:
         "You look good in this lighting":
             $girl2.add_affection(-1)
-            show cath dress 8
+            show cath dress 10
             p "What about other lightings?"
-            "{i}Oops, I guess that came out wrong.{/i}"
+            show cath dress 8
+            show thought with dissolve
+            m "{i}Oops, I guess that came out wrong.{/i}"
+            hide thought with dissolve
         "It's a beautiful night":
             $girl2.add_affection(1)
             show cath dress 3
             p "Yeah, it is."
-    
-    show cath dress 2
-                
+            show cath dress 5
+               
     m "It's the big day huh? How are you feeling?"
+    show cath dress 2
     p "My palms are a little sweaty and my head is all jumbled with worries."
+    show cath dress 1
     m "It will be fine, don't worry about it. Let's just try our best!"
+    show cath dress 2
     p "I need this to be perfect..."
+    show cath dress 1
     menu:
         "Downplay it to make her feel more at ease":
             $girl2.add_affection(-1)
             m "Calm down a little, it's not a big deal."
+            show cath dress 2
             p "Haven't you been listening at all?"
-            "{i}Oh crap that wasn't smart of me.{/i}"
+            show cath dress 1
+            show thought with dissolve
+            m "{i}Oh crap that wasn't smart of me.{/i}"
+            hide thought with dissolve
             menu:
                 "Reassure her":
                     show cath dress 1
                     m "Well it's an important day to you right? You want to get into the school? You want to make it into the school, right?"
                     p "..."
                     m "What's with the silence?"
-                    
+                   
         "Reassure her":
             $girl2.add_affection(1)
             show cath dress 1
             m "Well it's an important day to you right? You want to get into the school?"
             p "..."
             m "What's with the silence?"
-            
+   
+   
+    show cath dress 2
     p "To be completely honest, I couldn't care less if I went to the music academy or not. Not anymore anyways..."
+    show cath dress 1
     m "I thought that was your goal to become the greatest violinist of our time?"
+    show cath dress 2
     p "I mean, excelling at playing the violin is my goal, but this concert is for approval from others."
+    show cath dress 1
     m "Sounds like a lot of work for some recognition."
+    show cath dress 2
     p "I know... But you don't know what it's like. I've always had people holding my hand while I do everything, not letting me take my own steps, and not letting me take any credit. Maybe you do... If not,  you could at least try understanding it from my perspective."
     show cath dress 6
     "> At this moment, she turns and looks up to you. The beauty of her red lips and rosy cheeks captivates you for a moment; you feel like a pin went through your chest."
@@ -1440,30 +1662,44 @@ label music_event_2_part_2:
     "> She smiles."
     show cath dress 4
     p "Thanks for the words of encouragement. They mean a lot to me."
+    show cath dress 6
     "> She sees your watch."
+    show cath dress 4
     p "Oh! It's almost time to go! Quick smell my perfume, make sure it smells good!"
+    show cath dress 6
     "> She pulls back her hair and leans forward, exposing her neck to you."
     "> You quickly lean in to smell."
     "> When you breathe in the scent, it's like fireworks begin going off your head. This feeling travels down through the rest of your body, but you feel something briefly press against your cheek."
+    show cath dress 4
     p "That was for good luck...and for listening to me."
+    show cath dress 6
     "> She covers her mouth, and avoids eye contact, blushing."
     m "Thanks..."
+    show cath dress 11
     p "D-don't look at me like that, you're wasting time."
     hide cath with dissolve
     "> She grabs your hand and leads you through the doors of the auditorium."
-    
+   
     scene bg auditorium
     with fade
-    show cath dress 12
+    show cath dress 13 with dissolve
     "> You feel like a ragdoll as she makes sharp corners towards back-stage. She stops abruptly and turns around quickly to face you. Her eyes are shining with excitement and nervousness."
+    show cath dress 12
     p "Ready?"
+    show cath dress 13
     m "Your palms are sweaty."
-    "{i}Oh God, I literally could have said anything else.{/i}"
+    show thought with dissolve
+    m "{i}Oh God, I literally could have said anything else.{/i}"
+    hide thought with dissolve
+    show cath dress 9
     "> She pulls her hand quickly away and picks up her violin."
+    show cath dress 11
     p "Don't get full of yourself. Let's do this."
+    show cath dress 9
     "> You walk out onto the stage; as you look out you don't see a face, but you feel like everyone is staring at you."
     "> You take a seat at the piano and wait for her signal."
-    show cath concert
+    hide cath with fade
+    show cath concert with fade
     "> You hear her draw her bow across the strings. Her playing is colourful, vibrant, and full of expression.  You can feel her stage presence growing as the song reaches the climax."
     # cue music here
     stop music fadeout 1.0
@@ -1473,78 +1709,110 @@ label music_event_2_part_2:
         play music "Chopin.mp3" fadein 1.0
     else:
         play music "Rondo.mp3" fadein 1.0
-        
+       
     while(1):
         $ renpy.pause(10.0)
         menu:
             "Skip?":
                 jump outta_girl2_while_loop2            
-                
-label outta_girl2_while_loop2:                
+               
+label outta_girl2_while_loop2:  
+    hide cath with fade
     stop music fadeout 1.0
     play music "Background Music.mp3" fadein 1.0
-    
+   
     "> You reach the end of the song and you get up to stand next to her. When you approach her, she holds out her hand in front of you; you grab it and bow together. The audience gives you a large applause."
     "> Both of you walk off stage."
     show cath dress 4
     p "We did it!"
+    show cath dress 6
     menu:
         "Hug her":
             $ girl2.add_affection(1)
             m "Yeah, good job!"
             "> You hug her. you intended to have a quick hug, but it lingers for a while longer."
+            show cath dress 4
             p "I'm really thankful for you helping me out."
+            show cath dress 6
         "Talk about the Academy":
             $ girl2.add_affection(-1)
             m "You did it, you're sure to get in now! I'm glad it went well."
-            show cath dress 1
+            show cath dress 2
             p "Oh... yeah right. thanks..."
-            
-    
+            show cath dress 1
+           
+   
     m "We should celebrate!"
+    show cath dress 2
     p "Celebrate? What do you have in mind?"
+    show cath dress 1
     m "How about Karaoke?"
+    show cath dress 10
     p "Karaoke?"
     show cath dress 8
     m "Yeah, that thing where you sing in a room..."
+    show cath dress 10
     p "I know what it is, but why Karaoke?"
+    show cath dress 8
     m "Why not? You've been so stressed out on music lately; this is a good way to destress."
     "> She sighs."
+    show cath dress 10
     p "Okay..."
+    show cath dress 8
     m "GREAT! LET'S GO"
     hide cath with dissolve
     jump music_event_3
-            
+           
 label music_event_3:
     # karaoke event here, success or failure
+    #TODO ADD IMAGE OUTSIDE KARAOKE
     scene bg karaoke
     with fade
     show cath casual 14 with dissolve
     m "Here we are."
+    show cath casual 16
     p "Y-yeah..."
+    show cath casual 14
     m "What's wrong, Cathy?"
     show cath casual 16
     p "I've never sung in front of anyone..."
+    show cath casual 14
     m "So wait, you're telling me that you can get on a stage in front of hundreds of people, but you can't sing in front of me?"
+    show cath casual 17
     p "IT'S DIFFERENT!  The violin produces such elegant music."
+    show cath casual 14
     menu:
         "Reassure her":
             $ girl2.add_affection(1)
             m "It can't be that bad. Don't worry, I'm not here to judge you."
+            show cath casual 16
             p "Liar..."
+            show cath casual 14
             m "PROMISE."
             "> She rolls her eyes."
+            show cath casual 16
             p " Don't say I didn't warn you."
-            
+            show cath casual 14
+           
         "Joke":
             $ girl2.add_affection(-1)
             m "Well that's a shame, I guess that's the problem with hiding behind an instrument your whole life."
+            show cath casual 16
             p "Aren't you a tad bit conceited?"
+            show cath casual 14
             m "That came out wrong..."
+            show cath casual 16
             p "Yeah it did."
-    
+            show cath casual 14
+   
+    show cath casual 16
     p "Well... let's get this over with."
+    show cath casual 14
     "> You place your hands on her shoulders and guide her into the karaoke room."
+    hide cath with fade
+    scene bg karaoke
+    with fade
+    show cath casual 3
     m " Come on, it's going to be fun!"
     "> When you sit down, you place songs in the playlist. As one of them is about to begin, you notice out of the corner of your eye, Catherine clutching the mic with both hands. She holds it with her arms retracted close to her chest."
     m "C'mon, lighten up! This is supposed to be fun! Just imagine I'm not even here."
@@ -1552,28 +1820,41 @@ label music_event_3:
     show cath casual 5
     "> She bursts out laughing."
     p "That's what you do when you're giving birth!"
+    show cath casual 4
     m "THEN YOU HAVE NOTHING TO WORRY ABOUT!"
+    show cath casual 5
     "> She laughs."
     p "Alright, alright I'm ready."
+    show cath casual 3
     "> Her shoulders relax, and she takes a deep breath."
     "> The music starts playing, You start the song slow. following the lyrics her voice takes you by surprise. You are taken back for moment to the point where you stop singing out of disbelief. Her voice actually is powerful and smooth."
-
+    hide cath with fade
     stop music fadeout 1.0
     play music ["Adele Karaoke.mp3", "John Legend Karaoke.mp3"] fadeout 1.0 fadein 1.0
-    "{i}SHE LIED TO ME{/i}"
+    show thought with dissolve
+    m "{i}SHE LIED TO ME{/i}"
+    hide thought with dissolve
+    show cath casual 5 with dissolve
     "> You decide to just go with it. You have an almost a deja vu moment, as if you were her accompanist again. Naturally, you begin to harmonize with her. It must be from practising with her. At one point of the song, you both feel each other pushing your diaphragms to their limit. You look at each other trying not to laugh."
     "> You see her under the fluorescent rose lighting of the room, she looks like she's really having enjoying herself. She looks at you and smiles as the song ends."
     stop music fadeout 1.0
     play music "Background Music.mp3" fadein 1.0
+    show cath casual 4
     p "That was great!"
     "> She begins laughing uncontrollably while leaning forward."
     "> She beings to lose balance as she falls forward and falls in your direction. You react by trying to catch her with both arms, but her momentum catches you off guard and pushes you back. You fall directly on your butt."
+    show cath casual 13
     p "OH! I'M SO SORRY ARE YOU OKAY?"
+    show cath casual 11
     "> She immediately panics and clumsily tries helping you up."
     m "Probably just fractured my tailbone, but I'm fine."
+    show cath casual 9
     p "SERIOUSLY?"
+    show cath casual 15
     m "Don't worry... I'm just kidding"
+    show cath casual 17
     p "Don't scare me like that..."
+    show cath casual 15
     m "Since when did you start worrying about me so much?"
     show cath casual 9
     "> Her cheeks instantly turn red."
@@ -1583,38 +1864,51 @@ label music_event_3:
         "Hey, if you want to talk about something, I'm listening":
             $ girl2.add_affection(1)
             p "..."
-            
+           
         "Oh alright":
             $ girl2.add_affection(-1)
             p "... Why do you have to be so dense all the time?"
-            
+           
     "> She sighs."
     show cath casual 16
     p "Look... It's been really hard for me to be comfortable around you."
+    show cath casual 14
     m "What do you mean?"
+    show cath casual 16
     p "In the short time I've known you, I don't think I've ever felt so close to anyone. At first I couldn't stand you being around, but you just kept persisting to help me out and to help you out. Then well I guess you just grew on me."
+    show cath casual 14
     m "Is that a bad thing?"
+    show cath casual 16
     p "No... I'm just a little confused, that's all... I've grown up in a well off family and I always was given opportunities, as if they were served to me on a silver platter. I never felt like I earned anything. I eventually just hated it when people helped me accomplish tasks; people always checking up on me saying 'Do you need help with that?' As if I couldn't handle myself, as if I was completely incapable of doing anything. I started to be secluded from people, and refuse people that tried to get close to me."
+    show cath casual 14
     m "What about now?"
+    show cath casual 16
     p "I don't know anymore. I guess you could say that you're now an exception to the rule."
     show cath casual 4
     "> She smiles, leans back into the couch, and stares blankly towards the karaoke lyrics rolling."
+    show cath casual 5
     p "You know, it's funny. I try to push people away, but then one person is just able to push through all the walls I set up. I didn't want to trust that person, but I end up leaning on them the most, when I'm in need."
+    show cath casual 4
     "> She shifts her weight so that her rests upon your shoulder."
     "> You feel a tension while your beats per minute skyrocket. It's like your head is going to explode from built up pressure."
     m "H-hey Ca--"
+    show cath casual 5
     p "Just be quiet for a moment..."
+    show cath casual 4
     "> Neither of you move while the karaoke lyrics roll and the rose lights pulsate in the room. From this atmosphere, you just enjoy each other's presence."
     menu:
         "Hey Cathy, do you want to go out with me?":
             # check affection level
             $ affection = girl2.get_affection("Catherine")
             # if success:
-            if affection > 6: # NUMBER CAN VARY
+            if affection >= 6: # NUMBER CAN VARY
                 show cath casual 8
                 p "Does it look like I don't want to?"
+                show cath casual 7
                 m "Well maybe you just wanted to be friends."
+                show cath casual 8
                 p "Sometimes I can't believe how clueless you can be... So I'll say it plainly: I want to go out with you."
+                show cath casual 7
                 "> She wraps her arms around your torso, smiling. You both continue to bask in the emotions until it's time to go."
                 show cath casual 5
                 p "Thank you for everything, I'm really glad to have met you in my life..."
@@ -1624,24 +1918,31 @@ label music_event_3:
             else:
                 show cath casual 8
                 p "Does it look like I don't want to?"
+                show cath casual 7
                 m "Well maybe you just wanted to be friends."
+                show cath casual 8
                 p "Sometimes I can't believe how clueless you can be... But, I can't..."
                 show cath casual 14
                 m "..."
+                show cath casual 16
                 p "I got into the academy..."
+                show cath casual 14
                 m "Oh... Congrats..."
                 "> She wraps her arms around your torso, and begins to have tears streaming down her face."
+                show cath casual 16
                 p "I'm so sorry... as much as I want to be with you... this is a really important opportunity."
+                show cath casual 14
                 m "No of course... I couldn't expect you to drop everything for me..."
                 "> You both sit and try to savour the moment. She latches onto you tight, not wanting to let go. You sit trying to hold on to each other's presence inevitably comes to an end."
+                show cath casual 16
                 p "Thank you for everything, I'm really glad to have met you in my life..."
                 hide cath with dissolve
                 jump girl2_fail_end
-    
+   
 label music_event_3_part_2:
     scene bg home
     with fade
-
+ 
     "> A few days have passed since that day."
     play sound "Cell Phone Ring.mp3"
     "> Your phone rings."
@@ -1654,110 +1955,145 @@ label music_event_3_part_2:
         "Great! this will be a great opportunity for you!":
             p "It is good..."
             m "I'll see you at the music room then."
-            
+           
         "Oh I see, how do you feel about it?":
             p "Hmm... I don't know if I really want to go anymore."
             m "What about being the greatest violinist ever?"
             p "Well I just wanted to talk to you about it too. Wanna meet in the music room?"
             m "Sure."
-            
+           
     scene bg music_room
     with fade
-    show cath casual 7
+    show cath casual 7 with dissolve
     "> You arrive to the music room."
     "> You see her again against the window sill."
     m "Hey, Cathy."
+    show cath casual 8
     p "Hey..."
+    show cath casual 7
     m "Did you want to talk about it?"
     show cath casual 8
     p "I'll just get to the point: Do you want me to go or not?"
+    show cath casual 7
     m "Wait what? For the Academy? Why does my opinion matter?"
+    show cath casual 8
     p "Because it matters to me... because you're important to me."
+    show cath casual 7
     m "Oh..."
+    show cath casual 8
     p "So tell me, do you want me to stay or not?"
+    show cath casual 7
     menu:
         "I want you to stay":
             jump girl2_good_end
-            
+           
         "I think you should take the opportunity":
-            m "I completely support your decision." 
             show cath casual 14
+            m "I completely support your decision."
+            show cath casual 16
             p "Ohh... haha... Yeah, thanks for supporting me"
+            show cath casual 14
             m "Yeah, of course."
             "> She sighs."
+            show cath casual 16
             p "Well I guess this is what I asked for."
+            show cath casual 14
             m "Don't worry, I think you'll go really far with it. You'll be able to experience a lot of great things, especially living in the UK independently."
+            show cath casual 16
             p "Yeah you're right..."
+            show cath casual 14
             "> She seems frustrated about something."
+            show cath casual 16
             p "I don't get it! I haven't even known you for that long, but all the sudden you'll be out of my life. I tried so hard to be independent and do things on my own, and when I finally get the chance, I don't want it. I end up depending on you anyways. I even said 'yes', when you asked me out!"
+            show cath casual 14
             menu:
                 "We can still keep in touch":
                     m "Hmm... You didn't necessarily depend on me, you could always do it by yourself, I was just an accompanist. Besides we can still keep in touch."
+                    show cath casual 16
                     p "Yeah... that's a fair argument."
                     show cath casual 19
                     "> She shoves her face into your chest and latches around your torso."
+                    show cath casual 17
                     p "...Will you remember me?"
+                    show cath casual 15
                     m "What if told you I will?"
+                    show cath casual 17
                     p "That would make me happy... Well... Goodbye then..."
+                    show cath casual 7
                     m "This isn't 'goodbye', it's just a 'see you later'..."
                     jump girl2_bad_end
-                    
+                   
                 "Change your mind":
                     m "I'm just trying to not be selfish but believe me when I say I really do want you to stay. You're important to me and it would hurt to watch you leave."
                     jump girl2_good_end
-                    
+                   
         "You should make the decision yourself":
             "> Catherine seems frustrated."
             show cath casual 12
             p "I don't get it! I haven't even known you for that long, but all the sudden you'll be out of my life. I tried so hard to be independent and do things on my own, and when I finally get the chance, I don't want it. I end up depending on you anyways. I even said 'yes', when you asked me out!"
+            show cath casual 10
             m "This is finally your chance to be independent."
             m "This is what you wanted. What you worked for. You made it and you shouldn't let me hold you back."
+            show cath casual 12
             p "...Is it so wrong to have someone to lean on at least sometimes...I thought I could depend on you. We've been through a lot together...I really had feelings for you."
+            show cath casual 10
             m " I didn't mean it like that..."
+            show cath casual 12
             p "Forget it. You're right. I don't know what I was thinking. I'll go ahead with the academy. Thank you for everything. Let's both work hard on our separate paths."
+            hide cath with fade
             "> Catherine starts walking towards the door but stops at your side. She glances up towards you quickly but then looks away and continues out the door, leaving you behind. You're left alone standing in the silent music room and you have a feeling you won't be playing the piano for a long time."
             jump girl2_bad_end
-
+ 
 label girl2_failure:
     "GAME OVER"
     return
-    
+   
 label girl2_bad_end:
     "GAME OVER"
     return
-
+ 
 label girl2_good_end:
-    show cath casual 5
+    show cath casual 4
     "> She smiles."
+    show cath casual 5
     p "hahaha! You're funny."
     "> She continues to laugh at you, but you stand there confused at what just happened."
+    show cath casual 4
     m "I think I'm lost."
+    show cath casual 5
     p "I already declined the offer so whether you like it or not; it looks like you're going to be stuck with me."
+    show cath casual 4
     m "Oh hahaha... I thought you were asking seriously."
+    show cath casual 5
     p "Well I was asking, then I could figure out how much you like me hehe..."
+    show cath casual 4
     m "Charming haha..."
+    show cath casual 5
     p "So? what say you? Do I need to make you smell my perfume again?"
+    show cath casual 4
     m "Yeah... yeah, I do."
     "> She leans over then you feel something press against your cheek."
+    show cath casual 5
     p "Besides, I already said yes to you. You're my new dream. You're mine."
-    
+    hide cath with fade
+   
     "YOU WIN"
     return
-    
+   
 label girl2_fail_end:
     "GAME OVER"
     return
 #-----------------------------END OF MUSIC GIRL---------------------------------------------#
-
+ 
 #----------------------------START OF MARY--------------------------------------------------#
 #Mary first encounter ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 label home_ec_room:
     # show image of room
     # play sound of sizzling noise
-    
-    # you have chosen Mary as the girl 
+   
+    # you have chosen Mary as the girl
     $ stats.set_chosen_girl(1)
-    
+   
     "> In front of the Home-Ec Room."
     scene bg home_ec_room with fade
     "> As you enter the room, you hear a sizzling noise. The fragrances tickle your nose as you enter the room. Your sight is drawn to the centre of the room, to a girl. She looks up to acknowledge you and she gives a friendly, but shy smile."
@@ -1765,12 +2101,12 @@ label home_ec_room:
         xalign 0.7
         linear 1.0 xalign 0.5
     p "Hello, I haven't seen your face around, are you new?"
-    
+   
     m "Yeah, I just transferred here recently. Is this the cooking club?"
-    
+   
     show mary cook happy
     p "Yes! you've come to the right place."
-    
+   
     m "Where do I sign up?"
     show mary cook wonder
     p "Well... you kind of need to cook in this club. Show me what you can do first, and then we can talk about your membership."
@@ -1782,8 +2118,8 @@ label home_ec_room:
     $ str_check = stats.get_stats("str")
     $ int_check = stats.get_stats("int")
     $ cha_check = stats.get_stats("cha")
-    
-    menu: 
+   
+    menu:
         "Chocolate chip cookies (Need: Strength 1 & Charm 1)":
             hide mary cook wonder
             if str_check >= 1 and cha_check >= 1:
@@ -1794,50 +2130,50 @@ label home_ec_room:
                 "> You don't remember how to make this, time to guess!"
                 $ stats.set_food_choice(1)
                 jump girl_1_convo_1
-        
-
+       
+ 
         "Instant Ramen (No requirements)":
             hide mary cook wonder
             "> You decide that it’s would be more efficient to make what you know the best. Conveniently, you remember that you brought along a spare package of instant noodles to school with you. You pull it out of your backpack and proceed to open the plastic wrapping."
             $ stats.set_food_choice(2)
             jump girl_1_convo_1
-        
+       
         "Beef Carpaccio (Need: Strength 2)":
             hide mary cook wonder
             "> You decide that it would be best to go big or go home. If you managed to pull this off, she would be incredibly impressed. Unfortunately, you do not have the knowledge of the ingredients or techniques need to put this dish together. You improvise as you go."
-                
+               
             if str_check >= 2:
                 $ stats.set_food_choice(3)
                 jump girl_1_convo_1
             else:
                 $ stats.set_food_choice(4)
                 jump girl_1_convo_1
-            
+           
 label girl_1_convo_1:
-
+ 
     "> As you're working, you can't help notice the awkward silence settling in. You glance over to her and end up making eye contact. You could probably use this time to get to know her."
-
-    menu: 
+ 
+    menu:
         "Ask her for her name":
             show mary cook straight with fade
             m "Soooo... I actually never caught your name, my name's %(player_name)s."
             show mary cook shock
-            p "Oh, sorry about that!" 
+            p "Oh, sorry about that!"
             show mary cook smile
             p"I'm Mary, I am president of the cooking club. I'm also in my senior year."
             # change the name of p to Mary
             $ unknown_name = "Mary"
-            
+           
             menu:
                 "Ask her why she joined the cooking club":
                     show mary cook shy
                     p "It's just a hobby, nothing that serious."
-            
+           
         "Ask her why she joined the cooking club":
             show mary cook wonder with fade
             p "Why did I join the cooking club?"
             p "It's just a hobby, nothing that serious."
-            
+           
             menu:
                 "Ask her for her name":
                     m "Soooo... I actually never caught your name, my names %(player_name)s."
@@ -1847,7 +2183,7 @@ label girl_1_convo_1:
                     p "I'm Mary, I am president of the cooking club. I'm also in my senior year."
                     # change the name of p to Mary
                     $ unknown_name = "Mary"
-            
+           
     $ get_food = stats.get_food_choice()
     if get_food == 0 or get_food == 1:
         $ food = "cookies are"
@@ -1856,7 +2192,7 @@ label girl_1_convo_1:
     else:
         $ food = "beef carpaccio is"
     m "Looks like the %(food)s done!"
-    
+   
     $ get_food = stats.get_food_choice()
     if get_food == 0 or get_food == 3:
         jump made_good_food_1
@@ -1870,14 +2206,14 @@ label girl_1_convo_1:
         hide mary
         "> You peek at her eyes to get some idea of what she may be thinking, but it's not really discernible. You watch nervously as she takes a bite, wondering if you put in enough sriracha sauce to mask the overbearing taste of durian. After swallowing, she hesitates for a moment, and her eyes bulge. Violently she clasps her mouth and supports herself with the edge of the counter. She spits out your creation."
         jump made_bad_food_1
-        
+       
 label made_bad_food_1:
     show mary cook pout with fade
     p "It was... uh... not bad... "
     show mary cook shy
     $ girl1.add_closeness(-1)
     "> She forces a smile and pushes your food a few inches away"
-    
+   
     m "Sorry about that. Maybe you can teach me some basics?"
     show mary cook straight
     p "Hmmm... That sounds okay I suppose..."
@@ -1885,7 +2221,7 @@ label made_bad_food_1:
     p "Come by tomorrow and I'll teach you a little of what I know."
     "> You decide to head home for the day."
     jump end_day_1
-    
+   
 label made_good_food_1:
     show mary cook shock with fade
     p "It was good!"
@@ -1893,12 +2229,12 @@ label made_good_food_1:
     show mary cook smile
     "> Mary gives a warm smile"
     show mary cook happy
-    # change it to something without sous chef. No relevancy. Just be like Okay you've proven yourself. You are free to come by tomorrow after classes or something 
+    # change it to something without sous chef. No relevancy. Just be like Okay you've proven yourself. You are free to come by tomorrow after classes or something
     p "With your cooking skills, I'd be happy to let you into the club! Come by again tomorrow after class if you're free."
     "> You decide to head home for the day."
     jump end_day_1
     #jump standard_end_day #LINE TO JUMP TO STANDARD CYCLE CODE in day_cycle.rpy
-    
+   
 label end_day_1:
     scene bg player room with fade
     #show image of bedroom at night
@@ -1907,7 +2243,7 @@ label end_day_1:
     jump standard_day_cycle
 #    jump start_day_2
 # end of mary introduction ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+ 
 label start_day_2:
     scene bg hallway with fade
     "> Next morning."
@@ -1923,9 +2259,9 @@ label start_day_2:
     show thought with dissolve
     m "{i}Maybe I should drop by the club room. Mary might be there too.{/i}"
     hide thought with dissolve
-    
+   
     jump home_ec_day_2
-    
+   
 label girl1_check_1:
     $ closeness = girl1.get_closeness("Mary")
     $ day = stats.get_days()
@@ -1961,7 +2297,7 @@ label girl1_check_1:
             show mary casual happy
             p "There's this small cafe a couple blocks away from school. It's a nice, quiet place to relax every now and then."
             show mary casual smile
-            menu: 
+            menu:
                 "Sounds great!":
                     show mary casual laugh
                     p "Let's meet up afterwards then!"
@@ -1978,9 +2314,9 @@ label girl1_check_1:
             jump cafe_date1
     else:
         return
-        
+       
 label girl1_check_2:
-    
+   
     $ closeness = girl1.get_closeness("Mary")
     $ event_num = girl1.get_event("Mary")
     if not girl1check2:
@@ -1992,7 +2328,7 @@ label girl1_check_2:
             show mary casual straight with dissolve
             "> Mary is standing outside the club room. It looks like she was waiting for you."
             show mary casual shock
-            p "Ah!" 
+            p "Ah!"
             show mary casual happy
             p "There you are %(player_name)s! Are you free right now?"
             show mary casual wonder
@@ -2010,7 +2346,7 @@ label girl1_check_2:
             return
     else:
         return
-        
+       
 label girl1_check_3:
     $ closeness = girl1.get_closeness("Mary")
     $ event_num = girl1.get_event("Mary")
@@ -2033,16 +2369,16 @@ label girl1_check_3:
     else:
         return
 label home_ec_day_2:
-    
+   
     # check closeness
     call girl1_check_1
     call girl1_check_2
     call girl1_check_3
-    
+   
     $ str_check = stats.get_stats("str")
     $ int_check = stats.get_stats("int")
     $ cha_check = stats.get_stats("cha")
-    
+   
     scene bg home_ec_room with fade
     show mary cook wonder with dissolve:
         xalign 0.7
@@ -2057,7 +2393,7 @@ label home_ec_day_2:
             "> The muffins turned out great!"
             p "Wow! They're so fluffy, but the top is so crisp. Good job!"
             $ girl1.add_closeness(1)
-            
+           
         "Creme brule (Need: 2 Intelligence  & 2 Charm)":
             scene bg home_ec_room with fade
             if int_check >= 2 and cha_check >= 2:
@@ -2070,7 +2406,7 @@ label home_ec_day_2:
                 "> The Creme brule turned out completely black... You think that you burnt it..."
                 p "Uhh... is this even edible?"
                 $ girl1.add_closeness(-3)
-                
+               
         "Lasagna (Need: 2 Strength & 1 Charm)":
             scene bg home_ec_room with fade
             if str_check >= 2 and cha_check >= 1:
@@ -2081,13 +2417,13 @@ label home_ec_day_2:
                 "> You reach into the oven and pull out what looks like a pile of plain pasta."
                 p "I think you didn't use enough tomato sauce... it looks pretty dry."
                 $ girl1.add_closeness(-2)
-    
+   
     $ stats.increment_days()
-
+ 
 label day_3:
     scene bg hallway with fade
     "> Next morning."
-    m "Another day at school..." 
+    m "Another day at school..."
     scene bg classroom with fade
     "> You feel you're slowing getting more used to school life."
     scene bg hallway with fade
@@ -2096,24 +2432,24 @@ label day_3:
     $ stats.reset_classes()
     call make_schedule
     jump home_ec_day_3
-
+ 
 label home_ec_day_3:
-    
+   
     call girl1_check_1
     call girl1_check_2
     call girl1_check_3
-    
+   
     $ str_check = stats.get_stats("str")
     $ int_check = stats.get_stats("int")
     $ cha_check = stats.get_stats("cha")
-    
+   
     menu:
         "Cinnamon Buns (No reqs)":
             "> The Cinnamon Buns turned out great! The icing looks shiny and delicious!"
             p "Looks so good! Can't wait to try it."
             $ girl1.add_closeness(1)
-            
-
+           
+ 
         "Assorted Sashimi (Intelligence 3, Strength 3)":
             if int_check >= 3 and str_check >= 3:
                 "> The sashimi is perfectly sliced."
@@ -2123,7 +2459,7 @@ label home_ec_day_3:
                 "> The slices turned out oddly-shaped and uneven. You see pieces of bones and scales mixed in with the fish."
                 p "Uhh... It's okay. We can always get some more expensive fish."
                 $ girl1.add_closeness(-3)
-                
+               
         "Carbonara (Strength 2, Charm 2)":
             if str_check >= 2 and cha_check >= 2:
                 "> The pasta turned out perfectly cooked! The aroma of the sauce fills the air."
@@ -2133,12 +2469,12 @@ label home_ec_day_3:
                 "> The pasta looks like a pile of mush..."
                 p "I think the pasta is way too overcooked..."
                 $ girl1.add_closeness(-2)
-            
+           
     $stats.increment_days()
-
+ 
 label day_4:
     scene bg hallway with fade
-    m "Another day at school..." 
+    m "Another day at school..."
     scene bg classroom with fade
     "> Morning lectures weren't anything too difficult for you to understand."
     scene bg hallway with fade
@@ -2146,36 +2482,36 @@ label day_4:
     $ stats.reset_classes()
     call make_schedule
     jump home_ec_day_4
-    
+   
 label home_ec_day_4:
-
+ 
     call girl1_check_1
     call girl1_check_2
     call girl1_check_3
-    
+   
     $ str_check = stats.get_stats("str")
     $ int_check = stats.get_stats("int")
     $ cha_check = stats.get_stats("cha")
-
+ 
     p "I feel like I need some inspiration right now... I wish I could try some new food somewhere. Do you have any suggestions %(player_name)s?"
-
+ 
     menu:
         "Mac and Cheese (No reqs)":
             "> The cheese is perfectly melted and crisp on the surface of the casserole dish."
             p "I can't wait to try this! Looks fantastic!"
             $ girl1.add_closeness(1)
-            
+           
         "Beef Stroganoff (Strength 4, Charm 4)":
             if str_check >= 4 and cha_check >= 4:
                 "> The pasta turned out perfectly cooked! The aroma of the sauce fills the air."
                 p "That smells so good!"
                 $ girl1.add_closeness(2)
-
+ 
             else:
                 "> The pasta looks like a pile of mush..."
                 p "I think the pasta is way too overcooked..."
                 $ girl1.add_closeness(-2)
-                
+               
         "Lemon Meringue Pie (Intelligence 3, Charm 3)":
             if int_check >= 3 and cha_check >= 3:
                 "> The pie is firm and the meringue keeps it's form."
@@ -2185,9 +2521,9 @@ label home_ec_day_4:
                 "> The filling is too liquidy; it will not hold its shape."
                 p "I think that you overbaked the pie."
                 $ girl1.add_closeness(-2)
-                
+               
     $stats.increment_days()
-
+ 
 label return_to_which_day:
     $ day = stats.get_days()
     if day == 1:
@@ -2200,10 +2536,10 @@ label return_to_which_day:
         jump day_4
     else:
         jump day_5
-
+ 
 label day_5:
     scene bg hallway with fade
-    m "Another day at school..." 
+    m "Another day at school..."
     scene bg classroom with fade
     "> Morning classes are the same as usual. You can't help but feel that you're forgetting somethhing."
     scene bg hallway with fade
@@ -2211,7 +2547,7 @@ label day_5:
     $ stats.reset_classes()
     call make_schedule
     jump girl1_time_passed
-    
+   
 label girl1_failure:
     if stats.get_days == 5:
         "> It seems that too many days have passed and you still haven't gotten any closer to Mary."
@@ -2220,8 +2556,8 @@ label girl1_failure:
     #    jump mary_bad_end
     # failed, end game here
     return
-                
-
+               
+ 
 #the main daytime routine. //UNUSED
 #label daytime:
 #    $ stats.days += 1
@@ -2245,7 +2581,7 @@ label girl1_failure:
 #            $ stats.add_stats("str",1)
 #            $ temp = stats.get_stats("str")
 #            "strength is now [temp]."
-#        "Intelligence" if stats.get_stats("str") > 1: 
+#        "Intelligence" if stats.get_stats("str") > 1:
 #            $ stats.add_stats("int",1)
 #            $ temp = stats.get_stats("int")
 #            "intelligence is now [temp]."
@@ -2253,16 +2589,16 @@ label girl1_failure:
 #            $ stats.add_stats("cha",1)
 #            $ temp = stats.get_stats("cha")
 #            "charm is now [temp]."
-#    return 
-
-
-
+#    return
+ 
+ 
+ 
 #MARY DATE EVENTS ================================================================================================================================================
 #Mary - Cafe Date ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+ 
 label cafe_date1 :
-    if cafe_trigger == 0: 
-        
+    if cafe_trigger == 0:
+       
         if cafe_asked_count == 0 :
             scene bg cafe with fade
             "> At the cafe."
@@ -2271,7 +2607,7 @@ label cafe_date1 :
             "> The two of you spend some time casually talking at your table. A warm glow shines through the windows."
             show mary casual straight
             "> Mary is looking off to the distance, her face showing little expression."
-            
+           
             "> Your orders arrive at the table."
             show mary casual wonder
             p "Thank you!"
@@ -2288,63 +2624,63 @@ label cafe_date1 :
                 hide thought with dissolve
                 show mary casual grumpy
                 p "Excuse me? Where is this coming from all of a sudden? What does it matter to you anyways?"
-                
+               
                 "> Mary looks displeased."
-                    
+                   
                 " Maybe I should I should drop the topic..."
                 $ cafe_boyfriend = True
                 jump cafe_date1
-            
+           
             "C'mon, just tell me." if cafe_boyfriend:
                 hide thought with dissolve
                 $ cafe_asked_count += 1
                 $ girl1.add_closeness(-1)
                 p "Mmm... You really are persistent."
-                show mary casual sad   
+                show mary casual sad  
                 "> Mary looks very uncomfortable."
-                    
-                p "Oh yeah... I remembered there was something I had to do back home." 
+                   
+                p "Oh yeah... I remembered there was something I had to do back home."
                 show mary casual pout
                 p "Sorry to leave you so suddenly. Here's some money for the bill."
                 jump cafe_date_badending
-                    
-            
+                   
+           
             "What do you want to be?" :
                 hide thought with dissolve
                 $ cafe_asked_count += 1
                 show mary casual wonder
                 p "Hmm.. not sure. Medicine? Engineering? Something in those professional fields. What do you think?"
-                
+               
                 menu :
                     "Sounds great! I'll support you if you ever need help." :
                         $ girl1.add_closeness(-1)
                         show mary casual shy
                         p "Yeah... It does, doesn't it?"
-                        
+                       
                         "> Mary forces a smile. She lets out a small sigh."
                         show mary casual sigh
                         p "That's how life is supposed to go, right? As long as I can meet my mom's expectations. I guess that's what is most important. Cooking will always be just a hobby."
-                        
+                       
                         "> You sense a hint of frustration in her voice."
-                        
+                       
                         m "What do you mean?"
-                        
+                       
                         jump mary_backstory1
-                        
+                       
                     "What about being a chef?" :
                         $ girl1.add_closeness(2)
                         jump mary_backstory1
-                        
-                        
+                       
+                       
             "Do you usually come here?" if not cafe_before:
                 hide thought with dissolve
                 $ cafe_asked_count += 1
-                $ cafe_before = True 
+                $ cafe_before = True
                 $ girl1.add_closeness(1)
                 $ girl1.add_affection(1)
                 show mary casual happy
                 p "Yeah! I love coming here for the pastries and desserts!"
-                
+               
                 " > Mary looks more excited as she rapidly counts her fingers."
                 show mary casual laugh
                 p "Everything here is good, black forest cake, gingersnaps, cinnamon buns... "
@@ -2355,37 +2691,37 @@ label cafe_date1 :
                 p "Oops.. Haha, sorry. I'm usually more calm."
                 show mary casual sigh
                 "> Mary takes a therapeutic breath."
-                
+               
                 m "Hahaha, don't worry. It's really kind of cute."
                 show mary casual flustered1
                 "> Mary blushes. Her eyes drop to her latte."
                                          
                 jump cafe_date1
-                
-            "How are classes?" if not cafe_asked1: 
+               
+            "How are classes?" if not cafe_asked1:
                 $ cafe_asked_count += 1
                 $ cafe_asked1 = True
                 show mary casual wonder
                 p "Ehhh... not bad. Classes are the same old. Nothing that interesting."
-                
+               
                 jump cafe_date1
-    else: 
+    else:
         return
-            
-
+           
+ 
 label mary_backstory1 :
-    
+   
     $ cafe_trigger = 1
     show mary casual sad
     p "Hmm... I don't know. I feel that cooking is not the most stable career out there."
-    
+   
     m "So?"
     show mary casual pout
     p "Soooo... That's being pretty unrealistic. It's too selfish for me to just think about what I want to do."
     p "I mean, when I get older I have to think about supporting a family, and taking care of kids, so that they can go to university. At least that's what my mom thinks."
     show mary casual sigh
     "> Mary lets out a heavy sigh as her eyes roll back and she leans back into her chair. Her posture sinks and her eyes fall down to her cup."
-    menu: 
+    menu:
         "> Joke." :
            #$girl1.add_closeness(-1)
            m "Oh... Talk to me about it. Tell Dr.Fill about your problems."
@@ -2402,15 +2738,15 @@ label mary_backstory1 :
             m" That's rough. If you ever want to talk about it sometime, I'll be here."
             show mary casual shy  
             p "Thanks. Maybe another time."
-            
+           
             m "Yeah, anytime!"
     show mary casual shock
     p "Ahh.. It's getting pretty late, I should head home."
-    
+   
     m "Yeah, same. It was fun hanging out with you today!"
-    
+   
     jump cafe_date_goodending
-
+ 
 label cafe_date_goodending :
     scene bg cafe with fade
     show mary casual smile with dissolve
@@ -2419,10 +2755,10 @@ label cafe_date_goodending :
     p "I really enjoyed this. We should get together more often."
     "> You hold the door open for her and you guys part ways. As you're walking you look back to catch her peeking over her shoulders as well. You both wave at each other."
     "> The date was a success! You managed to get closer to Mary."
-    
+   
     #jump return_to_which_day
     jump standard_end_day
-
+ 
 label cafe_date_badending :
     $ girl1.add_closeness(-1)
     scene bg cafe with fade
@@ -2435,40 +2771,40 @@ label cafe_date_badending :
     "> You were unsuccessful in this date."
     jump mary_bad_end
     #jump return_to_which_day
-    
+   
     #cue bad game ending?
-
-    
+ 
+   
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #Mary - Restaurant Date
-
+ 
 label restaurant_date1 :
     scene bg restaurant with fade
     "> At the restaurant."
     if not rest1_asked2 and not rest1_asked3 :
-        
+       
         "> The hostess leads you to your table, and both of you get in each other's way trying to decide where each of you will sit. As you two take your respective seats, you chuckle to each other."
         show mary casual shy with dissolve
-        p "Wow, haha.. This place sure is fancy." 
+        p "Wow, haha.. This place sure is fancy."
         show thought behind mary
         "> Awkward silence follows."
         "> Mary looks a little flustered."
         "> QUICK! SAY SOMETHING TO HER YOU FOOL!"
         hide thought behind mary
     menu:
-        "You look very pretty today." if not rest1_asked2 : 
+        "You look very pretty today." if not rest1_asked2 :
             $ rest1_asked2 = True
             $ girl1.add_closeness(1)
             $girl1.add_affection(1)
             show mary casual flustered2
             p "O-Oh."
             show mary casual flustered1
-            "> Mary blushes and can't seem to look you in the eye. You hope this is a good sign?" 
+            "> Mary blushes and can't seem to look you in the eye. You hope this is a good sign?"
             "> Your compliment doesn't do anything to spark any conversation, rather, she seems even more flustered."
             jump restaurant_date1
-        "So.. What else do you like about cooking?" : 
-            jump restaurant_date2 
-            
+        "So.. What else do you like about cooking?" :
+            jump restaurant_date2
+           
         "We look like a real couple!" if not rest1_asked3 : #no effect
             $ rest1_asked2 = True
             show mary casual confused
@@ -2477,16 +2813,16 @@ label restaurant_date1 :
             show mary casual pout
             p "We're not... Sorry, I just don't think we're on the same page.."
             "> Mary looks a little shy about it but not annoyed or anything. She seems even more flustered than before."
-            
+           
             jump restaurant_date1
-            
+           
 label restaurant_date2:
     if not rest2_asked1:
         show mary casual shy
         "> The corners of her mouth raise ever so slightly, but her eyes wince a little."
-            
+           
         p "I've been really curious about ever since I was little. Cooking made me feel some sort of wonder and eventually it just grew into a passion."
-            
+           
         "> She shifts her glass back and forth. Her eyes follow the glass. She lets out a shallow sigh."
         show mary casual wonder    
         p "Something about cooking makes me feel unique, you know?"
@@ -2507,20 +2843,20 @@ label restaurant_date2:
             m "Just a hobby? But you're the president of the cooking club!"
             show mary casual shy
             p "Titles don't really mean a whole lot to me. Besides, you've never even tried my cooking."
-            
+           
             menu :
                 "> Be bold." : #stat requirement to say? (+2)
                     $ girl1.add_closeness(2)
                     $ girl1.add_affection(1)
-                    m "I feel like there's a pretty easy solution to that." 
+                    m "I feel like there's a pretty easy solution to that."
                     show mary casual smile
                     "> Mary leans forward. Her eyes are on you as she smirks."
                     p "Well don't expect much if I cook all by myself."
-                    
+                   
                     m "Haha, I doubt I'll be much help to you. You're on your own!"
                     show mary casual laugh
                     "> The two of you joke together. Mary playfully punches your shoulder as the two of you roll back laughing in your seats."
-                
+               
                 "> Joke." : #-1
                     $ girl1.add_closeness(-1)
                     m "Yeah I guess. I mean, how many people even ran for president anyway?"
@@ -2528,7 +2864,7 @@ label restaurant_date2:
                     p "Yeah, right..?"
                     show mary casual shy
                     "> Mary forces a smile."
-                    
+                   
                 "> Be polite":
                     m "You've tried mine. We should make something together, and you can teach me a few things."#(+1)
                     $ girl1.add_affection(1)
@@ -2538,11 +2874,11 @@ label restaurant_date2:
                     "> Mary smiles as you two think of things to make together."
             hide mary with dissolve        
             jump restaurant_date2
-                
+               
         "> Question." : #backstory opener
             m "It seems like cooking means a lot more to you. You seem upset. What's wrong?"
             jump mary_backstory2
-            
+           
 label mary_backstory2:
     "> Mary rolls her eyes, she sits back in her chair, while letting her posture sink and her sight drops to her glass."
     show mary casual pout
@@ -2551,43 +2887,43 @@ label mary_backstory2:
     p "I know she means well, and it's not like she's being mean about it. I just feel this pressure not to disappoint her. I don't even know why I'm telling you all of this. I've only known you for a couple of days. Sorry."
     m "Honestly Mary, don't worry I'm completely fine with it. Have you ever told her how you feel about cooking?"
     show mary casual wonder
-    p "I've sort of suggested being a chef, but she avoids really talking about it much. she redirects the conversation, or tells me that 
+    p "I've sort of suggested being a chef, but she avoids really talking about it much. she redirects the conversation, or tells me that
        “It would be better to keep it as a hobby.”"
     show mary casual sigh
     "> Mary pauses briefly."
     show mary casual sad
-    p "... My dad was a chef, and my mom loved him. She would sometimes get worried that he was a little too invested in his passion for cooking." 
+    p "... My dad was a chef, and my mom loved him. She would sometimes get worried that he was a little too invested in his passion for cooking."
     p " During holidays he would bring me into the kitchen and teach me different things about cooking. I really love those moments. It's why I fell in love with cooking."
     m "What about your dad? what does he think?"
     show mary casual sigh
     "> Mary stops for a moment. She takes a prolonged deep breath."
     show mary casual sad
-    p "He would have said, “Do it!” He was the nonchalant character that brought life to the family." 
+    p "He would have said, “Do it!” He was the nonchalant character that brought life to the family."
     p "My mom and dad were a strange couple and they both worked really hard. It's funny because my mom was the bread-winner, but my dad was the one who baked the bread. Hahaha... But he's not here to say that anymore..."
-    
+   
     m "I'm really sorry to hear that..."
     show mary casual shy
-    p "Thanks. I was about 14 at the time, so I've already come to accept it..." 
+    p "Thanks. I was about 14 at the time, so I've already come to accept it..."
     show mary casual sad
     p "Dad really loved his work. Sometimes he would spend 16 hours a day at his restaurant. "
-    p "The doctors said that he needed to take more breaks or he may suffer from stress, but my dad was the kind of guy who wouldn't accept that." 
+    p "The doctors said that he needed to take more breaks or he may suffer from stress, but my dad was the kind of guy who wouldn't accept that."
     p "One day he had a heart attack. It turned out that the stress caused high blood pressure and lead to heart failure."
-
+ 
     p "Mom and I were devastated. Cooking for me lets me keep a memory of him living. I think for my mom, seeing me cook, just reminds her of a passion that took dad away."
     show thought with dissolve
     m "{i}What should I say to her?{/i}"
     hide thought with dissolve
     menu: # choices should not decrease stats at this point of date
         "Keep cooking a secret." :
-            
+           
             m "You should continue pursuing a professional career to keep your mom happy. But try to keep cooking as a secret hobby for as long as possible so you can keep doing what you love."
             show mary casual shy
             "> Mary smiles a little, but doesn't seem satisfied."
-            
+           
             p "Haha, maybe you're right. But having to keep this a secret forever doesn't seem possible."
             show mary casual sad
-            "> Mary goes silent for a moment. She doesn't seem to be feeling well." 
-            
+            "> Mary goes silent for a moment. She doesn't seem to be feeling well."
+           
         "Don't listen to your mom." :
             m "It's really considerate of you to try and make your mom happy, but I think you deserve to be happy too, even if it means going against her wishes."
             show mary casual grumpy
@@ -2596,19 +2932,19 @@ label mary_backstory2:
             p "...Sorry. I know you're just trying to help. That means a lot to me. Thanks."
             show mary casual sad
             "> Mary goes silent for a moment."
-            
+           
         "Talk to your mom about it.":
             $ girl1.add_closeness(2)
             m "It sounds like you're pretty torn and I think expressing your feelings towards your mom would be a pretty good step forward. She probably wants you to be as happy just as much as you want her to be happy."
             show mary casual straight
             "> Mary looks contemplative. Her expression turns sour."
             show mary casual grumpy
-            p "No...I can't. You don't know my mom. She would never understand. This is important to me." 
+            p "No...I can't. You don't know my mom. She would never understand. This is important to me."
             show mary casual sad
             p "What if I end up losing all of it? I wouldn't be able to..."
-            
+           
             "> Mary looks like she's on the verge of tears."
-            
+           
             p "..I'm sorry."
     hide mary with dissolve
     show thought with dissolve
@@ -2624,50 +2960,50 @@ label mary_backstory2:
     m "{i}Was she really okay..?{/i}"
     jump standard_end_day
 #    jump return_to_which_day
-            
+           
 #label restaurant_ending:
 #label restaurant_badending:
-    
+   
 #Mary - Home Date~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 label girl1_home_date:
     scene bg hallway with fade
-    if reassure:
-        show mary casual straight with dissolve:
+    show mary casual straight with dissolve:
             xalign 0.7
             linear 1.0 xalign 0.5
+    if reassure:
         m "Hey Mary. I remember before you mentioned that I never tasted your cooking. If it's okay with you, I'd really like to try some today."
-        show mary casual wonder 
-        p "Oh! so you did remember!" 
+        show mary casual wonder
+        p "Oh! so you did remember!"
     else:
         m "Hey Mary. After all our conversations about cooking, it's surprising that I haven't actually tried any of your cooking yet."
         m "I'd really like to try some as soon as I can."
-        
+       
         "> Mary seems surprised as your sudden request."
-        
+       
         p "Hmm.. that is true."
         p "How about today then? You're free right?"
-        
+       
         m "Of course."
     show mary casual shy    
     "> Mary smiles shyly."
-
+ 
     p "Then.. Instead of cooking it here, Why don't we go to my house? There's plenty of ingredients there."
-
+ 
     m "S-sure."
-    
+   
     "> A nervous tension suddenly fills the air."
     #fade out
     hide mary with dissolve
     scene bg sidewalk with fade
-    "> You and Mary head back to her place after club activities. You feel tenser than usual, despite the fact you've recently spent a lot of time with her." 
+    "> You and Mary head back to her place after club activities. You feel tenser than usual, despite the fact you've recently spent a lot of time with her."
     "> In the corner of your eye you catch her peeking slightly in your direction, but she immediately redirects her vision forward after being noticed."
     show mary casual happy
     p "It's a really beautiful day today isn't it?"
-    
+   
     "> It seems that Mary's trying her hardest to cope with the awkwardness."
     hide mary with dissolve
     scene bg outside_house with fade
-    "> As you approach her house, your eyes follow her as she leaps ahead." 
+    "> As you approach her house, your eyes follow her as she leaps ahead."
     #Insert Leapsahead.png
     show leapsahead with fade
     "> She moves forward and her hair swings, pushing its scent towards you."
@@ -2675,21 +3011,21 @@ label girl1_home_date:
     scene bg house with fade
     show mary causal wonder with dissolve
     p "You look like you're lost."
-
+ 
     m "E-ehh. My bad."
     "> You look around her house, a bit flustered that you don't know how to recover smoothly."
     show mary casual laugh
     p "Hehehe, the kitchen is this way."
     hide mary with dissolve
-    "> She leads you into the kitchen and immediately moves along the room in a rehearsed efficiency, preparing her supplies." 
+    "> She leads you into the kitchen and immediately moves along the room in a rehearsed efficiency, preparing her supplies."
     "> You pick up some newspapers in an attempt to help."
     show mary casual shock with dissolve
     p "No, not there!"
     "> She pulls the papers out of your hands and sets them aside. She turns to you."
-    show mary casual happy 
+    show mary casual happy
     p "Alright! Everything is set! What do you want to eat?"
     call girl1_home_date_choice
-
+ 
     show thought with dissolve
     "> You look around the room; it's pretty nice. What should you do?"
     hide thought with dissolve
@@ -2705,7 +3041,7 @@ label girl1_home_date:
         "Look around for any photo albums that she may have.":
             show thought with dissolve
             "> You stray into the hall and walk along a line of portraits along the wall, many of them focused around Mary as a child."
-            "> Many of the photos appear almost bleak, with little expression on her face." 
+            "> Many of the photos appear almost bleak, with little expression on her face."
             "> Soccer photos, class photos, academic achievement photos, she hardly ever smiles."
             "> You pick one with her flour all over her face as a kid, her glasses caked in powder. Her smile was the only distinguishable feature."
             hide thought with dissolve
@@ -2720,8 +3056,8 @@ label girl1_home_date:
             show mary cook flustered1
             "> Her cheeks grow red."
             show mary cook flustered2
-            p "D-don't say things like that!" 
-            "> Despite saying that, it was obvious she was forcing herself to hold back her smile." 
+            p "D-don't say things like that!"
+            "> Despite saying that, it was obvious she was forcing herself to hold back her smile."
             show mary cook grumpy
             p "I-I think you should stay put in the kitchen from now on!"
             menu:
@@ -2730,10 +3066,10 @@ label girl1_home_date:
                     hide thought with dissolve
                 "Why is this the only happy photo?":
                     show mary cook wonder
-                    p "I don't really know. That was the first time my mom let me bake all by myself. I ended up dropping the flour bag and making a huge mess all over the place." 
+                    p "I don't really know. That was the first time my mom let me bake all by myself. I ended up dropping the flour bag and making a huge mess all over the place."
                     p "As for the other photos, I was just never excited about those things."
                     show mary cook sad
-                    p "My mom really wanted me to get good grades, so I was told avoid any extra-curricular activity because she felt they would get in the way." 
+                    p "My mom really wanted me to get good grades, so I was told avoid any extra-curricular activity because she felt they would get in the way."
                     p "{i}'Mary you have to do well so I can get into a good university and find a stable job.'{/i}"
                     p "{i}'Marry a good husband, raise a family.'{/i} I've heard it all.. "
                     show mary cook pout
@@ -2762,7 +3098,7 @@ label girl1_home_date:
                             p "Y-yeah! Of course!"
                     "> Mary grabs on to your arm and brings you back into the kitchen."
                     jump girl1_home_date_kitchen
-            
+           
 label girl1_home_date_kitchen:
     scene bg house with fade
     show mary cook happy with dissolve:
@@ -2789,7 +3125,7 @@ label girl1_home_date_kitchen:
     p "Sorry!"
     show mary cook pout
     "> She looks up at you for a brief moment and catches your gaze."
-    m "Don't apologize. It's alright." 
+    m "Don't apologize. It's alright."
     show mary cook shy
     "> Her eyes widen slightly, but immediately her face turns back to focus on the preparations."
     "> You notice a bead of sweat trail down from her temple to the front of her neck. Her cheeks flooded with red."
@@ -2797,9 +3133,9 @@ label girl1_home_date_kitchen:
     show mary cook flustered2
     p "Uhh.. It's getting a little warm in here. How hot did you preheat that oven exactly?"
     show mary cook flustered1
-    "> Mary turns to the oven." 
+    "> Mary turns to the oven."
     show mary cook flustered2
-    p "Oh! 350 degrees. Perfect! Uhhm.. I guess the weather is pretty today." 
+    p "Oh! 350 degrees. Perfect! Uhhm.. I guess the weather is pretty today."
     "> Frantically, she tries to clear her sweat, however she knocks the bowl of flour off the counter top."
     show mary cook shock
     p "OH NO!"
@@ -2819,22 +3155,22 @@ label girl1_home_date_kitchen:
             p "Haha. So dependable."
             "> After clearing the mess, you head into the pantry and find an extra-large bag of flour up on the top shelf."
             hide mary with dissolve
-    show thought with dissolve     
+    show thought with dissolve    
     "> The two of you struggle with the heavy bag as you try to get it. The shifting of the bag causes it to tip over."
     "> Unable to realize that the top of the bag was unsealed, a torrent of flour rains down and covers both your faces."
     m "You got some... Umm.. flour all over you."
-
+ 
     #says both of you have flour all over your faces , but u only wipe off hers . Maybe put a text saying u wipe your face first
     "> You brush the flour off her shoulders, trying to avoid making awkward physical contact."
     p "Well... I could only assume. My lenses are completely covered. I can't see a thing."
-                
+               
     m "Here I got it for you."
     hide thought with dissolve
     #Insert flour image
     show mary_flour with fade
-    "> You lean in closer as you lift the frames off her eyes." 
+    "> You lean in closer as you lift the frames off her eyes."
     "> Her brown eyes fixated on you. Unprepared, you find your faces lingering mere inches apart."
-
+ 
     menu:
         "{b}JUST DO IT!!{/b}":
             "> You decide to take the relationship further."
@@ -2843,15 +3179,15 @@ label girl1_home_date_kitchen:
             "> ..."
             "> ... You feel something press against your lips..."
             "> ..."
-            "> Something doesn't feel right..." 
+            "> Something doesn't feel right..."
             "> As you open your eyes you find your mouth, cupped by her hand."
             #SPLIT HERE BASED ON AFFECTION
             #change back to kitchen scene
             hide mary_flour with fade
-            if girl1.affection >= 7:
+            if girl1.affection >= 5:
                 show mary cook smile with dissolve
                 "> Mary's eyes still wide open, smiling."
-                show mary cook happy 
+                show mary cook happy
                 p "I may not be able to see that well without glasses, but I'm not blind."
                 show mary cook shy
                 p "Don't get me wrong, I can't deny that I have feelings for you, but let's take it slow."
@@ -2862,7 +3198,7 @@ label girl1_home_date_kitchen:
                 p "You know, you have pretty soft hands. I think I'll hold on to them for a while."
                 "> Both your hands begin to offset a little. You decide not to resist and allow your fingers to interlock."
                 jump mom_drama
-                
+               
             else:
                 show mary cook sad with dissolve
                 "> Mary's eyes are half-opened. A look of regret covers her face."
@@ -2881,7 +3217,7 @@ label girl1_home_date_kitchen:
                 p "At least we had fun together..."
                 m "..."
                 p "A relationship right now would be too distracting for me.... "
-                p "Also.. I need to focus on other things, like school..." 
+                p "Also.. I need to focus on other things, like school..."
                 p "...It's going to be hard to go back to the way things were before."
                 m "... Yeah."
                 "> You both get up."
@@ -2891,13 +3227,13 @@ label girl1_home_date_kitchen:
                 hide mary with dissolve
                 show thought with dissolve
                 scene bg outside_house with face
-                "> Mary leads you to the exit. You can't think of much to say without making it more awkward, so you just keep walking." 
+                "> Mary leads you to the exit. You can't think of much to say without making it more awkward, so you just keep walking."
                 "> You look back. The door is closed."
                 m "{i} I guess that's it, huh...? {/i}"
-                
+               
                 jump mary_bad_end
                 #return
-                
+               
 label girl1_home_date_choice:
     menu:
         "Deep-fried sushi" :
@@ -2915,7 +3251,7 @@ label girl1_home_date_choice:
                     "> Mary seems intimidated by the challenge but finds her resolve."
                     p "I'll do my best!"
                     "> Mary seems motivateds all of a sudden."
-                    #positive/neutral 
+                    #positive/neutral
         "Instant noodles":
             show mary casual grumpy
             p "C'mon..are you taking my offer seriously here?"
@@ -2925,7 +3261,7 @@ label girl1_home_date_choice:
         "Triple Layer Chocolate Cake":
             show mary casual wonder
             "> She seems surprised by your request"
-
+ 
             p "I thought you'd choose something more difficut. Why did you choose a cake?"
             menu:
                 "I didn't want you to work too hard.":
@@ -2934,7 +3270,7 @@ label girl1_home_date_choice:
                 "So we can share it when you're done.":
                     show mary casual laugh
                     p "Haha, Are you usually this corny? But alright, if that's what you want."
-                    #neutral 
+                    #neutral
                 "It has a special meaning.":
                     $ girl1.add_affection(1)
                     p "Meaning?"
@@ -2945,30 +3281,30 @@ label girl1_home_date_choice:
                     p "Were you always this corny?"
                     "> Mary seems pleased by your thought."
                     show mary casual happy
-                    p " Alright, I'll get started then." 
-
+                    p " Alright, I'll get started then."
+ 
                     #positive
     hide mary with dissolve
     "> Mary begins cooking the dish and you're left sitting in her living room alone."
-    return 
-    
+    return
+   
 label mom_drama:
     #mom drama stuff
     scene bg house with fade
     show thought with dissolve
     "> You hear the door bell ring. An unfamiliar voice calls from the door."
-
+ 
     mom "Hey Mary, I'm home from my business trip!"
     hide thought with dissolve
     show mary cook shock with dissolve
     p "What?! She's home a day early! Why?!"
-    
+   
     "> Mary looks around at all the cooking equipment and ingredients splayed out on the counters and looks helpless."
     "> She's visibly panicking and attempts to make a move to put things away but it's futile. "
     hide mary with dissolve
     show mom 3 with dissolve
     "> You don't have much time to react before her mom comes into the kitchen."
-    
+   
     "> Her mom spots you."
     show mom 2
     mom "Who is this, Mary? Why are you guys alone together?"
@@ -2995,7 +3331,7 @@ label mom_drama:
     show mom 5
     "> Her mom, is taken aback for a moment but then her voice is heightened."
     show mom 12
-    mom "Don't you remember what happened to your father? Why would you do this? I can't let that happen to you, Mary, I can't lose both of you like that." 
+    mom "Don't you remember what happened to your father? Why would you do this? I can't let that happen to you, Mary, I can't lose both of you like that."
     show mom 11
     p "But.."
     "> Mary looks down and appears defeated."
@@ -3008,7 +3344,7 @@ label mom_drama:
     menu:
         "Leave the house":
             show thought with dissolve
-            "> You stand there for a moment and Mary's look of disappointment and sadness is enough to tell you to that you've failed." 
+            "> You stand there for a moment and Mary's look of disappointment and sadness is enough to tell you to that you've failed."
             "> You move your legs mechanically out of the kitchen and out of the house."
             "> You tried your best but it wasn't enough. You probably won't be able to spend as much time with Mary anymore..."
             jump mary_bad_end
@@ -3032,10 +3368,10 @@ label mom_drama:
             show mom 9
             show thought with dissolve
             "> Mary's mom's eyes are full of anger and at the same time hurt. You feel beads of sweat forming on your neck as you feel the pressure. "
-            "> Your resolve is cracking under the weight of her glare and aura." 
+            "> Your resolve is cracking under the weight of her glare and aura."
             "> You glance over to Mary, whose eyes are wide and full of tears. "
             "> Seeing Mary strengthens your resolve and you look back to her mom."
-            menu: 
+            menu:
                 "Ease into it":
                     hide thought with dissolve
                     m "Well..I think there's a misunderstanding between you and Mary right now...You're not really on the same page. "
@@ -3057,16 +3393,16 @@ label mom_drama:
                             show mom 9
                             m "..."
                             show mom 8
-                            mom "You might mean well, but please. You're not helping anyone here. Bringing up past pain will not help Mary now. Just leave." 
+                            mom "You might mean well, but please. You're not helping anyone here. Bringing up past pain will not help Mary now. Just leave."
                             show thought with dissolve
                             "> You stand there for a moment and Mary's look of disappointment and sadness is enough to tell you that you've failed."
                             "> You move your legs mechanically out of the kitchen and out of the house."
                             hide thought with dissolve
                             hide mary with dissolve
                             scene bg outside_house with fade
-                            "> You've tried your best but it wasn't enough." 
+                            "> You've tried your best but it wasn't enough."
                             "> You probably won't be able to spend as much time with Mary anymore.."
-                            
+                           
                             jump mary_bad_end
                             #jump bad ending
                         "Talk about Mary":
@@ -3075,10 +3411,10 @@ label mom_drama:
                 "Be blunt":
                     hide thought with dissolve
                     jump be_blunt
-                
-            
+               
+           
 label be_blunt:
-    
+   
     m " To be straightforward, Mary's the president of the cooking club at school and she's been cooking for a long time behind your back."
     "> Mary's mom sharply turns to Mary in disbelief and Mary cowers even more."
     show mary cook shock at left
@@ -3086,72 +3422,72 @@ label be_blunt:
     show mary cook pout at left
     m "It's exactly how it looks."
     show mom 12
-    mom "Mary..Why haven't you been listening to me? You know exactly why I forbid you to cook." 
+    mom "Mary..Why haven't you been listening to me? You know exactly why I forbid you to cook."
     show mom 11
-    m "She does it because it's her passion." 
+    m "She does it because it's her passion."
     m "A passion that was fostered by your husband. She does it to honor him and ultimately, because it makes her happy. Is that really so bad?"
     show mom 9
     "> Mary's mom stares at you for a moment."
     show mom 8
     mom "Do you think I don't know what's best for my own daughter?"
     show mom 9
-    m "Please, I'm not trying to undermine you or your ideals." 
-    m "But I think it'd be great for both you and Mary if you would even just consider the idea of letting her cook as a hobby and potentially even going further as a career." 
+    m "Please, I'm not trying to undermine you or your ideals."
+    m "But I think it'd be great for both you and Mary if you would even just consider the idea of letting her cook as a hobby and potentially even going further as a career."
     show mom 11
-    mom "She..she can't. Or else she'll end up just like her father." 
+    mom "She..she can't. Or else she'll end up just like her father."
     show mom 12
     "> Her eyes seem less hard now, and more sad."
-    m "In some ways. She'll definitely be happier. More passionate. I can see why you worry about her...I do too." 
+    m "In some ways. She'll definitely be happier. More passionate. I can see why you worry about her...I do too."
     "> You look over at Mary again and your eyes lock. She smiles a little bit."
-    m" But you should trust her to know her limits - I know I've come to." 
+    m" But you should trust her to know her limits - I know I've come to."
     m "She's smart, she's reasonable. she knows her abilities and her talents. Honestly, she's great. Limiting her is putting on more stress than not. "
     "> Mary's mom is silent. She then looks over to Mary."
     show mom 11
     mom "Is..all of this true?"
     show mom 12
     show mary cook sad at left
-    p "Yes, mom...I've always loved cooking and I haven't stopped even if dad has died." 
+    p "Yes, mom...I've always loved cooking and I haven't stopped even if dad has died."
     p "I'm sorry..I never wanted you to find out like this.."
     mom "..."
     p "Please mom..This is what I really want to do. I know you loved dad because he was very passionate as well.."
     "> Mary's mom looks away from the both you and Mary."
     show mary cook pout at left
     show mom 6
-    mom "I didn't mean to drive a wall between us. You really kept all of this a secret from me?" 
+    mom "I didn't mean to drive a wall between us. You really kept all of this a secret from me?"
     show mom 5
     show mary cook cry at left
     p "I was too scared..I didn't want to hurt you too. But this is who I am.."
     "> Mary's mom turns around and embraces Mary."
     show thought with dissolve
-    mom "I'm sorry." 
-    "> It seems like she's unable to say anything else as her voice starts wavering. Mary is crying too." 
+    mom "I'm sorry."
+    "> It seems like she's unable to say anything else as her voice starts wavering. Mary is crying too."
     "> You decide that you shouldn't intrude and you leave the room."
     "> ..."
     hide thought with dissolve
     hide mary with dissolve
     hide mom with dissolve
     scene bg outside_house with fade
-    "> Time passes as you wait outside. You wonder if you could have said anything else, but it's up to Mary now." 
+    "> Time passes as you wait outside. You wonder if you could have said anything else, but it's up to Mary now."
     "> After a while, the door opens behind you and you turn to see Mary coming out."
     show mary cook sigh with dissolve:
         xalign 0.8
         linear 1.0 xalign 0.5
-    m "Hey. You okay?" 
+    m "Hey. You okay?"
     show mary cook shy
     "> Mary nods and a huge smile breaks out on her face."
     show mary cook happy
     p "She's letting me continue to cook! Can you believe it?"
     p "We talked it over and she's letting me have my shot at being a chef like my dad! She said I had to keep my grades up but that's all fine."
     show mary cook laugh
-    p "I'm so glad! It's all thanks to you, %(player_name)s. You stood up for me." 
-    m "I wanted to protect you." 
+    p "I'm so glad! It's all thanks to you, %(player_name)s. You stood up for me."
+    m "I wanted to protect you."
     show mary cook smile
     "> Mary smiles even more and hugs you."
     p "I'm so thankful for you..thank you so much.."
     "> You give her a hug back and you both relish in each other's happiness."
     jump mary_good_end
-
-
+ 
+ 
 #Endings ================================================================================================================================================================================
 label mary_good_end:
     scene bg home_ec_room with fade
@@ -3173,13 +3509,13 @@ label mary_good_end:
     hide mary_kiss with dissolve
     scene bg hallway with fade
     show thought with dissolve
-
+ 
     "> Days pass and your relationship with Mary continues to prosper."
     "> You enjoy the rest of your high school life together with your girlfriend."
     "> Congratulations %(player_name)s!"
     #game end
     #return #to end game
-    
+   
 label mary_bad_end:
     scene bg home_ec_room with fade
     "> At school the next day."
@@ -3193,18 +3529,18 @@ label mary_bad_end:
     "> Who knows? Maybe it'll be better after highshool...?"
     "> Better luck next time, %(player_name)s."
     #return #to end game
-
+ 
 #routine for raising stats
 label raisestat:
     call randomquiz
     menu:
         "What Stat to raise"
-
+ 
         "Strength":
             $ stats.add_stats("str",1)
             $ temp = stats.get_stats("str")
             "strength is now [temp]."
-        "Intelligence" if stats.get_stats("str") > 1: 
+        "Intelligence" if stats.get_stats("str") > 1:
             $ stats.add_stats("int",1)
             $ temp = stats.get_stats("int")
             "intelligence is now [temp]."
@@ -3212,6 +3548,4 @@ label raisestat:
             $ stats.add_stats("cha",1)
             $ temp = stats.get_stats("cha")
             "charm is now [temp]."
-    return 
-
-
+    return
