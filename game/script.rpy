@@ -359,6 +359,7 @@ init python:
     def stats_overlay():
         ui.image("overlay.png")
         #ui.text(("Days Elapsed:"+str(stats.get_days())),size=24)
+        ui.image("overlay.png")
         closeness = 0
         if stats.chosen_girl == 1:
             closeness = girl1.get_closeness()
@@ -1477,7 +1478,7 @@ label music_event_1_part_3:
     stop music fadeout 1.0
     hide cath with dissolve
     menu:
-        "Beethoven violin Sonata No.9 Op.47 \"Kreutzer\"":
+        "Beethoven Violin Sonata No.9 Op.47 \"Kreutzer\"":
             m "Let's play Beethoven Violin Sonata No.9 Op.47 \"Kreutzer\"." #ADD MUSIC
             $ girl2_music_choice = 1
             play music "Beethoven.mp3" fadein 1.0
@@ -1629,7 +1630,7 @@ label music_event_2_part_2:
     scene bg music_room
     with fade
     "> You arrive outside of the music room. The suit you're wearing makes you feel stiff and limited in mobility."
-    "I think I look okay, I can't tell with only the moonlight"
+    m "{i}I think I look okay, I can't tell with only the moonlight{/i}"
     "> You receive a text from Catherine."
    
     scene bg balcony
@@ -1669,7 +1670,7 @@ label music_event_2_part_2:
             p "Haven't you been listening at all?"
             show cath dress 1
             show thought with dissolve
-            m "{i}Oh crap that wasn't smart of me.{/i}"
+            m "{i}Oh crap, that wasn't smart of me.{/i}"
             hide thought with dissolve
             menu:
                 "Reassure her":
@@ -1770,7 +1771,7 @@ label outta_girl2_while_loop2:
         "Hug her":
             $ girl2.add_affection(1)
             m "Yeah, good job!"
-            "> - You hug her. You intended to have a quick hug, but it lingers for a while longer."
+            "> You hug her. You intended to have a quick hug, but it lingers for a while longer."
             show cath dress 4
             p "I'm really thankful for you helping me out."
             show cath dress 6
@@ -1778,7 +1779,7 @@ label outta_girl2_while_loop2:
             $ girl2.add_affection(-1)
             m "You did it, you're sure to get in now! I'm glad it went well."
             show cath dress 2
-            p "Oh... yeah right. thanks..."
+            p "Oh yeah... right. Thanks..."
             show cath dress 1
            
    
@@ -1819,7 +1820,7 @@ label music_event_3:
     show cath casual 14
     m "So wait, you're telling me that you can get on a stage in front of hundreds of people, but you can't sing in front of me?"
     show cath casual 17
-    p "IT'S DIFFERENT!  The violin produces such elegant music."
+    p "IT'S DIFFERENT! The violin produces such elegant music."
     show cath casual 14
     menu:
         "Reassure her":
@@ -1831,7 +1832,7 @@ label music_event_3:
             m "PROMISE."
             "> She rolls her eyes."
             show cath casual 16
-            p " Don't say I didn't warn you."
+            p "Don't say I didn't warn you."
             show cath casual 14
            
         "Joke":
@@ -1852,7 +1853,7 @@ label music_event_3:
     scene bg karaoke
     with fade
     show cath casual 3
-    m " Come on, it's going to be fun!"
+    m "Come on, it's going to be fun!"
     "> When you sit down, you place songs in the playlist. As one of them is about to begin, you notice out of the corner of your eye, Catherine clutching the mic with both hands. She holds it with her arms retracted close to her chest."
     m "C'mon, lighten up! This is supposed to be fun! Just imagine I'm not even here."
     "> You take 2 short consecutive breaths out, followed by one drawn out exhale."
@@ -3102,7 +3103,7 @@ label girl1_home_date:
     "> She moves forward and her hair swings, pushing its scent towards you."
     "> For a second you get hung on the scent as you're both entering. She turns to notice you."
     scene bg house with fade
-    show mary causal wonder with dissolve
+    show mary casual wonder with dissolve
     p "You look like you're lost."
  
     m "E-ehh. My bad."
@@ -3440,12 +3441,12 @@ label mom_drama:
             "> You stand there for a moment and Mary's look of disappointment and sadness is enough to tell you to that you've failed."
             "> You move your legs mechanically out of the kitchen and out of the house."
             "> You tried your best but it wasn't enough. You probably won't be able to spend as much time with Mary anymore..."
+            hide thought with dissolve
             jump mary_bad_end
             #replace return with jump to game over screen
         "Confront Mary's mom":
-            show thought with dissolve
+            show mom 9
             "> You gather all the courage you can muster and take a purposeful step forward as you look at Mary's mother in the eye."
-            hide thought with dissolve
             m "I'm sorry. I can't leave like this."
             show mom 7
             mom "What? How dare you! This is my house."
@@ -3459,6 +3460,7 @@ label mom_drama:
             show mom 8
             mom "What of it?"
             show mom 9
+            show mary cook cry
             show thought with dissolve
             "> Mary's mom's eyes are full of anger and at the same time hurt. You feel beads of sweat forming on your neck as you feel the pressure. "
             "> Your resolve is cracking under the weight of her glare and aura."
@@ -3486,6 +3488,7 @@ label mom_drama:
                             show mom 9
                             m "..."
                             show mom 8
+                            show mary cook sad
                             mom "You might mean well, but please. You're not helping anyone here. Bringing up past pain will not help Mary now. Just leave."
                             show thought with dissolve
                             "> You stand there for a moment and Mary's look of disappointment and sadness is enough to tell you that you've failed."
@@ -3511,7 +3514,7 @@ label be_blunt:
     m " To be straightforward, Mary's the president of the cooking club at school and she's been cooking for a long time behind your back."
     "> Mary's mom sharply turns to Mary in disbelief and Mary cowers even more."
     show mary cook shock at left
-    p "%(player_name)s!! I-It's not what you think, mom..."
+    p "%(player_name)s!! Mom it's not what you think, mom..."
     show mary cook pout at left
     m "It's exactly how it looks."
     show mom 12
@@ -3629,6 +3632,7 @@ label mary_bad_end:
 label credit:
     #show ending credit/references
     #pause for 120 seconds
+    scene bg hallway with fade
     show text "The End." with dissolve
     $renpy.pause(120.0)
     
