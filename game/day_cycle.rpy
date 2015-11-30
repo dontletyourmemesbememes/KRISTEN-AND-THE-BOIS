@@ -330,3 +330,4 @@ label girl1_time_passed: #Ending that triggers when the player waits too long
     show thought with dissolve
     "> You leave the office feeling a little numb. You wonder if you could’ve done anything to help Mary." 
     "> Regretfully, you go with the rest of your day with less energy than usual."
+    jump credit

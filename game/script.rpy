@@ -58,6 +58,7 @@ image leapsahead = "LeapsAhead.png"
 image hands = "HANDS.png"
 image mary_kiss = "MaryKISSSSSS.png"
 image mary_flour = "MaryFlour.png"
+image mary grad = "Grad_mary.png"
 #Catherine images---------------------------------------------------------------------------------
 image cath casual 1 = "Cath1-1.png"
 image cath casual 2 = "Cath1-2.png"
@@ -95,6 +96,7 @@ image cath back = "cathback.png"
 image cath violin = "CathIntro.png"
 image cath concert = "Concert.png"
 image cath drawing = "Drawing.png"
+image cath grad = "Grad_cath.png"
 image cath talk1:
     "Cath3-1.png"
     pause(1.0)
@@ -461,7 +463,9 @@ label school_tour:
     #replace with special scene of mary
     show mary intro with fade
     "> You look through the door and see a girl piling ingredients on one of the counters."
+    show thought with dissolve
     m "{i}It looks like she's preparing to cook something.{/i}"
+    hide thought with dissolve
     principal "Ahem!"
     # show principal
     hide mary with dissolve
@@ -481,7 +485,9 @@ label school_tour:
     scene bg music_room with fade
     show cath violin with fade
     "> Through the door you see a girl standing in the middle of the room playing a violin."
+    show thought with dissolve
     m"{i}She looks as if she's performing for a royal audience.{/i}"
+    hide thought with dissolve
     principal "Continuing on..."
     hide cath with dissolve
     show principal 7 with dissolve
@@ -2084,11 +2090,30 @@ label girl2_failure:
     hide thought with fade
     "> She hangs up on you. You leave the music room feeling a little disappointed. Regretfully, you go on with the rest of your high school days." 
     "> You end up quitting the piano for the second time in your life."
-    return
+    jump credit
+    #return
    
 label girl2_bad_end:
-    "GAME OVER"
-    return
+    scene bg music_room with fade
+    "> You head over to the music room and expect to see Catherine playing where she usually is. "
+    "> As you’re walking towards the room, there is an absence of music in the air. It is silent." 
+    "> You reach the room and Catherine is nowhere in sight. You wait for almost half an hour, but she still doesn’t show up. Suddenly, your phone starts to ring." 
+    show thought with dissolve
+    p " Hey %(player_name)s, I totally forgot to tell you, but I hope that you aren’t at the music room waiting for me.. I’m in London."
+    m "London?"
+    p "I got a last minute invite to a music competition. Sorry that I didn’t call you earlier; the performances just finished."
+    m "Oh.. How did you do?"
+    p "I thought that I played poorly, but I got approached afterwards by a scout." 
+    p "He said that I had great performance and invited me to a prestigious music academy." 
+    m "Thats great! Congratulations."
+    p "Thanks! I’m glad. This means I won’t be coming back to Gouglas Private Academy though. I hope that you’ll continue to practice the piano even without me there to teach you." 
+    m "Right…"
+    p "Good luck." 
+    hide thought with fade
+    "> She hangs up on you. You leave the music room feeling a little disappointed. Regretfully, you go on with the rest of your high school days." 
+    "> You end up quitting the piano for the second time in your life."
+    jump credit
+    #return
  
 label girl2_good_end:
     show cath casual 4
@@ -2114,13 +2139,35 @@ label girl2_good_end:
     show cath casual 5
     p "Besides, I already said yes to you. You're my new dream. You're mine."
     hide cath with fade
-   
-    "YOU WIN"
-    return
+    scene bg music_room with fade
+    "> Days pass and your relationship with Catherine continues to prosper."
+    scene cath grad with fade
+    "> You enjoy the rest of your high school life together with your girlfriend."
+    "> Congratulations %(player_name)s!"
+    jump credit
+    #return
    
 label girl2_fail_end:
-    "GAME OVER"
-    return
+    scene bg music_room with fade
+    "> You head over to the music room and expect to see Catherine playing where she usually is. "
+    "> As you’re walking towards the room, there is an absence of music in the air. It is silent." 
+    "> You reach the room and Catherine is nowhere in sight. You wait for almost half an hour, but she still doesn’t show up. Suddenly, your phone starts to ring." 
+    show thought with dissolve
+    p " Hey %(player_name)s, I totally forgot to tell you, but I hope that you aren’t at the music room waiting for me.. I’m in London."
+    m "London?"
+    p "I got a last minute invite to a music competition. Sorry that I didn’t call you earlier; the performances just finished."
+    m "Oh.. How did you do?"
+    p "I thought that I played poorly, but I got approached afterwards by a scout." 
+    p "He said that I had great performance and invited me to a prestigious music academy." 
+    m "Thats great! Congratulations."
+    p "Thanks! I’m glad. This means I won’t be coming back to Gouglas Private Academy though. I hope that you’ll continue to practice the piano even without me there to teach you." 
+    m "Right…"
+    p "Good luck." 
+    hide thought with fade
+    "> She hangs up on you. You leave the music room feeling a little disappointed. Regretfully, you go on with the rest of your high school days." 
+    "> You end up quitting the piano for the second time in your life."
+    jump credit
+    #return
 #-----------------------------END OF MUSIC GIRL---------------------------------------------#
  
 #----------------------------START OF MARY--------------------------------------------------#
@@ -3546,8 +3593,10 @@ label mary_good_end:
     show thought with dissolve
  
     "> Days pass and your relationship with Mary continues to prosper."
+    scene mary grad with fade
     "> You enjoy the rest of your high school life together with your girlfriend."
     "> Congratulations %(player_name)s!"
+    jump credit
     #game end
     #return #to end game
    
@@ -3563,8 +3612,17 @@ label mary_bad_end:
     "> You spend the rest of your normal high school life single, working hard to secure your future career."
     "> Who knows? Maybe it'll be better after highshool...?"
     "> Better luck next time, %(player_name)s."
+    jump credit
     #return #to end game
- 
+
+label credit:
+    #show ending credit/references
+    #pause for 120 seconds
+    show text "The End." with dissolve
+    $renpy.pause(120.0)
+    
+
+
 #routine for raising stats
 label raisestat:
     call randomquiz
