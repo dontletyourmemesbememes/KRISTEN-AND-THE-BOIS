@@ -346,6 +346,7 @@ init python:
  
  
     def stats_overlay():
+        ui.image("overlay.png")
         #ui.text(("Days Elapsed:"+str(stats.get_days())),size=24)
         closeness = 0
         if stats.chosen_girl == 1:
