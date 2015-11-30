@@ -346,6 +346,7 @@ init python:
  
  
     def stats_overlay():
+        ui.image("overlay.png")
         #ui.text(("Days Elapsed:"+str(stats.get_days())),size=24)
         ui.image("overlay.png")
         closeness = 0
