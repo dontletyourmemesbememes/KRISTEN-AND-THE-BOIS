@@ -164,15 +164,26 @@ init python:
  
         def check_answer(answer):
             return answer == self.answer
+
+
  
     class QuestionManager:
         def __init__(self):
             self.question_list = []
-        def get_random_question(self):
-            return self.question_list[renpy.random.randint(0,len(self.question_list)-1)]
         def add_question(self,desc,choices,answer):
             question = Question(desc,choices,answer)
             self.question_list.append(question)
+            return
+        def remove_question(self,index):
+            self.question_list.pop(index)
+            return
+
+        def get_random_question(self):
+            index = renpy.random.randint(0,len(self.question_list)-1)
+            question = self.question_list[index]
+            if len(self.question_list) > 1:
+                self.remove_question(index)
+            return question
  
  
     class Stats:
@@ -289,7 +300,7 @@ init python:
     bio_qman.add_question("The blood vessels that carry (usually oxygenated) blood away from the heart are called?",["Artery","Vein","Ventricle","Atrium"],0)
     bio_qman.add_question("What is the largest organ in the human body?",["Liver","Lung","Skin","Brain"],2)
     bio_qman.add_question("An example of a waste product of aerobic celluar respiration is:",["carbon monoxide","carbon dioxide","oxygen","methanol"],1)
-    bio_qman.add_question("What is the basic unit of all living organisms found on Earth?",["The cell","The atom","brick","DNA","Tissue","Fecal matter"],0)
+    bio_qman.add_question("What is the basic unit of all living organisms found on Earth?",["The cell","The atom","Brick","DNA","Tissue","Fecal matter"],0)
     bio_qman.add_question("What describes the movement of molecules from a higher concentration to a lower concentration",["Diffusion","Osmosis","Diffration","Refraction"],0)
     bio_qman.add_question("Plants are typically green because they:",["reflect green light","absorb green light"],0)
     bio_qman.add_question("What is a difference between plant cells and animal cells?",["Presence of a cell wall","Presence of a membrane","Presence of Vacuoles","Presence of feet","There are no differences"],0)
@@ -313,7 +324,7 @@ init python:
     drama_qman.add_question("How does Hamlet Sr. die in the play, 'Hamlet'?",["Poison","Obesity","Witches","A duel with Ferdinard Sr."],0)
     drama_qman.add_question("What is the name of the role of a person who writes the play?",["Playwright","Actor","Director","Player"],0)
     drama_qman.add_question("When you are on stage, to make sure your audience can understand, you must project your:",["Vision","Breath","Ideas","Voice"],3)
-    drama_qman.add_question("In which Shakespeare play does this line appear: 'All the world's a stage and all the men and women merely players'",["Othello","Macbeth","Hamlet","Romeo and Juliet"],2)
+    drama_qman.add_question("In which Shakespeare play does this line appear: 'All the world's a stage and all the men and women merely players'",["Othello","Macbeth","Hamlet","Romeo and Juliet","As you like it"],4)
     drama_qman.add_question("What are instructions for actors, directors and the stage crew?",["Stage Directions","Dialogue","Soliloquy","Metaphor"],0)
     drama_qman.add_question("What is conversation between characters?",["Small talk","Dialogue","Oxymoron","Monologue"],1)
     drama_qman.add_question("What are people watching a play called?",["Fan girls/boys","Plebs","Audience","4th wallers"],2)
