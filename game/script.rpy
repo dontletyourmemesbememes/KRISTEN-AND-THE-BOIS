@@ -2263,7 +2263,7 @@ label girl_1_convo_1:
            
             menu:
                 "Ask her for her name":
-                    m "Soooo... I actually never caught your name, my names %(player_name)s."
+                    m "Soooo... I actually never caught your name, my name's %(player_name)s."
                     show mary cook shock
                     p "Oh, sorry about that!"
                     show mary cook smile
@@ -3624,6 +3624,7 @@ label credit:
     scene bg hallway with fade
     show text "The End." with dissolve
     $renpy.pause(120.0)
+    $renpy.quit(True)
     
 
 
