@@ -87,7 +87,7 @@ label standard_home_ec:
                 scene bg home_ec_room with fade
                 if int_check >= 2 and cha_check >= 2:
                     # sucess
-                    "> The crème brûlée  looks great! nice golden caramelize on it! Looks delicious!"
+                    "> The crème brûlée  looks great! Nice golden caramelization on it! Looks delicious!"
                     show mary cook laugh with fade
                     p "Looks great. I'm impressed."
                     $ girl1.add_closeness(3)
@@ -196,7 +196,7 @@ label standard_home_ec:
                 scene bg home_ec_room with fade
                 if int_check >= 2 and cha_check >= 2:
                     # sucess
-                    "> The crème brûlée  looks great! nice golden caramelize on it! Looks delicious!"
+                    "> The crème brûlée  looks great! Nice golden caramelization on it! Looks delicious!"
                     show mary cook laugh with fade
                     p "Looks great. I'm impressed."
                     $ girl1.add_closeness(3)
