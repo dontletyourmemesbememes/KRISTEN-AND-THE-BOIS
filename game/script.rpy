@@ -662,7 +662,7 @@ label music_room:
     scene bg hallway
     with fade
    
-    "> As you get closer to the music room, you notice the door cracked open an inch. As you approach, you hear sustained instrument that cuts through the opening."
+    "> As you get closer to the music room, you notice the door cracked open an inch. As you approach, you hear music that cuts through the opening."
     # fade to show entering room
     scene bg music_room
     with fade
@@ -670,21 +670,21 @@ label music_room:
     show cath violin with fade
    
     "> Upon entering, you find a girl drawing her bow flawlessly across the strings. She faces the opposite direction, displaying her hair that follows the dynamics of her playing."
-    "> You're compelled to sit down at the piano bench, as your eyes and ears perked up to witness her welcoming and mellow style."
+    "> You’re compelled to sit down at the piano bench as your eyes and ears perked up to witness her welcoming and mellow style."
     "> She doesn't notice you as you sit down behind her."
     menu:
         "> Get her attention.":
             hide cath violin with fade
             $ girl2.add_closeness(-1)
-            m "Hi!"
             show cath casual 1 with dissolve
+            m "Hi!"
             stop music fadeout 1.0
             "> Her enrapturing music screeches to a halt. Before you can say anything else, she spins around quickly with a look of anger on her face."
             show cath casual 2
             p "How. Dare. You."
         "> Wait.":    
             "> She seems so enveloped in her music that you don’t want to interrupt her."
-            "> The song grows in depth, as the notes create an atmosphere, sustained in emotion. Her upper body sways intimately with the music, while the hairs on the back of your neck rise gradually."
+            "> The song grows in depth as the notes create an atmosphere, sustained in emotion. Her upper body sways intimately with the music while the hairs on the back of your neck rise gradually."
             "> You find yourself enveloped by her music."
             m "{i}Wow... she's pretty amazing. I need to know this girl's name.{/i}"
             "> Her playing approaches the end. You feel anxiety rising up as you stand to attempt talking to her."
@@ -703,16 +703,16 @@ label music_room:
     show cath casual 2
     p "I'm practicing, so if you don't mind, I have a concert to prepare for. If you could leave that would be really great."
     show cath casual 1
-    "> You can tell she sounds really sarcastic. "
+    "> You think that she is being sarcastic."
     hide cath with dissolve
-    "> Immediately she gets back to playing, but this time. Her playing loses its warmth, and immediately has an air of superiority."
+    "> Immediately she gets back to playing, but this time her playing loses its warmth and immediately has an air of superiority."
     play music "violin.mp3" fadein 1.0
    
     # TODO SHOW VIOLIN
     show cath violin with fade
    
     m "I never caught your name, by the way."
-    "> The violin lets out a shriek, and she turns to you in frustration."
+    "> The violin lets out a shriek and she turns to you in frustration."
     hide cath violin with fade
     stop music fadeout 1.0
     show cath casual 12 with dissolve
@@ -728,7 +728,7 @@ label music_room:
     show cath casual 1
     "> She holds a frown."
     show cath casual 2
-    p "Catherine... I suppose it's not a HUGE inconvenience if you listen, just try to keep quiet, and don't do anything to distract me or I am going to kick you out."
+    p "Catherine... I suppose it’s not a huge inconvenience if you listen, just try to keep quiet and don’t do anything to distract me or I am going to kick you out."
     $ unknown_name = "Catherine"
     show thought with dissolve
     m "{i}This girl's scary.{/i}"
@@ -739,11 +739,11 @@ label music_room:
    
     play music "violin.mp3" fadein 1.0
     "> She moves to her music stand again raising her bow into position. This time she continues to play, but still not as welcoming and warm as the first time."
-    "> You start to get into the music, leaning back while tapping your feet."
+    "> You start to get into the music as you lean back and tap your feet."
     hide cath with fade
     show thought with dissolve
     "> As you notice the dust on your elbows, you realize you have been sitting beside a piano."
-    m "{i}Oh man, this piano's pretty dusty. I also haven't touched one of these in a couple years. Now let's see what we have here...{/i}"
+    m "{i}Oh man, this piano’s pretty dusty. I haven’t touched one of these in a couple years. Now let’s see what we have here...{/i}"
     "> You lift the key covering."
     $ int_check = stats.get_stats("int")
     menu:
@@ -786,13 +786,15 @@ label music_room:
 label play_with_her:
    
     # play with piano
+    stop music fadeout 1.0
     if int_check >= 1:
         $ girl2.add_closeness(1)
+        play music "violinpiano.mp3" fadein 1.0
         "> You pick up where there's an opening, and accompany her. The first few moments feel sluggish and your hands feel clumsy, but after a few bars you're able to familiarize yourself. You peek over your shoulder to notice that Catherine's posture is rigid; she doesn't seem like she's used to someone playing with her. Her playing begins to become harsher and her facial expression suddenly becomes unimpressed."
         m "{i}Hmm... She hasn't stopped playing yet... I'll just keep going to see where this takes me.{/i}"
         "> You listen to her carefully and do your best to follow her, trying to avoid taking over or not supporting her enough. You remember the feeling from before: the chill in your spine, hair upright, and heightened senses."
-        "> You can't see her now, but you'd like to imagine she also is feeling the same way you do."
-        "> You listen carefully, and end the song."
+        "> You can’t see her now, but you’d like to imagine that she is also feeling the same way you do."
+        "> You listen carefully and end the song."
         stop music fadeout 1.0
         show thought with dissolve
         m "{i}I think my finish was coordinated with her pretty well. Granted not perfect, but pretty good I think.{/i}"
@@ -803,7 +805,7 @@ label play_with_her:
         "> Catherine crosses her arms again and turns her back on you with a puff of air."
         show cath casual 5
         p "But..not bad for an impromptu."
-        "> You can't see the expression on her face but her response makes you smile."
+        "> You can’t see the expression on her face, but her response makes you smile."
         play music "Background Music.mp3" fadein 1.0
         show cath casual 4
         menu:
@@ -818,28 +820,30 @@ label play_with_her:
                 $girl2.add_closeness(1)
                 m "Thanks Catherine, but I'm still pretty rusty. I haven't played since junior high. Your playing earlier inspired me!"
                 show cath casual 14
-                "> Catherine looks flustered but is trying keep an exaggerated, mature composure." # guess image here instead of description
+                "> Catherine looks flustered, but is trying to keep an exaggerated, mature composure." # guess image here instead of description
                 p "..."
                 show cath casual 16
                 p "Of course! I'm training to be the best you know. It's nice to meet you too I guess."
        
         m "Well, I think i might take another shot at playing the piano."
         show cath casual 12
-        p "What!? what do you mean?"
+        p "What!? What do you mean?"
         show cath casual 10
-        m "I'll be around the music room more often, I like listening to you play and the way you played the violin has inspired me to get back into playing the piano."
+        m "I’ll be around the music room more often; I like listening to you play and the way you played the violin has inspired me to get back into playing the piano."
         show cath casual 12
         p "Who said you could be in here?"
         show cath casual 10
         m "Would you be opposed? I need to practice a little more and you could tell me how I'm doing."
         show cath casual 2
-        p "I don't have time to deal with an amateur like you. Ugh....but I guess it's sort of useful having an accompanist. JUST FOR PRACTICE. Come by tomorrow, don't be late or else I'll kick you out."  
+        p "I don’t have time to deal with an amateur like you. Ugh... but I guess it’s sort of useful having an accompanist. JUST FOR PRACTICE. Come by tomorrow; don’t be late or else I’ll kick you out."  
         hide cath with dissolve
         # end day
        
     else:
+        play music "Piano Fail.mp3" fadein 1.0
         "> You try to think of what to play, but the keys starts to look more and more like a puzzle. You play the keys but it just makes a loud obstruction to The girl's music."
         "> She stops midway, pointing the violin bow at you."
+        stop music fadeout 1.0
         show cath casual 10 with dissolve
         play music "Background Music.mp3" fadein 1.0
         show cath casual 12
@@ -1270,7 +1274,7 @@ label music_event_1:
             play sound "Cell Phone Ring.mp3"
             "> ring ring ring"
             show cath casual 16
-            p "sigh..."
+            p "Sigh..."
             show cath talk1 with dissolve
             stop sound
             p "Hi Mom."
@@ -1285,7 +1289,7 @@ label music_event_1:
             show thought with dissolve
             m "{i}I wonder why she sounded so angry at the end of her conversation.{/i}"
             hide thought with dissolve
-            "> You walk nearer to her without her noticing and upon closer inspection, notice that she's making posters for some sort of concert."
+            "> You walk closer to her without her noticing and upon closer inspection; notice that she’s making posters for some sort of concert."
             m "Hey Catherine, what are all these for? Do you need help with something?"
             show cath casual 16
             p "Oh! Hi %(player_name)s."
@@ -1302,7 +1306,7 @@ label music_event_1:
             "> She still seems embarrassed for accepting your help, but at the same time, satisfied."
             "> You end up kneeling beside her. As you sit she retracts a couple inches away from where you're sitting."
             show thought with dissolve
-            m "{i}She doesn't seem that comfortable with me maybe I should try to make some conversation.{/i}"
+            m "{i}She doesn’t seem that comfortable with me. Maybe I should try to make some conversation.{/i}"
             hide thought with dissolve
             hide cath with dissolve          
             menu:
@@ -1354,7 +1358,7 @@ label music_event_1_part_2:
     "> You look at your clock and notice that the sun is starting to set."
     "> You look towards the window and you see the sunlight give a warm colouring to the surroundings. The chalk dust in the air highlights the sun rays giving the room a calm atmosphere."
     "> Your eyes wander to Catherine in the middle room and under the sun rays. She is putting on the finishing touches on the posters."
-    "> She looks like she's in a spotlight. She looks so natural in it, like she was born to be in the spotlight. Light passes through her hair giving it an ethereal look as it drapes down on her shoulders. By observing her alone, you begin to feel unsettled and hot"
+    "> She looks like she's in a spotlight. She looks so natural in it, like she was born to be in the spotlight. Light passes through her hair giving it an ethereal look as it drapes down on her shoulders. By observing her alone, you begin to feel unsettled and hot."
     "> She tucks her hair behind her hair as she finishes up the final touches, but realizes that you are staring at her."
    
     show cath casual 2 with dissolve
@@ -1452,7 +1456,7 @@ label music_event_1_part_3:
     hide cath with dissolve
     menu:
         "Beethoven violin Sonata No.9 Op.47 \"Kreutzer\"":
-            m "Let's play Beethoven violin Sonata No.9 Op.47 \"Kreutzer\"." #ADD MUSIC
+            m "Let's play Beethoven Violin Sonata No.9 Op.47 \"Kreutzer\"." #ADD MUSIC
             $ girl2_music_choice = 1
             play music "Beethoven.mp3" fadein 1.0
            
@@ -1567,11 +1571,11 @@ label music_event_2:
     m "{i}She looks pretty concerned. I wonder what it is about?{/i}"
     hide thought with dissolve
     show cath casual 17
-    p "So... the concert..."
+    p "So... The concert..."
     show cath casual 15
     m "Yeah?"
     show cath casual 17
-    p "Apparently I'm required to have an accompanist."
+    p "Apparently, I’m required to have an accompanist."
     show cath casual 15
     m "Oh? And?"
     "> You try not to crack a smile knowing what's coming."
@@ -1582,7 +1586,7 @@ label music_event_2:
     show thought with dissolve
     m "{i}I'm not sure if I should be teasing her in a situation like this, but I need to make the most of this opportunity!{/i}"
     hide thought with dissolve
-    "> She seems surprised at your response like she was expecting you to agree right away. Her face turns mad red and squeezes her eyes shut. Her face instantly turns red from frustration."
+    "> She seems surprised at your response like she was expecting you to agree right away.  Her face instantly turns red from frustration."
     show cath casual 17
     p "I know I've been mean to you this whole time, but please! This is my only opportunity!"
     show cath casual 18
@@ -1599,10 +1603,9 @@ label music_event_2:
             jump music_event_2_part_2
  
 label music_event_2_part_2:
-   
+    "> Several days later."
     scene bg music_room
     with fade
-    "> Several days later."
     "> You arrive outside of the music room. The suit you're wearing makes you feel stiff and limited in mobility."
     "I think I look okay, I can't tell with only the moonlight"
     "> You receive a text from Catherine."
@@ -1684,11 +1687,11 @@ label music_event_2_part_2:
     show cath dress 6
     "> She pulls back her hair and leans forward, exposing her neck to you."
     "> You quickly lean in to smell."
-    "> When you breathe in the scent, it's like fireworks begin going off your head. This feeling travels down through the rest of your body, but you feel something briefly press against your cheek."
+    "> When you breathe in the scent, it’s like fireworks beginning to going off in your head. This feeling travels down through the rest of your body, but you feel something briefly pressed against you cheek."
     show cath dress 4
     p "That was for good luck...and for listening to me."
     show cath dress 6
-    "> She covers her mouth, and avoids eye contact, blushing."
+    "> She covers her mouth and avoids eye contact, blushing."
     m "Thanks..."
     show cath dress 11
     p "D-don't look at me like that, you're wasting time."
@@ -1745,7 +1748,7 @@ label outta_girl2_while_loop2:
         "Hug her":
             $ girl2.add_affection(1)
             m "Yeah, good job!"
-            "> You hug her. you intended to have a quick hug, but it lingers for a while longer."
+            "> - You hug her. You intended to have a quick hug, but it lingers for a while longer."
             show cath dress 4
             p "I'm really thankful for you helping me out."
             show cath dress 6
@@ -1761,20 +1764,20 @@ label outta_girl2_while_loop2:
     show cath dress 2
     p "Celebrate? What do you have in mind?"
     show cath dress 1
-    m "How about Karaoke?"
+    m "How about karaoke?"
     show cath dress 10
     p "Karaoke?"
     show cath dress 8
     m "Yeah, that thing where you sing in a room..."
     show cath dress 10
-    p "I know what it is, but why Karaoke?"
+    p "I know what it is, but why karaoke?"
     show cath dress 8
     m "Why not? You've been so stressed out on music lately; this is a good way to destress."
     "> She sighs."
     show cath dress 10
     p "Okay..."
     show cath dress 8
-    m "GREAT! LET'S GO"
+    m "GREAT! LET'S GO."
     hide cath with dissolve
     jump music_event_3
            
@@ -1840,19 +1843,19 @@ label music_event_3:
     "> She laughs."
     p "Alright, alright I'm ready."
     show cath casual 3
-    "> Her shoulders relax, and she takes a deep breath."
-    "> The music starts playing, You start the song slow. following the lyrics her voice takes you by surprise. You are taken back for moment to the point where you stop singing out of disbelief. Her voice actually is powerful and smooth."
+    "> Her shoulders relax and she takes a deep breath."
+    "> As the music starts playing, the song starts slow. While following the lyrics, her voice takes you by surprise. Her voice actually is powerful and smooth."
     hide cath with fade
     stop music fadeout 1.0
-    play music ["Adele Karaoke.mp3", "John Legend Karaoke.mp3"] fadeout 1.0 fadein 1.0
+    play music ["Adele Karaoke.mp3", "John Legend Karaoke.mp3", "Jpop.mp3"] fadeout 1.0 fadein 1.0
     show thought with dissolve
     m "{i}SHE LIED TO ME{/i}"
     hide thought with dissolve
     show cath casual 5 with dissolve
-    "> You decide to just go with it. You have an almost a deja vu moment, as if you were her accompanist again. Naturally, you begin to harmonize with her. It must be from practising with her. At one point of the song, you both feel each other pushing your diaphragms to their limit. You look at each other trying not to laugh."
+    "> You decide to just go with it. You have an almost Déjà vu moment as if you were her accompanist again. Naturally, you begin to harmonize with her. It must be from practicing with her. At one point of the song, you both feel each other pushing your diaphragms to their limit. You look at each other trying not to laugh."
     "> You see her under the fluorescent rose lighting of the room, she looks like she's really having enjoying herself. She looks at you and smiles as the song ends."
-    stop music fadeout 1.0
-    play music "Background Music.mp3" fadein 1.0
+    #stop music fadeout 1.0
+    
     show cath casual 4
     p "That was great!"
     "> She begins laughing uncontrollably while leaning forward."
@@ -1865,7 +1868,7 @@ label music_event_3:
     show cath casual 9
     p "SERIOUSLY?"
     show cath casual 15
-    m "Don't worry... I'm just kidding"
+    m "Don't worry... I'm just kidding."
     show cath casual 17
     p "Don't scare me like that..."
     show cath casual 15
@@ -1893,7 +1896,7 @@ label music_event_3:
     show cath casual 14
     m "Is that a bad thing?"
     show cath casual 16
-    p "No... I'm just a little confused, that's all... I've grown up in a well off family and I always was given opportunities, as if they were served to me on a silver platter. I never felt like I earned anything. I eventually just hated it when people helped me accomplish tasks; people always checking up on me saying 'Do you need help with that?' As if I couldn't handle myself, as if I was completely incapable of doing anything. I started to be secluded from people, and refuse people that tried to get close to me."
+    p "No... I’m just a little confused, that’s all... I’ve grown up in a well off family and I always was given opportunities, as if they were served to me on a silver platter. I never felt like I earned anything. I eventually just hated it when people helped me accomplish tasks; people always checking up on me saying ‘Do you need help with that’ As if I couldn’t handle myself, as if I was completely incapable of doing anything. I started to be secluded from people and refused people that tried to get close to me."
     show cath casual 14
     m "What about now?"
     show cath casual 16
@@ -1925,7 +1928,7 @@ label music_event_3:
                 show cath casual 7
                 "> She wraps her arms around your torso, smiling. You both continue to bask in the emotions until it's time to go."
                 show cath casual 5
-                p "Thank you for everything, I'm really glad to have met you in my life..."
+                p "Thank you for everything. I am really glad to have met you."
                 hide cath with dissolve
                 jump music_event_3_part_2
             # if failure:
@@ -1949,7 +1952,7 @@ label music_event_3:
                 m "No of course... I couldn't expect you to drop everything for me..."
                 "> You both sit and try to savour the moment. She latches onto you tight, not wanting to let go. You sit trying to hold on to each other's presence inevitably comes to an end."
                 show cath casual 16
-                p "Thank you for everything, I'm really glad to have met you in my life..."
+                p "Thank you for everything. I am really glad to have met you..."
                 hide cath with dissolve
                 jump girl2_fail_end
    
@@ -2080,31 +2083,14 @@ label girl2_failure:
     return
    
 label girl2_bad_end:
-    scene bg music_room with fade
-    "> You head over to the music room and expect to see Catherine playing where she usually is. "
-    "> As you’re walking towards the room, there is an absence of music in the air. It is silent." 
-    "> You reach the room and Catherine is nowhere in sight. You wait for almost half an hour, but she still doesn’t show up. Suddenly, your phone starts to ring." 
-    show thought with dissolve
-    p " Hey %(player_name)s, I totally forgot to tell you, but I hope that you aren’t at the music room waiting for me.. I’m in London."
-    m "London?"
-    p "I got a last minute invite to a music competition. Sorry that I didn’t call you earlier; the performances just finished."
-    m "Oh.. How did you do?"
-    p "I thought that I played poorly, but I got approached afterwards by a scout." 
-    p "He said that I had great performance and invited me to a prestigious music academy." 
-    m "Thats great! Congratulations."
-    p "Thanks! I’m glad. This means I won’t be coming back to Gouglas Private Academy though. I hope that you’ll continue to practice the piano even without me there to teach you." 
-    m "Right…"
-    p "Good luck." 
-    hide thought with fade
-    "> She hangs up on you. You leave the music room feeling a little disappointed. Regretfully, you go on with the rest of your high school days." 
-    "> You end up quitting the piano for the second time in your life."
+    "GAME OVER"
     return
  
 label girl2_good_end:
     show cath casual 4
     "> She smiles."
     show cath casual 5
-    p "hahaha! You're funny."
+    p "Hahaha! You’re funny."
     "> She continues to laugh at you, but you stand there confused at what just happened."
     show cath casual 4
     m "I think I'm lost."
@@ -2113,13 +2099,13 @@ label girl2_good_end:
     show cath casual 4
     m "Oh hahaha... I thought you were asking seriously."
     show cath casual 5
-    p "Well I was asking, then I could figure out how much you like me hehe..."
+    p "Well I was just asking so that I could figure out how much you like me."
     show cath casual 4
-    m "Charming haha..."
+    m "Charming..."
     show cath casual 5
-    p "So? what say you? Do I need to make you smell my perfume again?"
+    p "So? What say you? Do I need to make you smell my perfume again?"
     show cath casual 4
-    m "Yeah... yeah, I do."
+    m "Yeah... Yeah, I do."
     "> She leans over then you feel something press against your cheek."
     show cath casual 5
     p "Besides, I already said yes to you. You're my new dream. You're mine."
