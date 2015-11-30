@@ -2970,8 +2970,7 @@ label mary_backstory2:
     p "I know she means well and it's not like she's being mean about it. I just feel this pressure not to disappoint her. I don't even know why I'm telling you all of this. I've only known you for a couple of days. Sorry."
     m "Honestly Mary, don't worry I'm completely fine with it. Have you ever told her how you feel about cooking?"
     show mary casual wonder
-    p "I've sort of suggested being a chef, but she avoids really talking about it much. She redirects the conversation or tells me that
-       “It would be better to keep it as a hobby.”"
+    p "I've sort of suggested being a chef, but she avoids really talking about it much. She redirects the conversation or tells me that {i}\"It would be better to keep it as a hobby.\"{/i}"
     show mary casual sigh
     "> Mary pauses briefly."
     show mary casual sad
