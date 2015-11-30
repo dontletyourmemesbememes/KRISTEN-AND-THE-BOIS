@@ -310,15 +310,23 @@ label standard_end_day:
     jump standard_day_cycle
     
 label girl1_time_passed: #Ending that triggers when the player waits too long
+    scene bg home_ec_room with fade
     "> You head over to the home ec room and expect to see Mary working where she usually is. You don’t see her." 
     "> You wait for almost half an hour, but she still doesn’t show up. You leave the room to go home, a little worried." 
     "> Next day."
+    scene bg office with fade
     "You arrive at school, but just before your first class starts, you are called to the principal’s office." 
+    show principal 10 with dissolve
     principal "Hello again, %(player_name)s. How are you doing this morning?...Well I’ll just get straight to the point." 
     principal "I understand that you joined the cooking club? I’m afraid to tell you that the club will be cancelled until further notice."
+    show principal 11
     m "What happened?"
+    show principal 13
     principal "Unfortunately, Mary, the president of the club, won’t be able to run the club anymore due to illness." 
     principal "Apparently, she was under a lot of stress. I’m sorry about this, %(player_name)s. "
+    show principal 10
     principal "Hopefully you can still enjoy the rest of your year here." 
+    scene bg hallway with fade
+    show thought with dissolve
     "> You leave the office feeling a little numb. You wonder if you could’ve done anything to help Mary." 
     "> Regretfully, you go with the rest of your day with less energy than usual."
