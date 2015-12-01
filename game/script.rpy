@@ -14,7 +14,7 @@ image bg classroom = "Classroom.png"
 image bg hallway = "Hallway.png"
 image bg home_ec_room = "Home_ec_room.png"
 image bg house = "House.png"
-image by karaoke_lobby = "Karaoke_lobby.png"
+image bg karaoke_lobby = "Karaoke_lobby.png"
 image bg karaoke = "Karaoke.png"
 image bg music_room = "Music_room.png"
 image bg office = "Office.png"
@@ -727,16 +727,13 @@ label music_room:
     p "I'm practicing, so if you don't mind, I have a concert to prepare for. If you could leave that would be really great."
     show cath casual 1
     "> You think that she is being sarcastic."
-    hide cath with dissolve
+    show cath back 
     "> Immediately she gets back to playing, but this time her playing loses its warmth and immediately has an air of superiority."
     play music "violin.mp3" fadein 1.0
    
-    # TODO SHOW VIOLIN
-    show cath violin with fade
-   
     m "I never caught your name, by the way."
     "> The violin lets out a shriek and she turns to you in frustration."
-    hide cath violin with fade
+    hide cath with dissolve
     stop music fadeout 1.0
     show cath casual 12 with dissolve
     p "Did you not hear me earlier?"
@@ -758,7 +755,7 @@ label music_room:
    
     # TODO SHOW VIOLIN
     hide thougt with dissolve
-    show cath violin with fade
+    show cath back with fade
    
     play music "violin.mp3" fadein 1.0
     "> She moves to her music stand again raising her bow into position. This time she continues to play, but still not as welcoming and warm as the first time."
@@ -1807,7 +1804,7 @@ label outta_girl2_while_loop2:
 label music_event_3:
     # karaoke event here, success or failure
     #TODO ADD IMAGE OUTSIDE KARAOKE
-    scene bg karaoke_lobby
+    scene bg karaoke_lobby with fade
     with fade
     show cath casual 14 with dissolve
     m "Here we are."
@@ -1952,6 +1949,7 @@ label music_event_3:
                 "> She wraps her arms around your torso, smiling. You both continue to bask in the emotions until it's time to go."
                 show cath casual 5
                 p "Thank you for everything. I am really glad to have met you."
+                stop music fadeout 1.0
                 hide cath with dissolve
                 jump music_event_3_part_2
             # if failure:
@@ -1976,13 +1974,14 @@ label music_event_3:
                 "> You both sit and try to savour the moment. She latches onto you tight, not wanting to let go. You sit trying to hold on to each other's presence inevitably comes to an end."
                 show cath casual 16
                 p "Thank you for everything. I am really glad to have met you..."
+                stop music fadeout 1.0
                 hide cath with dissolve
                 jump girl2_fail_end
    
 label music_event_3_part_2:
     scene bg home
     with fade
- 
+    play music "Background Music.mp3" fadein 1.0
     "> A few days have passed since that day."
     play sound "Cell Phone Ring.mp3"
     "> Your phone rings."
@@ -2061,13 +2060,15 @@ label music_event_3_part_2:
                     p "That would make me happy... Well... Goodbye then..."
                     show cath casual 7
                     m "This isn't 'goodbye', it's just a 'see you later'..."
+                    stop music fadeout 1.0
                     jump girl2_bad_end
                    
                 "Change your mind":
                     m "I'm just trying to not be selfish but believe me when I say I really do want you to stay. You're important to me and it would hurt to watch you leave."
+                    stop music fadeout 1.0
                     jump girl2_good_end
                    
-        "You should make the decision yourself":
+        "You should make the decision y ourself":
             "> Catherine seems frustrated."
             show cath casual 12
             p "I don't get it! I haven't even known you for that long, but all the sudden you'll be out of my life. I tried so hard to be independent and do things on my own, and when I finally get the chance, I don't want it. I end up depending on you anyways. I even said 'yes', when you asked me out!"
@@ -2082,6 +2083,7 @@ label music_event_3_part_2:
             p "Forget it. You're right. I don't know what I was thinking. I'll go ahead with the academy. Thank you for everything. Let's both work hard on our separate paths."
             hide cath with fade
             "> Catherine starts walking towards the door but stops at your side. She glances up towards you quickly but then looks away and continues out the door, leaving you behind. You're left alone standing in the silent music room and you have a feeling you won't be playing the piano for a long time."
+            stop music fadeout 1.0
             jump girl2_bad_end
  
 label girl2_failure:
@@ -2459,7 +2461,7 @@ label girl1_check_3:
             show thought with dissolve
             "> You notice Mary doesn't look as cheerful as she normally does when she cooks."
             m "Is she still concerned about what we talked about at the restaurant?"
-            "> You decide to confront her."
+            "> You decide to try and cheer her up."
             hide thought with dissolve
             jump girl1_home_date
         else:
@@ -2943,7 +2945,7 @@ label restaurant_date2:
             menu :
                 "> Be bold." : #stat requirement to say? (+2)
                     $ girl1.add_closeness(2)
-                    $ girl1.add_affection(1)
+                    $ girl1.add_affection(2)
                     m "I feel like there's a pretty easy solution to that."
                     show mary casual smile
                     "> Mary leans forward. Her eyes are on you as she smirks."
@@ -3229,7 +3231,7 @@ label girl1_home_date_kitchen:
     show mary cook flustered1
     "> Mary turns to the oven."
     show mary cook flustered2
-    p "Oh! 350 degrees. Perfect! Uhhm.. I guess the weather is pretty today."
+    p "Oh! 350 degrees. Perfect! Uhhm.. I guess the weather is pretty warm today."
     "> Frantically, she tries to clear her sweat, however she knocks the bowl of flour off the counter top."
     show mary cook shock
     p "OH NO!"
@@ -3320,7 +3322,7 @@ label girl1_home_date_kitchen:
                 p " ...Yeah."
                 hide mary with dissolve
                 show thought with dissolve
-                scene bg outside_house with face
+                scene bg outside_house with fade
                 "> Mary leads you to the exit. You can't think of much to say without making it more awkward, so you just keep walking."
                 "> You look back. The door is closed."
                 m "{i} I guess that's it, huh...? {/i}"
