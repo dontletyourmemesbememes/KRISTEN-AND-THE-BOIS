@@ -917,14 +917,14 @@ label music_event_check_1:
     if day < 5 and closeness > -3 and closeness < 5:
         # continue on with music
         return
-    elif day >= 5:
+    elif day > 5:
         # too long trigger failure event
         jump girl2_failure
     elif closeness <= -3:
         # lost too much closeness
         jump girl2_failure
-    elif day < 5 and closeness >= 5 and event_num == 0:
-        # trigger event 1 as day < 5 and closess > 5
+    elif day <= 5 and closeness >= 4 and event_num == 0:
+        # trigger event 1 as day <= 5 and closess >= 4
         # set the event value to 1
         $ girl2.add_event()
         jump music_event_1
@@ -933,7 +933,7 @@ label music_event_check_2:
    
     $ closeness = girl2.get_closeness("Catherine")
     $ event_num = girl2.get_event("Catherine")
-    if closeness >= 8 and event_num == 1:
+    if closeness >= 6 and event_num == 1:
         $ girl2.add_event()
         jump music_event_2
     else:
@@ -972,9 +972,9 @@ label music_day_2:
             p "You have redeemed yourself a little bit. You can come back to the music room if you want. Just don't get in my way."
             $ girl2.add_closeness(1)
            
-        "Rock (Strength 2, Charm 2)":
+        "Rock (Strength 1, Charm 2)":
             p "Rock today? okay I'll give it a try."
-            if str_check >= 2 and cha_check >=2:
+            if str_check >= 1 and cha_check >=2:
                 play music "rock.mp3" fadein 1.0
                 "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
                 stop music fadeout 1.0
@@ -993,11 +993,11 @@ label music_day_2:
                 p "That was terrible. The piano is suppose to accompany the violin not the other way around... But I guess this is a huge improvement from yesterday. I guess I will let you continue coming to the music room because you are dedicated to improve and you kind of have potential.."
                 $ girl2.add_closeness(-2)
        
-        "Jazz (Charm 2, Intelligence 2)":
+        "Jazz (Charm 1, Intelligence 2)":
             show cath casual 5 with dissolve
             p "OH! I LOVE JAZZ!"
             hide cath with dissolve
-            if cha_check >= 2 and int_check >= 2:
+            if cha_check >= 1 and int_check >= 2:
                 play music "Jazz.mp3" fadein 1.0
                 "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
                 stop music fadeout 1.0
@@ -1071,11 +1071,11 @@ label music_day_3:
             $ girl2.add_closeness(1)
  
            
-        "Folk (Strength 2, Charm 3)":
+        "Folk (Strength 2, Charm 2)":
             show cath casual 2 with dissolve
             p "Really? Okay, I'm not very used to folk, but if you want."
             hide cath with dissolve
-            if str_check >= 2 and cha_check >=3:
+            if str_check >= 2 and cha_check >=2:
                 "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
                 stop music fadeout 1.0
                 play music "Background Music.mp3" fadein 1.0
@@ -1091,11 +1091,11 @@ label music_day_3:
                 p "That was terrible. The piano is suppose to accompany the violin not the other way around... But I guess this is a huge improvement from yesterday. I guess I will let you continue coming to the music room because you are dedicated to improve and you kind of have potential.."
                 $ girl2.add_closeness(-2)
        
-        "Blues (Charm 2, Intelligence 3)":
+        "Blues (Charm 2, Intelligence 2)":
             show cath casual 3 with dissolve
             p "Alright, if you want."
             hide cath with dissolve
-            if cha_check >= 2 and int_check >= 3:
+            if cha_check >= 2 and int_check >= 2:
                 play music "Blues.mp3" fadein 1.0
                 "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
                 stop music fadeout 1.0
@@ -1170,13 +1170,13 @@ label music_day_4:
             $ girl2.add_closeness(1)
  
            
-        "Latin (Strength 3, Charm 4)":
+        "Latin (Strength 2, Charm 3)":
             show cath casual 5 with dissolve
             p "Very, very interesting."
             show cath casual 3
             p "..I don't know how to start... ummm... here goes nothing."
             hide cath with dissolve
-            if str_check >= 3 and cha_check >=4:
+            if str_check >= 2 and cha_check >=3:
                 play music "Latin.mp3" fadein 1.0
                 "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
                 stop music fadeout 1.0
@@ -1193,13 +1193,13 @@ label music_day_4:
                 p "That was terrible. The piano is suppose to accompany the violin not the other way around... But I guess this is a huge improvement from yesterday. I guess I will let you continue coming to the music room because you are dedicated to improve and you kind of have potential.."
                 $ girl2.add_closeness(-2)
        
-        "J-pop (Charm 3, Intelligence 4)":
+        "J-pop (Charm 2, Intelligence 3)":
             show cath casual 5 with dissolve
             p "Oh great!"
             show cath casual 8
             p "I have this song from a dating sim game I wanted to play!"
             hide cath with dissolve
-            if cha_check >= 3 and int_check >= 4:
+            if cha_check >= 2 and int_check >= 3:
                 play music "Jpop.mp3" fadein 1.0
                 "> It is like Catherine and you have performed before. You accidently play the wrong keys here and there, but you are able to stay on beat and made sure that the piano does not overpower the violin."
                 stop music fadeout 1.0
@@ -1235,6 +1235,8 @@ label music_day_4:
     m "Time for afternoon classes. What should I take today?"
     $ stats.reset_classes()
     call make_schedule
+    call music_event_check_1
+    call music_event_check_2
     jump girl2_failure
    
 label music_event_1:
@@ -1379,7 +1381,7 @@ label music_event_1_part_2:
     "> You look towards the window and you see the sunlight give a warm colouring to the surroundings. The chalk dust in the air highlights the sun rays giving the room a calm atmosphere."
     "> Your eyes wander to Catherine in the middle room and under the sun rays. She is putting on the finishing touches on the posters."
     "> She looks like she's in a spotlight. She looks so natural in it, like she was born to be in the spotlight. Light passes through her hair giving it an ethereal look as it drapes down on her shoulders. By observing her alone, you begin to feel unsettled and hot."
-    "> She tucks her hair behind her hair as she finishes up the final touches, but realizes that you are staring at her."
+    "> She tucks her hair behind her ear as she finishes up the final touches, but realizes that you are staring at her."
    
     show cath casual 2 with dissolve
     p "...Why are you staring at me?"
@@ -1938,7 +1940,7 @@ label music_event_3:
             # check affection level
             $ affection = girl2.get_affection("Catherine")
             # if success:
-            if affection >= 6: # NUMBER CAN VARY
+            if affection >= 4: # NUMBER CAN VARY
                 show cath casual 8
                 p "Does it look like I don't want to?"
                 show cath casual 7
@@ -2068,7 +2070,7 @@ label music_event_3_part_2:
                     stop music fadeout 1.0
                     jump girl2_good_end
                    
-        "You should make the decision y ourself":
+        "You should make the decision yourself":
             "> Catherine seems frustrated."
             show cath casual 12
             p "I don't get it! I haven't even known you for that long, but all the sudden you'll be out of my life. I tried so hard to be independent and do things on my own, and when I finally get the chance, I don't want it. I end up depending on you anyways. I even said 'yes', when you asked me out!"
