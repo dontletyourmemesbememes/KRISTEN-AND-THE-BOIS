@@ -83,116 +83,7 @@ label standard_home_ec:
                 p "The top is so crisp too. Good job!"
                 $ girl1.add_closeness(1)
                 
-            "Crème brûlée  (Need: 2 Intelligence  & 2 Charm)":
-                scene bg home_ec_room with fade
-                if int_check >= 2 and cha_check >= 2:
-                    # sucess
-                    "> The crème brûlée  looks great! Nice golden caramelization on it! Looks delicious!"
-                    show mary cook laugh with fade
-                    p "Looks great. I'm impressed."
-                    $ girl1.add_closeness(3)
-                else:
-                    # failure
-                    "> The vrème brûlée  turned out completely black... You think that you burnt it..."
-                    show mary cook pout with fade
-                    p "Uhh... is this even edible?"
-                    $ girl1.add_closeness(-3)
-                    
-            "Lasagna (Need: 2 Strength & 1 Charm)":
-                scene bg home_ec_room with fade
-                if str_check >= 2 and cha_check >= 1:
-                    "> The lasagna turned out great! The cheese is perfectly melted."
-                    show mary cook happy with fade
-                    p "The Lasagna looks awesome! The layers look so even!"
-                    $ girl1.add_closeness(2)
-                else:
-                    "> You reach into the oven and pull out what looks like a pile of plain pasta."
-                    show mary cook wonder with fade
-                    p "I think you didn't use enough tomato sauce... it looks pretty dry."
-                    $ girl1.add_closeness(-2)
-        
-    elif standard_dc == 1:
-        menu:
-            "Cinnamon Buns (No requirements)":
-                scene bg home_ec_room with fade
-                "> The Cinnamon Buns turned out great! The icing looks shiny and delicious!"
-                show mary cook laugh with fade
-                p "Looks so good! Can't wait to try it."
-                $ girl1.add_closeness(1)
-            
-            "Assorted Sashimi (Need: Intelligence 3 & Strength 3)":
-                scene bg home_ec_room with fade
-                if int_check >= 3 and str_check >= 3:
-                    "> The sashimi is perfectly sliced."
-                    show mary cook happy with fade
-                    p "Wow! Looks so good I almost don't want to eat it!"
-                    $ girl1.add_closeness(3)
-                else:
-                    "> The slices turned out oddly-shaped and uneven. You see pieces of bones and scales mixed in with the fish."
-                    show mary cook pout with fade
-                    p "Uhh... It's okay. We can always get some more expensive fish."
-                    $ girl1.add_closeness(-3)
-                    
-            "Carbonara (Need: Strength 2 & Charm 2)":
-                scene bg home_ec_room with fade
-                if str_check >= 2 and cha_check >= 2:
-                    "> The pasta turned out perfectly cooked! The aroma of the sauce fills the air."
-                    show mary cook laugh with fade
-                    p "That smells so good!"
-                    $ girl1.add_closeness(2)
-                else:
-                    "> The pasta looks like a pile of mush..."
-                    show mary cook sigh with fade
-                    p "I think the pasta is way too overcooked..."
-                    $ girl1.add_closeness(-2)
-   
-    elif standard_dc == 2:
-        menu:
-            "Mac and Cheese (No requirements)":
-                scene bg home_ec_room with fade
-                "> The cheese is perfectly melted and crisp on the surface of the casserole dish."
-                show mary cook laugh with fade
-                p "I can't wait to try this! Looks fantastic!"
-                $ girl1.add_closeness(1)
-                
-            "Beef Stroganoff (Needs: Strength 4 & Charm 4)":
-                scene bg home_ec_room with fade
-                if str_check >= 4 and cha_check >= 4:
-                    "> The pasta turned out perfectly cooked! The aroma of the sauce fills the air."
-                    show mary cook happy with fade
-                    p "That smells so good!"
-                    $ girl1.add_closeness(2)
-
-                else:
-                    "> The pasta looks like a pile of mush..."
-                    show mary cook wonder with fade
-                    p "I think the pasta is way too overcooked..."
-                    $ girl1.add_closeness(-2)
-                    
-            "Lemon Meringue Pie (Need: Intelligence 3 & Charm 3)":
-                scene bg home_ec_room with fade
-                if int_check >= 3 and cha_check >= 3:
-                    "> The pie is firm and the meringue keeps it's form."
-                    show mary cook laugh with fade
-                    p "Wow! The browning of the meringue is beautiful!"
-                    $ girl1.add_closeness(2)
-                else:
-                    "> The filling is too liquidy; it will not hold its shape."
-                    p "I think that you overbaked the pie."
-                    $ girl1.add_closeness(-2)
-   
-    elif standard_dc == 3:
-        menu:
-            "Blueberry Muffins (No requirements)":
-                scene bg home_ec_room with fade
-                "> The muffins turned out great!"
-                show mary cook happy with dissolve
-                p "Wow! They're so fluffy!" 
-                show mary cook laugh
-                p "The top is so crisp too. Good job!"
-                $ girl1.add_closeness(1)
-                
-            "Crème brûlée  (Need: 2 Intelligence  & 2 Charm)":
+            "Crème brûlée  (Need: 2 Intelligence & 2 Charm)":
                 scene bg home_ec_room with fade
                 if int_check >= 2 and cha_check >= 2:
                     # sucess
@@ -205,11 +96,11 @@ label standard_home_ec:
                     "> The crème brûlée  turned out completely black... You think that you burnt it..."
                     show mary cook pout with fade
                     p "Uhh... is this even edible?"
-                    $ girl1.add_closeness(-3)
+                    $ girl1.add_closeness(-1)
                     
-            "Lasagna (Need: 2 Strength & 1 Charm)":
+            "Lasagna (Need: 2 Strength & 1 Charm & 1 Intelligence)":
                 scene bg home_ec_room with fade
-                if str_check >= 2 and cha_check >= 1:
+                if str_check >= 2 and cha_check >= 1 and int_check >=1:
                     "> The lasagna turned out great! The cheese is perfectly melted."
                     show mary cook happy with fade
                     p "The Lasagna looks awesome! The layers look so even!"
@@ -218,9 +109,9 @@ label standard_home_ec:
                     "> You reach into the oven and pull out what looks like a pile of plain pasta."
                     show mary cook wonder with fade
                     p "I think you didn't use enough tomato sauce... it looks pretty dry."
-                    $ girl1.add_closeness(-2)
-   
-    elif standard_dc == 4:
+                    $ girl1.add_closeness(-1)
+        
+    elif standard_dc == 1:
         menu:
             "Cinnamon Buns (No requirements)":
                 scene bg home_ec_room with fade
@@ -229,7 +120,7 @@ label standard_home_ec:
                 p "Looks so good! Can't wait to try it."
                 $ girl1.add_closeness(1)
             
-            "Assorted Sashimi (Need: Intelligence 3 & Strength 3)":
+            "Assorted Sashimi (Need: 3 Intelligence  & 3 Strength)":
                 scene bg home_ec_room with fade
                 if int_check >= 3 and str_check >= 3:
                     "> The sashimi is perfectly sliced."
@@ -240,11 +131,11 @@ label standard_home_ec:
                     "> The slices turned out oddly-shaped and uneven. You see pieces of bones and scales mixed in with the fish."
                     show mary cook pout with fade
                     p "Uhh... It's okay. We can always get some more expensive fish."
-                    $ girl1.add_closeness(-3)
+                    $ girl1.add_closeness(-1)
                     
-            "Carbonara (Need: Strength 2 & Charm 2)":
+            "Carbonara (Need: 2 Strength & 2 Charm & 1 Intelligence)":
                 scene bg home_ec_room with fade
-                if str_check >= 2 and cha_check >= 2:
+                if str_check >= 2 and cha_check >= 2 and int_check >= 1:
                     "> The pasta turned out perfectly cooked! The aroma of the sauce fills the air."
                     show mary cook laugh with fade
                     p "That smells so good!"
@@ -253,7 +144,116 @@ label standard_home_ec:
                     "> The pasta looks like a pile of mush..."
                     show mary cook sigh with fade
                     p "I think the pasta is way too overcooked..."
-                    $ girl1.add_closeness(-2)
+                    $ girl1.add_closeness(-1)
+   
+    elif standard_dc == 2:
+        menu:
+            "Mac and Cheese (No requirements)":
+                scene bg home_ec_room with fade
+                "> The cheese is perfectly melted and crisp on the surface of the casserole dish."
+                show mary cook laugh with fade
+                p "I can't wait to try this! Looks fantastic!"
+                $ girl1.add_closeness(1)
+                
+            "Beef Stroganoff (Needs: 5 Strength & 4 Charm)":
+                scene bg home_ec_room with fade
+                if str_check >= 6 and cha_check >= 4:
+                    "> The pasta turned out perfectly cooked! The aroma of the sauce fills the air."
+                    show mary cook happy with fade
+                    p "That smells so good!"
+                    $ girl1.add_closeness(3)
+
+                else:
+                    "> The pasta looks like a pile of mush..."
+                    show mary cook wonder with fade
+                    p "I think the pasta is way too overcooked..."
+                    $ girl1.add_closeness(-1)
+                    
+            "Lemon Meringue Pie (Need: 3 Intelligence & 2 Charm & 2 Strength)":
+                scene bg home_ec_room with fade
+                if int_check >= 3 and cha_check >= 3 and str_check >= 2:
+                    "> The pie is firm and the meringue keeps it's form."
+                    show mary cook laugh with fade
+                    p "Wow! The browning of the meringue is beautiful!"
+                    $ girl1.add_closeness(2)
+                else:
+                    "> The filling is too liquidy; it will not hold its shape."
+                    p "I think that you overbaked the pie."
+                    $ girl1.add_closeness(-1)
+   
+    elif standard_dc == 3:
+        menu:
+            "Banana-Nut Muffins (No requirements)":
+                scene bg home_ec_room with fade
+                "> The muffins turned out great!"
+                show mary cook happy with dissolve
+                p "Wow! They're so fluffy!" 
+                show mary cook laugh
+                p "The top is so crisp too. Good job!"
+                $ girl1.add_closeness(1)
+                
+            "Chocolate Crème brûlée  (Need: 5 Intelligence  & 4 Charm)":
+                scene bg home_ec_room with fade
+                if int_check >= 5 and cha_check >= 4:
+                    # sucess
+                    "> The crème brûlée  looks great! Nice caramelization on it! Looks delicious!"
+                    show mary cook laugh with fade
+                    p "Looks great. I'm impressed."
+                    $ girl1.add_closeness(3)
+                else:
+                    # failure
+                    "> The crème brûlée  turned out completely black... You think that you burnt it..."
+                    show mary cook pout with fade
+                    p "Uhh... is this even edible?"
+                    $ girl1.add_closeness(-1)
+                    
+            "6-Cheese Lasagna (Need: 4 Strength & 2 Charm & 2 Intelligence)":
+                scene bg home_ec_room with fade
+                if str_check >= 4 and cha_check >= 2 and int_check >= 2:
+                    "> The lasagna turned out great! The cheeses are perfectly melted."
+                    show mary cook happy with fade
+                    p "The Lasagna looks awesome! The layers look so even!"
+                    $ girl1.add_closeness(2)
+                else:
+                    "> You reach into the oven and pull out what looks like a pile of plain pasta."
+                    show mary cook wonder with fade
+                    p "I think you didn't use enough tomato sauce... it looks pretty dry."
+                    $ girl1.add_closeness(-1)
+   
+    elif standard_dc == 4:
+        menu:
+            "Cinnamon Buns (No requirements)":
+                scene bg home_ec_room with fade
+                "> The Cinnamon Buns turned out great! The icing looks shiny and delicious!"
+                show mary cook laugh with fade
+                p "Looks so good! Can't wait to try it."
+                $ girl1.add_closeness(1)
+            
+            "Sushi Platter (Need: 5 Intelligence & 6 Strength)":
+                scene bg home_ec_room with fade
+                if int_check >= 5 and str_check >= 6:
+                    "> The sushi looks perfect!"
+                    show mary cook happy with fade
+                    p "Wow! Looks so good I almost don't want to eat it!"
+                    $ girl1.add_closeness(3)
+                else:
+                    "> The rolls turned out oddly-shaped and uneven. You see pieces of bones and scales mixed in with the fish."
+                    show mary cook pout with fade
+                    p "Uhh... It's okay. We can always get some more expensive fish."
+                    $ girl1.add_closeness(-1)
+                    
+            "Pasta Bolognese (Need: 5 Strength & 2 Charm & 3 Intelligence)":
+                scene bg home_ec_room with fade
+                if str_check >= 5 and cha_check >= 2 and int_check >= 3:
+                    "> The pasta turned out perfectly cooked! The aroma of the sauce fills the air."
+                    show mary cook laugh with fade
+                    p "That smells so good!"
+                    $ girl1.add_closeness(2)
+                else:
+                    "> The pasta looks like a pile of mush..."
+                    show mary cook sigh with fade
+                    p "I think the pasta is way too overcooked..."
+                    $ girl1.add_closeness(-1)
         
     else: #Extra just in case. Shouldn't get past standard_dc == 4
         menu:
@@ -264,9 +264,9 @@ label standard_home_ec:
                 p "I can't wait to try this! Looks fantastic!"
                 $ girl1.add_closeness(1)
                 
-            "Beef Stroganoff (Needs: Strength 4 & Charm 4)":
+            "Beef Stroganoff (Needs: 8 Strength & 8 Charm)":
                 scene bg home_ec_room with fade
-                if str_check >= 4 and cha_check >= 4:
+                if str_check >= 8 and cha_check >= 8:
                     "> The pasta turned out perfectly cooked! The aroma of the sauce fills the air."
                     show mary cook happy with fade
                     p "That smells so good!"
@@ -276,11 +276,11 @@ label standard_home_ec:
                     "> The pasta looks like a pile of mush..."
                     show mary cook wonder with fade
                     p "I think the pasta is way too overcooked..."
-                    $ girl1.add_closeness(-2)
+                    $ girl1.add_closeness(-1)
                     
-            "Lemon Meringue Pie (Need: Intelligence 3 & Charm 3)":
+            "Lemon Meringue Pie (Need: 6 Intelligence & 6 Charm)":
                 scene bg home_ec_room with fade
-                if int_check >= 3 and cha_check >= 3:
+                if int_check >= 6 and cha_check >= 6:
                     "> The pie is firm and the meringue keeps it's form."
                     show mary cook laugh with fade
                     p "Wow! The browning of the meringue is beautiful!"
@@ -288,8 +288,9 @@ label standard_home_ec:
                 else:
                     "> The filling is too liquidy; it will not hold its shape."
                     p "I think that you overbaked the pie."
-                    $ girl1.add_closeness(-2)
-                
+                    $ girl1.add_closeness(-1)
+    scene bg home_ec_room with fade
+    show mary cook happy
     p "Good work everyone! That's enough for today."
     "> You clean up your supplies and decide to head home for the day."
     jump standard_end_day

@@ -299,7 +299,7 @@ init python:
  
     bio_qman.add_question("The blood vessels that carry (usually oxygenated) blood away from the heart are called?",["Artery","Vein","Ventricle","Atrium"],0)
     bio_qman.add_question("What is the largest organ in the human body?",["Liver","Lung","Skin","Brain"],2)
-    bio_qman.add_question("An example of a waste product of aerobic celluar respiration is:",["carbon monoxide","carbon dioxide","oxygen","methanol"],1)
+    bio_qman.add_question("An example of a waste product of aerobic cellular respiration is:",["carbon monoxide","carbon dioxide","oxygen","methanol"],1)
     bio_qman.add_question("What is the basic unit of all living organisms found on Earth?",["The cell","The atom","Brick","DNA","Tissue","Fecal matter"],0)
     bio_qman.add_question("What describes the movement of molecules from a higher concentration to a lower concentration",["Diffusion","Osmosis","Diffration","Refraction"],0)
     bio_qman.add_question("Plants are typically green because they:",["reflect green light","absorb green light"],0)
@@ -324,7 +324,7 @@ init python:
     drama_qman.add_question("How does Hamlet Sr. die in the play, 'Hamlet'?",["Poison","Obesity","Witches","A duel with Ferdinard Sr."],0)
     drama_qman.add_question("What is the name of the role of a person who writes the play?",["Playwright","Actor","Director","Player"],0)
     drama_qman.add_question("When you are on stage, to make sure your audience can understand, you must project your:",["Vision","Breath","Ideas","Voice"],3)
-    drama_qman.add_question("In which Shakespeare play does this line appear: 'All the world's a stage and all the men and women merely players'",["Othello","Macbeth","Hamlet","Romeo and Juliet","As you like it"],4)
+    drama_qman.add_question("In which Shakespeare play does this line appear: 'All the world's a stage and all the men and women merely players'",["Othello","Macbeth","Hamlet","Romeo and Juliet","As You Like It"],4)
     drama_qman.add_question("What are instructions for actors, directors and the stage crew?",["Stage Directions","Dialogue","Soliloquy","Metaphor"],0)
     drama_qman.add_question("What is conversation between characters?",["Small talk","Dialogue","Oxymoron","Monologue"],1)
     drama_qman.add_question("What are people watching a play called?",["Fan girls/boys","Plebs","Audience","4th wallers"],2)
@@ -332,7 +332,7 @@ init python:
     drama_qman.add_question("True or False: In Ancient Greek plays, there were NO women actresses.",["True","False","Unknown","Only when there were female roles"],0)
     drama_qman.add_question("Which of the following refers to talking to the audience?",["Dialogue","Aside","Monologue","Solo"],1)
     drama_qman.add_question("What does a character foil refer to?",["Antagonist","Protagonist","The opposite of the protagonist","The doppelganger of the protagonist"],2)
-    drama_qman.add_question("Who is the king of the fairies in A Midsummer Night's Dream",["King Lear","Othello","Claudius","Oberon"],3)
+    drama_qman.add_question("Who is the king of the fairies in 'A Midsummer Night's Dream'?",["King Lear","Othello","Claudius","Oberon"],3)
     drama_qman.add_question("The imaginary wall between the audience and the actor is called:",["The fourth wall","The third wall","The second wall","The first wall"],0)
     drama_qman.add_question("Who tells Macbeth he can kill Duncan to become king?",["Lady Macbeth","The Ghost of Macbeth Sr.","Banquo","The 3 witches"],3)
  
@@ -350,7 +350,7 @@ init python:
     gym_qman.add_question("What is the term when you have zero points in tennis?",["Loser","Zero","Pleb","Love"],3)
     gym_qman.add_question("One stroke less than par in golf is called:",["Not good enough","Eagle","Birdie","Bogey","Hole in one"],2)
     gym_qman.add_question("What sport is the FIFA World cup for?",["Football (soccer)","Tennis","Hockey","Quidditch"],0)
-    gym_qman.add_question("Famous player involved in MBA and MLB, and is associated with a shoe brand?",["Michael Jackson","Jeremy Lin","Micheal Jordan","Shaquille O'Neil"],2)
+    gym_qman.add_question("Famous player involved in NBA and MLB, and is associated with a shoe brand?",["Michael Jackson","Jeremy Lin","Micheal Jordan","Shaquille O'Neil"],2)
     gym_qman.add_question("What is the most points you can get in a bowling game?",["300","1","2","500"],0)
     gym_qman.add_question("How do you end Quidditch?",["Knock over all of the opposing team","Say the name that cannot be said","Remove your nose","Catch the golden snitch"],3)
  
@@ -2222,7 +2222,7 @@ label home_ec_room:
     $ cha_check = stats.get_stats("cha")
    
     menu:
-        "Chocolate chip cookies (Need: Strength 1 & Charm 1)":
+        "Chocolate chip cookies (Need: 1 Strength & 1 Charm)":
             hide mary cook wonder
             if str_check >= 1 and cha_check >= 1:
                 "> Miraculously, you remember a recipe for chocolate cookies and manage to put them together."
@@ -2240,7 +2240,7 @@ label home_ec_room:
             $ stats.set_food_choice(2)
             jump girl_1_convo_1
        
-        "Beef Carpaccio (Need: Strength 2)":
+        "Beef Carpaccio (Need: 2 Strength)":
             hide mary cook wonder
             "> You decide that it would be best to go big or go home. If you managed to pull this off, she would be incredibly impressed. Unfortunately, you do not have the knowledge of the ingredients or techniques need to put this dish together. You improvise as you go."
                
@@ -2313,9 +2313,7 @@ label made_bad_food_1:
     show mary cook pout with fade
     p "It was... uh... not bad... "
     show mary cook shy
-    $ girl1.add_closeness(-1)
     "> She forces a smile and pushes your food a few inches away"
-   
     m "Sorry about that. Maybe you can teach me some basics?"
     show mary cook straight
     p "Hmmm... That sounds okay I suppose..."
@@ -2422,10 +2420,10 @@ label girl1_check_2:
     $ closeness = girl1.get_closeness("Mary")
     $ event_num = girl1.get_event("Mary")
     if not girl1check2:
-        if closeness >= 12  and event_num == 1: #EVENT TRIGGERED
+        if closeness >= 11  and event_num == 1: #EVENT TRIGGERED
             $ girl1.add_event()
             $ girl1check2 = True
-            $ standard_dc = 0
+            $ standard_dc = 1
             scene bg hallway with fade
             show mary casual straight with dissolve
             "> Mary is standing outside the club room. It looks like she was waiting for you."
@@ -2453,9 +2451,9 @@ label girl1_check_3:
     $ closeness = girl1.get_closeness("Mary")
     $ event_num = girl1.get_event("Mary")
     if not girl1check3:
-        if closeness >= 20 and event_num == 2: #EVENT TRIGGERED
+        if closeness >= 18 and event_num == 2: #EVENT TRIGGERED
             $ girl1check3 = True
-            $ standard_dc = 0
+            $ standard_dc = 2
             scene bg hallway with fade
             show mary casual sad with dissolve:
                 xalign 0.7
@@ -2747,7 +2745,7 @@ label cafe_date1 :
                 jump cafe_date_badending
                    
            
-            "What do you want to be?" :
+            "What do you want to do after high school?" :
                 hide thought with dissolve
                 $ cafe_asked_count += 1
                 show mary casual wonder
@@ -2755,7 +2753,6 @@ label cafe_date1 :
                
                 menu :
                     "Sounds great! I'll support you if you ever need help." :
-                        $ girl1.add_closeness(-1)
                         show mary casual shy
                         p "Yeah... It does sound great, doesn't it?"
                        
@@ -2769,8 +2766,8 @@ label cafe_date1 :
                        
                         jump mary_backstory1
                        
-                    "What about being a chef?" :
-                        $ girl1.add_closeness(2)
+                    "What about a profession in cooking?" :
+                        $ girl1.add_closeness(1)
                         jump mary_backstory1
                        
                        
@@ -2826,10 +2823,9 @@ label mary_backstory1 :
     menu:
         "> Joke." :
            #$girl1.add_closeness(-1)
-           m "Oh... Talk to me about it. Tell Dr.Fill about your problems."
+           m "Oh... Talk to me about it. Tell Dr. Fill about your problems."
            show mary casual sad
            p " Uhmm... I'd rather not talk about it right now."
-           
            m "Feel free to talk to me anytime."
            show mary casual shy
            p "Yeah, thanks."
@@ -2852,9 +2848,9 @@ label cafe_date_goodending :
     show mary casual smile with dissolve
     "> After a while of more small talk, the two of you finish your food. You both stand up and she looks at you."
     show mary casual happy
-    p "I really enjoyed this. We should get together more often."
+    p "I enjoyed this. We should get together more often."
     "> You hold the door open for her and you guys part ways. As you're walking you look back to catch her peeking over her shoulders as well. You both wave at each other."
-    "> The date was a success! You managed to get closer to Mary."
+    "> It seems you've managed to get closer to Mary."
    
     #jump return_to_which_day
     jump standard_end_day
@@ -2902,10 +2898,10 @@ label restaurant_date1 :
             "> Mary blushes and can't seem to look you in the eye. You hope this is a good sign?"
             "> Your compliment doesn't do anything to spark any conversation, rather, she seems even more flustered."
             jump restaurant_date1
-        "So.. What else do you like about cooking?" :
+        "So what else do you like about cooking?" :
             jump restaurant_date2
            
-        "We look like a real couple!" if not rest1_asked3 : #no effect
+        "We look like a real couple!" if not rest1_asked2 : #no effect
             $ rest1_asked2 = True
             show mary casual confused
             p "Uhm.."
@@ -3187,9 +3183,9 @@ label girl1_home_date:
                             show mary cook confused
                             p "Wha-?!"
                             show mary cook flustered1
-                            "> You pat her head in an attempt to calm her."
-                            "> Mary settles down. Her arms slowly wrap around your back."
-                            "> The two of you stand silent for a while before finally letting go of each other."
+                            "> Mary flinches slightly when she realizes what you're doing. However, she doesn't seem to dislike it."
+                            "> She begins to settle down. Her arms slowly wrap around your back."
+                            "> The two of you stand silently for a while before finally letting go of each other."
                             show mary cook flustered2
                             p "U-uumm... Thank you. Sorry if I made you feel uncomfortable."
                             m "We should probably head back to the kitchen."
