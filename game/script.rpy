@@ -286,6 +286,9 @@ init python:
            
         def add_event(self):
             self.event += 1
+            
+        def sub_event(self):
+            self.event -= 1
            
     def rng_roll(chance): #chance should be between [0,1]
         return chance > renpy.random.random()
@@ -1252,6 +1255,7 @@ label music_event_1:
             p "I am busy at the moment. Leave me alone."
             show cath casual 14
             $ girl2.add_affection(-1)
+            $ girl2.sub_event()
             "> You decide to leave her alone."
             hide cath with dissolve
             $ girl2_event1_asked1 = True
