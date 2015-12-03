@@ -23,6 +23,7 @@ image bg restaurant = "Restaurant.png"
 image bg player room = "Player_room.png"
 image bg sidewalk = "Sidewalk.png"
 image bg home = "Player_room.png"
+image credits = "Credits.png"
 #Mary images--------------------------------------------------------------------------------------
 image mary intro = "MaryIntro.png"
 image mary casual smile = "mary_casual_1.png"
@@ -3642,6 +3643,8 @@ label credit:
     #pause for 120 seconds
     scene bg hallway with fade
     show text "The End." with dissolve
+    hide text with dissolve
+    scene credits with fade
     $renpy.pause(120.0)
     $renpy.quit(True)
     
