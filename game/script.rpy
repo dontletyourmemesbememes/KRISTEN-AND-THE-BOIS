@@ -2877,7 +2877,7 @@ label restaurant_date1:
     if not rest1_asked2 and not rest1_asked3:
         scene bg restaurant with fade
         "> At the restaurant."
-        "> The hostess leads you to your table, and both of you get in each other's way trying to decide where each of you will sit. As you two take your respective seats, you chuckle to each other."
+        "> The hostess leads you to your table and both of you get in each other's way trying to decide where each of you will sit. As you two take your respective seats, you chuckle to each other."
         show mary casual shy with dissolve
         p "Wow, haha.. This place sure is fancy."
         show thought behind mary
@@ -2909,7 +2909,7 @@ label restaurant_date1:
             "> Mary looks confused."
             show mary casual pout
             p "We're not... Sorry, I just don't think we're on the same page.."
-            "> Mary looks a little shy about it but not annoyed or anything. She seems even more flustered than before."
+            "> Mary looks a little shy about it, but not annoyed or anything. She seems even more flustered than before."
            
             jump restaurant_date1
            
