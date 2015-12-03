@@ -23,11 +23,11 @@ init -1 python hide:
     ## This controls the title of the window, when Ren'Py is
     ## running in a window.
 
-    config.window_title = u"KRISTEN AND THE B01zzzzzzzz"
+    config.window_title = u"GRILLS? GIRLS?"
 
     # These control the name and version of the game, that are reported
     # with tracebacks and other debugging logs.
-    config.name = "KRISTEN AND THE B01zzzzzzzz"
+    config.name = "GRILLS? GIRLS?"
     config.version = "0.0"
 
     #########################################

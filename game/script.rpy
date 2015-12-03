@@ -382,7 +382,6 @@ init python:
 define p = DynamicCharacter("unknown_name", color="#c8ffc8")
 define m = DynamicCharacter("player_name")
 define principal = Character("Principal", color="#c8ffc8")
- 
 define mom = Character("Mom", color="#c8ffc8")
 define cookies_baked = False
 #Mary variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -400,7 +399,6 @@ define rest1_asked2 = False
 define rest1_asked3 = False
 define rest2_asked1 = False
 define reassure = False
- 
 #Music girl variables~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 define girl2_event1_asked1 = False
 define girl2_music_choice = 0
@@ -2195,11 +2193,11 @@ label home_ec_room:
    
     # you have chosen Mary as the girl
     $ stats.set_chosen_girl(1)
-   
+    scene bg hallway with fade
     "> In front of the Home-Ec Room."
     scene bg home_ec_room with fade
     "> As you enter the room, you hear a sizzling noise. The fragrances tickle your nose as you enter the room. Your sight is drawn to the centre of the room, to a girl. She looks up to acknowledge you and she gives a friendly, but shy smile."
-    show mary cook smile with fade:
+    show mary cook smile with dissolve:
         xalign 0.7
         linear 1.0 xalign 0.5
     p "Hello, I haven't seen your face around, are you new?"
@@ -2874,11 +2872,10 @@ label cafe_date_badending :
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #Mary - Restaurant Date
  
-label restaurant_date1 :
-    scene bg restaurant with fade
-    "> At the restaurant."
-    if not rest1_asked2 and not rest1_asked3 :
-       
+label restaurant_date1: 
+    if not rest1_asked2 and not rest1_asked3:
+        scene bg restaurant with fade
+        "> At the restaurant."
         "> The hostess leads you to your table, and both of you get in each other's way trying to decide where each of you will sit. As you two take your respective seats, you chuckle to each other."
         show mary casual shy with dissolve
         p "Wow, haha.. This place sure is fancy."
@@ -2887,6 +2884,9 @@ label restaurant_date1 :
         "> Mary looks a little flustered."
         "> QUICK! SAY SOMETHING TO HER YOU FOOL!"
         hide thought behind mary
+    else:
+        show thought with dissolve
+        m "{i}What else should I ask her?{/i}" 
     menu:
         "You look very pretty today." if not rest1_asked2 :
             $ rest1_asked2 = True
@@ -2928,10 +2928,8 @@ label restaurant_date2:
         "> Her glass slows down, and her smile fades to concern."
         show mary casual sigh    
         p "But... In the end it's just a hobby..."
-    show mary casual wonder
-    show thought with dissolve
-    "> Time passes as the two of you talk. Mary becomes silent as her eyes wander down to her glass."
-    hide thought with dissolve        
+    show mary casual sad
+    "> Mary becomes silent as her eyes wander down to her glass."       
     menu :
         "> Reassure." if not rest2_asked1: #chance to gain closeness
             $ rest2_asked1 = True
@@ -2947,8 +2945,9 @@ label restaurant_date2:
                     m "I feel like there's a pretty easy solution to that."
                     show mary casual smile
                     "> Mary leans forward. Her eyes are on you as she smirks."
+                    show mary casual happy
                     p "Well don't expect much if I cook all by myself."
-                   
+                    show mary casual smile
                     m "Haha, I doubt I'll be much help to you. You're on your own!"
                     show mary casual laugh
                     "> The two of you joke together. Mary playfully punches your shoulder as the two of you roll back laughing in your seats."
@@ -2967,9 +2966,18 @@ label restaurant_date2:
                     $ girl1.add_closeness(1)
                     show mary casual happy
                     p "Sounds like a fun time. Haha, alright then."
+                    show mary casual smile
                     "> Mary smiles as you two think of things to make together."
-            hide mary with dissolve        
-            jump restaurant_date2
+            show mary casual wonder with fade
+            show thought with dissolve
+            "> Time passes as the two of you continue to talk."
+            show mary casual straight
+            "> You notice Mary's gaze getting lost in the distance more frequently."
+            hide thought with dissolve
+            m "Is something the matter Mary?"
+            show mary casual sad
+            p "Well.. back when I said that cooking was just a hobby. The reason I said that was.."
+            jump mary_backstory2
                
         "> Question." : #backstory opener
             m "It seems like cooking means a lot more to you. You seem upset. What's wrong?"

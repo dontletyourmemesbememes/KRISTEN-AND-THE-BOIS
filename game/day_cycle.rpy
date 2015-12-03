@@ -155,9 +155,9 @@ label standard_home_ec:
                 p "I can't wait to try this! Looks fantastic!"
                 $ girl1.add_closeness(1)
                 
-            "Beef Stroganoff (Needs: 5 Strength & 4 Charm)":
+            "Beef Stroganoff (Needs: 4 Strength & 4 Charm)":
                 scene bg home_ec_room with fade
-                if str_check >= 6 and cha_check >= 4:
+                if str_check >= 4 and cha_check >= 4:
                     "> The pasta turned out perfectly cooked! The aroma of the sauce fills the air."
                     show mary cook happy with fade
                     p "That smells so good!"
@@ -171,7 +171,7 @@ label standard_home_ec:
                     
             "Lemon Meringue Pie (Need: 3 Intelligence & 2 Charm & 2 Strength)":
                 scene bg home_ec_room with fade
-                if int_check >= 3 and cha_check >= 3 and str_check >= 2:
+                if int_check >= 3 and cha_check >= 2 and str_check >= 2:
                     "> The pie is firm and the meringue keeps it's form."
                     show mary cook laugh with fade
                     p "Wow! The browning of the meringue is beautiful!"
@@ -264,9 +264,9 @@ label standard_home_ec:
                 p "I can't wait to try this! Looks fantastic!"
                 $ girl1.add_closeness(1)
                 
-            "Beef Stroganoff (Needs: 8 Strength & 8 Charm)":
+            "Beef Stroganoff (Needs: 6 Strength & 5 Charm)":
                 scene bg home_ec_room with fade
-                if str_check >= 8 and cha_check >= 8:
+                if str_check >= 6 and cha_check >= 5:
                     "> The pasta turned out perfectly cooked! The aroma of the sauce fills the air."
                     show mary cook happy with fade
                     p "That smells so good!"
@@ -278,9 +278,9 @@ label standard_home_ec:
                     p "I think the pasta is way too overcooked..."
                     $ girl1.add_closeness(-1)
                     
-            "Lemon Meringue Pie (Need: 6 Intelligence & 6 Charm)":
+            "Lemon Meringue Pie (Need: 5 Intelligence & 5 Charm & 3 Strength)":
                 scene bg home_ec_room with fade
-                if int_check >= 6 and cha_check >= 6:
+                if int_check >= 5 and cha_check >= 5 & str_check >=3):
                     "> The pie is firm and the meringue keeps it's form."
                     show mary cook laugh with fade
                     p "Wow! The browning of the meringue is beautiful!"
