@@ -1738,7 +1738,6 @@ label music_event_2_part_2:
     "> You take a seat at the piano and wait for her signal."
     hide cath with fade
     show cath concert with fade
-    "> You hear her draw her bow across the strings. Her playing is colourful, vibrant, and full of expression.  You can feel her stage presence growing as the song reaches the climax."
     # cue music here
     stop music fadeout 1.0
     if girl2_music_choice == 1:
@@ -1747,6 +1746,7 @@ label music_event_2_part_2:
         play music "Chopin.mp3" fadein 1.0
     else:
         play music "Rondo.mp3" fadein 1.0
+    "> You hear her draw her bow across the strings. Her playing is colourful, vibrant, and full of expression.  You can feel her stage presence growing as the song reaches the climax."
        
     while(1):
         $ renpy.pause(10.0)
